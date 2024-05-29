@@ -1,0 +1,18 @@
+{
+  "name": "floatnote",
+  "version": "1.0.0",
+  "description": "note everywhere",
+  "main": "index.js",
+  "scripts": {
+    "start:client": "pnpm --filter client run dev",
+    "start:server": "pnpm --filter server run start:dev",
+    "start:extension": "pnpm --filter extension run dev",
+    "start:all": "concurrently \"pnpm start:client\" \"pnpm start:server\" \"pnpm start:extension\""
+  },
+  "keywords": [],
+  "author": "wangwenbo.me",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

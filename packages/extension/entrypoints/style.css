@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+:host {
+  font-size: 16px;
+  color: #222;
+}
