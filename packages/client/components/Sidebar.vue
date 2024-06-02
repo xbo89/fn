@@ -1,25 +1,12 @@
 <template>
-  <div class="sidebar h-full w-52 bg-white border-r flex-shrink-0">
+  <div class="sidebar h-full bg-white border-r flex-shrink-0 w-52">
     <div class="text-xl font-bold px-2 py-4">Float Note</div>
     <div class="menus px-2">
       <div class="bg-gray-200 rounded-lg px-4 py-1.5">inbox</div>
     </div>
 
-    <!-- <PopoverRoot>
-      <PopoverTrigger class="user flex space-x-2 items-center px-2">
-        <div class="rounded-full bg-gray-100 w-8 h-8"></div>
-        <span>usernamea</span>
-      </PopoverTrigger>
-      <PopoverPortal>
-        <PopoverContent class="rounded-lg border p-2">
-          Some more info...
-          <PopoverClose />
-          <PopoverArrow class="fill-white stroke-slate-100 stroke-1" />
-        </PopoverContent>
-      </PopoverPortal>
-    </PopoverRoot> -->
     <DropdownMenuRoot v-model:open="toggleState">
-      <DropdownMenuTrigger class="user flex space-x-2 items-center px-2 hover:bg-gray-100"
+      <DropdownMenuTrigger class="user flex space-x-2 items-center px-4 py-1.5 hover:bg-gray-100 mx-2 rounded-lg"
         aria-label="Customise options">
         <AvatarRoot
           class="bg-blackA3 inline-flex h-[26px] w-[26px] select-none items-center justify-center overflow-hidden rounded-full align-middle">

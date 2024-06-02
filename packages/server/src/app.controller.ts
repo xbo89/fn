@@ -35,7 +35,7 @@ export class AppController {
 
   @Get('/auth/callback')
   @Redirect()
-  async userinfo(@Req() req: Request): Promise<object> {
+  async authCallback(@Req() req: Request): Promise<object> {
     const code = req.query.code;
     const codeString = code.toString();
     if (code) {
@@ -48,6 +48,14 @@ export class AppController {
   async isLogin(): Promise<object> {
     const user = await supabase.auth.getUser();
     console.log(user);
+    return user;
+  }
+
+  @Get('/auth/userinfo')
+  async userinfo(): Promise<object> {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     return user;
   }
 }

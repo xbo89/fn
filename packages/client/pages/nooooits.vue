@@ -7,6 +7,9 @@
   </div>
 </template>
 <script setup>
-  const { data: { user, error } } = await $fetch('/api-v1/auth/islogin')
+  import {
+    SplitterGroup, SplitterPanel, SplitterResizeHandle
+  } from 'radix-vue'
+  const user = await $fetch('/api-v1/auth/userinfo')
   console.log(user)
 </script>
