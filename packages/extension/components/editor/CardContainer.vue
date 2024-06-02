@@ -16,8 +16,8 @@
   import { reactive } from 'vue'
 
   const cardConfigure = reactive({
-    x: 0,
-    y: 0,
+    x: 1000,
+    y: 1000,
     width: 260,
     height: 420
   })
