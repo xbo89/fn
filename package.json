@@ -5,14 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start:client": "pnpm --filter client run dev",
-    "start:server": "pnpm --filter server run start:dev",
     "start:extension": "pnpm --filter extension run dev",
-    "start:all": "concurrently \"pnpm start:client\" \"pnpm start:server\" \"pnpm start:extension\""
+    "start:all": "concurrently \"pnpm start:client\" \"pnpm start:extension\""
   },
   "keywords": [],
   "author": "wangwenbo.me",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "remixicon": "^4.2.0"
   }
 }

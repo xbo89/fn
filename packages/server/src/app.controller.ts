@@ -1,9 +1,17 @@
-import { Controller, Get, Res, Req, Redirect, HttpCode } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Req,
+  Res,
+  Redirect,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { AppService } from './app.service';
-import { createClient } from '@supabase/supabase-js';
+import { createServerClient } from '@supabase/ssr';
 import { Request, Response } from 'express';
 
-const supabase = createClient(
+let supabase = createServerClient(
   'https://enxogxbtvgjpbybgllxw.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVueG9neGJ0dmdqcGJ5YmdsbHh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM3ODExMzksImV4cCI6MjAyOTM1NzEzOX0.ckGnzpi6sUf3XR4icHHZi5SEkdIzkDa_hXNJqqaoA2s',
   {
@@ -35,20 +43,30 @@ export class AppController {
 
   @Get('/auth/callback')
   @Redirect()
-  async authCallback(@Req() req: Request): Promise<object> {
+  async authCallback(
+    @Req() req: Request,
+    @Res() res: Response,
+  ): Promise<object> {
     const code = req.query.code;
     const codeString = code.toString();
     if (code) {
+      // supabase<> = createClient({ req, res });
       await supabase.auth.exchangeCodeForSession(codeString);
     }
-    return { url: 'http://localhost:3000/list' };
+    return { url: 'http://localhost:3000/login?step=next' };
   }
 
   @Get('/auth/islogin')
-  async isLogin(): Promise<object> {
-    const user = await supabase.auth.getUser();
-    console.log(user);
-    return user;
+  async isLogin(): Promise<boolean> {
+    const { data, error } = await supabase.auth.getUser();
+    console.log(data, error);
+    // console.log(data.user === null, error === null);
+    if (!data.user === null) {
+      return false;
+    }
+    if (error === null) {
+      return true;
+    }
   }
 
   @Get('/auth/userinfo')
