@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar h-full bg-white border-r flex-shrink-0 w-60">
-    <div class="text-lg font-bold flex items-center justify-between h-12 px-4">
+    <div class="text-lg flex items-center justify-between h-12 px-4">
       <span>Float Note</span>
       <SidebarAvatar />
     </div>

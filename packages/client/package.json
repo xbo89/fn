@@ -11,21 +11,10 @@
   },
   "dependencies": {
     "@floatnote/writer": "workspace:*",
+    "@nuxt/ui": "^2.16.0",
     "@nuxtjs/supabase": "^1.2.2",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
-    "floating-vue": "^5.2.2",
-    "lucide-vue-next": "^0.394.0",
     "nuxt": "^3.11.2",
-    "radix-vue": "^1.8.2",
-    "remixicon": "^4.2.0",
-    "shadcn-nuxt": "^0.10.4",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"
-  },
-  "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.12.0"
   }
 }
