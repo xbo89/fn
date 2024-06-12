@@ -1,9 +1,9 @@
-html,
+/* html,
 body,
 #__float_note {
   width: 100%;
   height: 100%;
-  @apply text-gray-600;
+  @apply antialiased font-sans;
 }
 
 .router-link-active .item {
@@ -12,12 +12,15 @@ body,
 
 .icon-button {
   @apply rounded-lg cursor-pointer flex items-center justify-center hover:bg-gray-100 text-sm bg-white w-8 h-8;
+} */
+html,
+body,
+#__float_note {
+  width: 100%;
+  height: 100%;
+  @apply bg-white dark:bg-zinc-900;
 }
 
-.v-popper--theme-fn .v-popper__arrow-outer {
-  visibility: hidden;
-}
-
-.v-popper--theme-fn .v-popper__arrow-inner {
-  visibility: hidden;
+.router-link-active .item {
+  @apply text-primary bg-primary-50 dark:text-gray-900 dark:bg-primary;
 }

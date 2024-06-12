@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center w-full justify-between px-6 h-12 border-b">
+  <div class="flex items-center w-full justify-between px-6 h-12 border-b border-gray-200 dark:border-gray-700">
     <h1 class="text-lg font-bold">Zettelkasten</h1>
 
     <!-- <VMenu>

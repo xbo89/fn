@@ -6,16 +6,14 @@ export default defineNuxtConfig({
     rootId: '__float_note'
   },
   css: ['~/assets/css/style.css'],
-  routeRules: {
-    '/api-v1/**': {
-      proxy: 'http://localhost:3002/**'
-    }
-  },
   supabase: {
     redirectOptions: {
       login: '/login',
       callback: '/login',
       exclude: ['/'],
     }
+  },
+  ui: {
+    safelistColors: ['indigo']  // 这里添加 orange 颜色到 safelist
   }
 })
