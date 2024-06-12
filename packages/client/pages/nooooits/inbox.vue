@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center w-full justify-between px-6 h-12 border-b border-gray-200 dark:border-gray-700">
+  <div class="flex items-center w-full justify-between px-6 h-12 border-b border-gray-200 dark:border-gray-800">
     <h1 class="text-lg font-bold">Zettelkasten</h1>
 
     <!-- <VMenu>
@@ -31,6 +31,13 @@
         class="flex-1 bg-gray-400 rounded-[10px] relative before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-full before:h-full before:min-w-[44px] before:min-h-[44px]" />
     </ScrollAreaScrollbar>
   </ScrollAreaRoot> -->
+  <div class="list grid md:grid-cols-2 lg:grid-cols-3 gap-1.5 px-6 py-4">
+    <UCard v-for="(item,index) in 30" :key="index">
+
+      as
+
+    </UCard>
+  </div>
 
 
 </template>

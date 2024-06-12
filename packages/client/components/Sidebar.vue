@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar h-full border-r border-gray-200 dark:border-gray-700 flex-shrink-0 w-60 ">
+  <div class="sidebar h-full border-r border-gray-200 dark:border-gray-800 flex-shrink-0 w-60 ">
     <div class="text-lg flex items-center justify-between h-12 px-4">
       <span>Float Note</span>
       <SidebarAvatar />
