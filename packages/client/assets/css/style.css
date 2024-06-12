@@ -13,3 +13,11 @@ body,
 .icon-button {
   @apply rounded-lg cursor-pointer flex items-center justify-center hover:bg-gray-100 text-sm bg-white w-8 h-8;
 }
+
+.v-popper--theme-fn .v-popper__arrow-outer {
+  visibility: hidden;
+}
+
+.v-popper--theme-fn .v-popper__arrow-inner {
+  visibility: hidden;
+}

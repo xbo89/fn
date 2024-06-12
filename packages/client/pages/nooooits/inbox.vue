@@ -1,6 +1,14 @@
 <template>
   <div class="flex items-center w-full justify-between px-6 h-12 border-b">
     <h1 class="text-lg font-bold">Zettelkasten</h1>
+    <VMenu>
+      <button>Documentation</button>
+
+      <template #popper>
+        <button>Guide</button>
+        <button>API Reference</button>
+      </template>
+    </VMenu>
     <div class="flex space-x-1">
       <InboxFilter />
       <CreateCard />
@@ -9,7 +17,7 @@
   <ScrollAreaRoot class="absolute top-12 bottom-0 inset-x-0" style="position: absolute;">
     <ScrollAreaViewport class="w-full h-full">
       <div class="list grid md:grid-cols-2 lg:grid-cols-3 gap-1.5 px-6 py-4">
-        <CardItem v-for="(item,index) in data" :key="i" :data="item">
+        <CardItem v-for="(item,index) in data" :key="index" :data="item">
           {{item}}
         </CardItem>
       </div>
