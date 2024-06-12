@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tiptap/extension-bubble-menu": "^2.4.0",
     "@tiptap/extension-document": "^2.4.0",
     "@tiptap/extension-paragraph": "^2.4.0",
     "@tiptap/extension-text": "^2.4.0",

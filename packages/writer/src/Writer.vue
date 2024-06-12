@@ -1,20 +1,56 @@
 <template>
   <editor-content :editor="editor" />
-  <bubble-menu :editor="editor" :tippy-options="{ duration: 10,appendTo:'body' }" v-if="editor"
-    class="p-8 bg-white border">
-    <VMenu>
-      <button class="p-8 bg-white border">Documentation</button>
+  <bubble-menu :editor="editor" :tippy-options="{ duration: 10}" v-if="editor" class="p-1 bg-white border">
+    <HoverCard :openDelay="100">
+      <HoverCardTrigger as-child>
+        <Button variant="link">
+          @vuejs
+        </Button>
+      </HoverCardTrigger>
+      <HoverCardContent class="w-80" align="end">
+        <ul>
+          <li>a</li>
+          <li>a</li>
+          <li>a</li>
+          <li>a</li>
+          <li>a</li>
+          <li>a</li>
+          <li>a</li>
+        </ul>
+      </HoverCardContent>
+    </HoverCard>
+    <!-- <button v-tooltip="{ content: '<b>Bold</b>', html: true,hideTriggers: events => [...events, 'click'], }">aa</button> -->
+    <!-- <div class="a" @mouseenter="openn=true">aaa</div>
+    <div class="bb" v-show="openn">aaasss</div> -->
+    <!-- <VMenu>
+      <button class="p-1 bg-white border">Documentation</button>
 
       <template #popper>
         <button>Guide</button>
         <button>API Reference</button>
       </template>
-    </VMenu>
+    </VMenu> -->
   </bubble-menu>
 
 
 </template>
 <script setup>
+  import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from '@/components/ui/dropdown-menu'
+  import { Button } from '@/components/ui/button'
+  import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+  } from '@/components/ui/hover-card'
+
+
   import 'remixicon/fonts/remixicon.css'
   import './style.css'
   import { useEditor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
