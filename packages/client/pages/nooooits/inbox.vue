@@ -1,4 +1,5 @@
 <template>
+  <!-- <div class="w-full h-full relative overflow-hidden flex flex-col"> -->
   <div class="flex items-center w-full justify-between px-6 h-12 border-b border-gray-200 dark:border-gray-800">
     <h1 class="text-lg font-bold">Zettelkasten</h1>
     <div class="flex space-x-1">
@@ -16,25 +17,10 @@
       <CreateCard />
     </div>
   </div>
-
-  <!-- <ScrollAreaRoot class="absolute top-12 bottom-0 inset-x-0" style="position: absolute;">
-    <ScrollAreaViewport class="w-full h-full">
-      <div class="list grid md:grid-cols-2 lg:grid-cols-3 gap-1.5 px-6 py-4">
-        <CardItem v-for="(item,index) in data" :key="index" :data="item">
-          {{item}}
-        </CardItem>
-      </div>
-    </ScrollAreaViewport>
-    <ScrollAreaScrollbar
-      class="flex select-none touch-none p-0.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col data-[orientation=horizontal]:h-2.5"
-      orientation="vertical">
-      <ScrollAreaThumb
-        class="flex-1 bg-gray-400 rounded-[10px] relative before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-full before:h-full before:min-w-[44px] before:min-h-[44px]" />
-    </ScrollAreaScrollbar>
-  </ScrollAreaRoot> -->
-  <UContainer>
-    <div class="list grid md:grid-cols-2 lg:grid-cols-3 gap-1.5">
-      <UCard v-for="(item,index) in 30" :key="index" :ui="{
+  <Simplebar class="top-12 bottom-0 inset-x-0 " style="position:absolute">
+    <div class="p-6 ">
+      <div class="list grid md:grid-cols-2 lg:grid-cols-3 gap-1.5">
+        <UCard v-for="(item,index) in 30" :key="index" :ui="{
         shadow: 'none',
         base:'min-h-40',
         body: {
@@ -48,13 +34,15 @@
         },
       }">
 
-        as
-        <template #footer>
-          <UBadge color="gray" variant="solid">Badge</UBadge>
-        </template>
-      </UCard>
+          as
+          <template #footer>
+            <UBadge color="gray" variant="solid">Badge</UBadge>
+          </template>
+        </UCard>
+      </div>
     </div>
-  </UContainer>
+  </Simplebar>
+  <!-- </div> -->
   <UModal v-model="isOpen">
     <UCommandPalette v-model="selected2" multiple nullable :groups="[{ key: 'people', commands: people2 }]" />
   </UModal>
@@ -62,6 +50,8 @@
 
 </template>
 <script setup>
+  import Simplebar from 'simplebar-vue';
+  import 'simplebar-vue/dist/simplebar.min.css';
   const people = ['Wade Cooper', 'Arlene Mccoy', 'Devon Webb', 'Tom Cook', 'Tanya Fox', 'Hellen Schmidt', 'Caroline Schultz', 'Mason Heaney', 'Claudie Smitham', 'Emil Schaefer']
   const selected = ref([])
   const isOpen = ref(false)
