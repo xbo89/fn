@@ -4,7 +4,7 @@
       <span>Float Note</span>
       <SidebarAvatar />
     </div>
-    <UCheckbox v-model="selected" name="notifications" label="Notifications" />
+
     <div class="menus px-2 mt-2">
       <NuxtLink to="/nooooits/inbox">
         <div class="item rounded-lg px-3 py-1 flex items-center space-x-1.5 cursor-pointer hover:bg-gray-100">
