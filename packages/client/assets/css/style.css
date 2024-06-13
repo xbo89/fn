@@ -18,9 +18,14 @@ body,
 #__float_note {
   width: 100%;
   height: 100%;
-  @apply bg-white dark:bg-zinc-900;
+  @apply bg-white dark:bg-gray-900;
 }
 
 .router-link-active .item {
-  @apply text-primary bg-primary-50 dark:text-gray-900 dark:bg-primary;
+  @apply text-primary bg-primary-50 dark:text-gray-900 dark:bg-primary hover:dark:bg-primary-500;
+}
+
+#__float_note .simplebar-scrollbar::before {
+  /* background-color: rgba(0, 0, 0, 0.2) !important */
+  @apply bg-black/20 dark:bg-white/10;
 }

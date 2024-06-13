@@ -1,5 +1,6 @@
 <template>
-  <div class="border rounded-xl px-6 p-2 font-medium cursor-pointer flex items-center space-x-2 hover:bg-gray-100"
+  <div
+    class="border border-gray-200 dark:border-gray-800 rounded-xl px-6 p-2 font-medium cursor-pointer flex items-center space-x-2 hover:bg-gray-100 hover:dark:bg-gray-900"
     @click="signInWithOAuth">
     <svg xmlns="http://www.w3.org/2000/svg" :width="size" :height="size" viewBox="0 0 256 262"
       v-if="platform === 'Google'">

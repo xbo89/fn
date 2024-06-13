@@ -1,7 +1,20 @@
 <template>
 
-  <UDropdown :items="items" :popper="{ placement: 'bottom-end' }">
-    <UAvatar size="xs" :src="avatar_url" alt="Avatar" />
+  <UDropdown :items="items" :popper="{ placement: 'bottom-end' }"
+    :ui="{ item: { disabled: 'cursor-text select-text' } }">
+    <UChip inset position="bottom-right">
+      <UAvatar size="xs" :src="avatar_url" alt="Avatar" />
+    </UChip>
+    <template #account="{ item }">
+      <div class="text-left">
+        <p>
+          Signed in as
+        </p>
+        <p class="truncate font-medium *:text-gray-900 dark:text-white">
+          {{ item.label }}
+        </p>
+      </div>
+    </template>
   </UDropdown>
 
 </template>
@@ -23,16 +36,18 @@
   })
   const items = [
     [{
-      label: name,
-      avatar: {
-        src: avatar_url
-      }
+      label: email,
+      slot: 'account',
+      disabled: true
     }], [{
       label: isDark.value ? 'Dark' : 'Light',
       icon: isDark.value ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid',
       click: () => {
         isDark.value = !isDark.value
       }
+    }], [{
+      label: 'Changelog',
+      icon: 'ri-book-read-line'
     }], [{
       label: 'LogOut',
       icon: 'ri-logout-box-r-line'
