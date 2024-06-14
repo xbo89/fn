@@ -8,8 +8,14 @@
       <span class="text-xl font-medium">New Card</span>
       <div class="flex space-x-1">
         <UButton icon="ri-more-2-line" size="sm" color="white" variant="solid" @click="isOpen = true" />
-        <UButton label="Save" @click="isOpen = true" color="white" variant="solid" />
-        <UButton label="Save & Close" @click="isOpen = true" />
+        <UTooltip text="Create new note card" :shortcuts="['⌘', 's']"
+          :popper="{ placement: 'top',strategy:'absolute' }">
+          <UButton label="Save" @click="isOpen = true" color="white" variant="solid" />
+        </UTooltip>
+        <UTooltip text="Create new note card" :shortcuts="['⌘', 'Enter']"
+          :popper="{ placement: 'top',strategy:'absolute' }">
+          <UButton label="Save & Close" @click="isOpen = true" />
+        </UTooltip>
       </div>
     </div>
     <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' ,base:'min-h-80'}">

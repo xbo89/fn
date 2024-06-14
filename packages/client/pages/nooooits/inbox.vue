@@ -20,8 +20,8 @@
     </div>
   </div>
 
-  <Simplebar class="inset-0 " style="position:absolute">
-    <div class="p-6 pt-14">
+  <Simplebar class="inset-0 top-12" style="position:absolute">
+    <div class="px-6 py-3">
       <div class="list grid md:grid-cols-2 lg:grid-cols-3 gap-1.5">
         <UCard v-for="(item,index) in 30" :key="index" :ui="{
         shadow: 'shadow-none',
