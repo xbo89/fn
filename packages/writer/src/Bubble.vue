@@ -4,28 +4,38 @@
       <BubbleToggleButton icon="i-ri-heading" hasChild />
       <template #floating>
         <MenuPopper>
-          <MenuItem icon="i-ri-paragraph">Paragraph</MenuItem>
-          <div class="h-px bg-gray-100 my-1 -mx-2" />
-          <MenuItem icon="i-ri-h-1">Heading 01</MenuItem>
-          <MenuItem icon="i-ri-h-2">Heading 02</MenuItem>
-          <MenuItem icon="i-ri-h-3">Heading 03</MenuItem>
+          <MenuItem icon="i-ri-paragraph" @mousedown="editor.chain().focus().setParagraph().run()">Paragraph
+          </MenuItem>
+          <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
+          <MenuItem icon="i-ri-h-1" @mousedown="editor.chain().focus().toggleHeading({ level: 1 }).run()">
+          Heading 01
+          </MenuItem>
+          <MenuItem icon="i-ri-h-2" @mousedown="editor.chain().focus().toggleHeading({ level: 2 }).run()">Heading 02
+          </MenuItem>
+          <MenuItem icon="i-ri-h-3" @mousedown="editor.chain().focus().toggleHeading({ level: 3 }).run()">Heading 03
+          </MenuItem>
           <MenuContainer placement="right-start" :offset="0">
             <MenuItem icon="i-ri-more-2-fill" hasChild>Other headings</MenuItem>
             <template #floating>
               <MenuPopper>
-                <MenuItem icon="i-ri-h-4">Heading 04</MenuItem>
-                <MenuItem icon="i-ri-h-5">Heading 05</MenuItem>
-                <MenuItem icon="i-ri-h-6">Heading 06</MenuItem>
+                <MenuItem icon="i-ri-h-4" @click="editor.chain().focus().toggleHeading({ level: 4 }).run()">Heading 04
+                </MenuItem>
+                <MenuItem icon="i-ri-h-5" @click="editor.chain().focus().toggleHeading({ level: 5 }).run()">Heading 05
+                </MenuItem>
+                <MenuItem icon="i-ri-h-6" @click="editor.chain().focus().toggleHeading({ level: 6 }).run()">Heading 06
+                </MenuItem>
               </MenuPopper>
             </template>
           </MenuContainer>
-          <div class="h-px bg-gray-100 my-1 -mx-2" />
+          <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
           <MenuItem icon="i-ri-list-ordered">Number List</MenuItem>
-          <MenuItem icon="i-ri-list-unordered">Bulleted List</MenuItem>
+          <MenuItem icon="i-ri-list-unordered" @click="editor.chain().focus().toggleBulletList().run()">Bulleted List
+          </MenuItem>
           <MenuItem icon="i-ri-code-block">Code Block</MenuItem>
-          <div class="h-px bg-gray-100 my-1 -mx-2" />
+          <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
           <MenuItem icon="i-ri-layout-bottom-2-line">Callout</MenuItem>
-          <MenuItem icon="i-ri-double-quotes-l">Quote</MenuItem>
+          <MenuItem icon="i-ri-double-quotes-l" @click="editor.chain().focus().toggleBlockquote().run()">Blockquote
+          </MenuItem>
         </MenuPopper>
       </template>
     </MenuContainer>
@@ -68,6 +78,11 @@
   import MenuDivider from './components/MenuDivider.vue'
   import MenuPopper from './components/MenuPopper.vue'
   import BubbleToggleButton from './components/BubbleToggleButton.vue'
+  defineProps({
+    editor: {
+      type: Object
+    }
+  })
 </script>
 <style>
 

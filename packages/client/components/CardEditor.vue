@@ -10,6 +10,7 @@
     }">
         <UCard :ui="{base:'min-h-80',shadow:'shadow-none',body:{padding:'sm:p-4'}}">
           <Writer />
+          <UButton color="white" label="Saved" @click="toast.add({ title: 'Saved' })" />
         </UCard>
       </UContainer>
     </Simplebar>
@@ -21,4 +22,5 @@
   import Simplebar from 'simplebar-vue';
   import { Writer } from '@floatnote/writer'
   import '@floatnote/writer/dist/style.css'
+  const toast = useToast()
 </script>

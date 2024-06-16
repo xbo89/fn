@@ -1,5 +1,6 @@
 <template>
-  <div class="h-8 rounded-md hover:bg-gray-200 flex justify-center items-center cursor-pointer  flex-shrink-0"
+  <div
+    class="h-8 rounded-md hover:bg-gray-200 hover:dark:bg-gray-900 flex justify-center items-center cursor-pointer  flex-shrink-0"
     :class="[hasChild?'w-10':'w-8']">
     <i :class="[icon, 'text-xl']"></i>
     <div v-if="hasChild" class="i-ri-arrow-down-s-line text-gray-500"></div>

@@ -1,3 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ProseMirror h1 {
+  @apply text-2xl
+}
+
+.ProseMirror h2 {
+  @apply text-xl
+}
+
+.ProseMirror h3 {
+  @apply text-lg
+}
+
+.ProseMirror h4 {
+  @apply text-base
+}
+
+.ProseMirror h5 {
+  @apply text-sm
+}
+
+.ProseMirror h6 {
+  @apply text-xs
+}
+
+.ProseMirror ul, ol {
+  @apply mx-0 my-2 px-4 py-0;
+}
+
+.ProseMirror li {
+  list-style: disc;
+}
+
+.ProseMirror li p {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+.ProseMirror li ul {
+  @apply my-0;
+}
+
+.ProseMirror blockquote {
+  @apply border-l-4 pl-2 py-0.5 text-gray-600
+}

@@ -1,5 +1,7 @@
 <template>
-  <Writer />
+  <div class="p-96">
+    <Writer />
+  </div>
 </template>
 <script setup>
   import Writer from './Writer.vue'

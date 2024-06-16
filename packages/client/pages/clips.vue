@@ -5,6 +5,7 @@
     <div class="md:w-[300px] lg:w-[500px] flex-shrink-0 h-full relative overflow-hidden">
       <NuxtPage />
     </div>
+    <UNotifications />
   </div>
 </template>
 <script setup>

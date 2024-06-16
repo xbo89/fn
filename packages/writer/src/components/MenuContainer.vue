@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-container relative bg-white">
+  <div class="menu-container relative">
     <div class="reference cursor-pointer" ref="reference" @mouseenter="mouseenterRef" @mouseleave="mouseleaveRef">
       <slot></slot>
     </div>
