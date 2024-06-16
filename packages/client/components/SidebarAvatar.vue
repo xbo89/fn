@@ -1,6 +1,6 @@
 <template>
   <UDropdown :items="items" :popper="{ placement: 'bottom-end' }"
-    :ui="{ item: { disabled: 'cursor-text select-text' } }">
+    :ui="{width:'w-[220px]', item: { disabled: 'cursor-text select-text' } }">
     <UChip inset position="bottom-right">
       <UAvatar size="xs" :src="avatar_url" alt="Avatar" />
     </UChip>

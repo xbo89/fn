@@ -3,13 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "index.js",
+  "main": "./dist/clip-writer.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@floating-ui/vue": "^1.0.6",
     "@tiptap/extension-bubble-menu": "^2.4.0",
     "@tiptap/extension-document": "^2.4.0",
     "@tiptap/extension-paragraph": "^2.4.0",
@@ -20,7 +21,12 @@
     "vue": "^3.4.21"
   },
   "devDependencies": {
+    "@iconify-json/ri": "^1.1.20",
+    "@egoist/tailwindcss-icons": "^1.8.1",
     "@vitejs/plugin-vue": "^5.0.4",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
     "vite": "^5.2.0"
   }
 }

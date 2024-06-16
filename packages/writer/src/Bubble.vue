@@ -1,35 +1,73 @@
 <template>
-  <MenubarRoot class="flex bg-white p-[3px] rounded-md shadow-[0_2px_10px] shadow-blackA7 ">
-    <MenubarMenu value="heading">
-      <MenubarTrigger
-        class="py-2 px-3 outline-none select-none font-semibold leading-none rounded text-grass11 text-[13px] flex items-center justify-between gap-[2px] data-[highlighted]:bg-green4 data-[state=open]:bg-green4">
-        File
-      </MenubarTrigger>
-      <MenubarPortal>
-        <MenubarContent
-          class="min-w-[220px] outline-none bg-white rounded-md p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] [animation-duration:_400ms] [animation-timing-function:_cubic-bezier(0.16,_1,_0.3,_1)] will-change-[transform,opacity] z-50"
-          align="start" :side-offset="5" :align-offset="-3">
-          <MenubarItem
-            class="group text-[13px] leading-none text-grass11 rounded flex items-center h-[25px] px-[10px] relative select-none outline-none data-[state=open]:bg-green4 data-[state=open]:text-grass11 data-[highlighted]:bg-gradient-to-br data-[highlighted]:from-green9 data-[highlighted]:to-green10 data-[highlighted]:text-green1 data-[highlighted]:data-[state=open]:text-green1 data-[disabled]:text-mauve8 data-[disabled]:pointer-events-none">
-            New Tab
-            <div class="ml-auto pl-5 text-mauve9 group-data-[highlighted]:text-white group-data-[disabled]:text-mauve8">
-              ⌘ T
-            </div>
-          </MenubarItem>
-        </MenubarContent>
-      </MenubarPortal>
-    </MenubarMenu>
-  </MenubarRoot>
+  <BubbleContainer>
+    <MenuContainer placement="bottom-start">
+      <BubbleToggleButton icon="i-ri-heading" hasChild />
+      <template #floating>
+        <MenuPopper>
+          <MenuItem icon="i-ri-paragraph">Paragraph</MenuItem>
+          <div class="h-px bg-gray-100 my-1 -mx-2" />
+          <MenuItem icon="i-ri-h-1">Heading 01</MenuItem>
+          <MenuItem icon="i-ri-h-2">Heading 02</MenuItem>
+          <MenuItem icon="i-ri-h-3">Heading 03</MenuItem>
+          <MenuContainer placement="right-start" :offset="0">
+            <MenuItem icon="i-ri-more-2-fill" hasChild>Other headings</MenuItem>
+            <template #floating>
+              <MenuPopper>
+                <MenuItem icon="i-ri-h-4">Heading 04</MenuItem>
+                <MenuItem icon="i-ri-h-5">Heading 05</MenuItem>
+                <MenuItem icon="i-ri-h-6">Heading 06</MenuItem>
+              </MenuPopper>
+            </template>
+          </MenuContainer>
+          <div class="h-px bg-gray-100 my-1 -mx-2" />
+          <MenuItem icon="i-ri-list-ordered">Number List</MenuItem>
+          <MenuItem icon="i-ri-list-unordered">Bulleted List</MenuItem>
+          <MenuItem icon="i-ri-code-block">Code Block</MenuItem>
+          <div class="h-px bg-gray-100 my-1 -mx-2" />
+          <MenuItem icon="i-ri-layout-bottom-2-line">Callout</MenuItem>
+          <MenuItem icon="i-ri-double-quotes-l">Quote</MenuItem>
+        </MenuPopper>
+      </template>
+    </MenuContainer>
+    <MenuDivider />
+    <MenuContainer placement="bottom-start">
+      <BubbleToggleButton icon="i-ri-align-left" hasChild />
+      <template #floating>
+        <MenuPopper>
+          <MenuItem icon="i-ri-align-left">Align Left</MenuItem>
+          <MenuItem icon="i-ri-align-center">Align Center</MenuItem>
+          <MenuItem icon="i-ri-align-right">Align Right</MenuItem>
+        </MenuPopper>
+      </template>
+    </MenuContainer>
+    <MenuDivider />
+    <BubbleToggleButton icon="i-ri-bold" />
+    <BubbleToggleButton icon="i-ri-strikethrough" />
+    <BubbleToggleButton icon="i-ri-italic" />
+    <BubbleToggleButton icon="i-ri-underline" />
+    <BubbleToggleButton icon="i-ri-link" />
+    <BubbleToggleButton icon="i-ri-code-view" />
+    <MenuDivider />
+    <MenuContainer>
+      <BubbleToggleButton icon="i-ri-font-color" hasChild />
+      <template #floating>
+        <MenuPopper>
+          <MenuItem icon="i-ri-align-left">Align Left</MenuItem>
+          <MenuItem icon="i-ri-align-center">Align Center</MenuItem>
+          <MenuItem icon="i-ri-align-right">Align Right</MenuItem>
+        </MenuPopper>
+      </template>
+    </MenuContainer>
+  </BubbleContainer>
 </template>
 <script setup>
   import { ref } from 'vue'
-  defineProps({
-    editor: {
-      type: Object
-    }
-  })
-  const listType = ['ordered', 'unordered']
-  const currentMenu = ref('')
+  import BubbleContainer from './components/BubbleContainer.vue'
+  import MenuContainer from './components/MenuContainer.vue'
+  import MenuItem from './components/MenuItem.vue'
+  import MenuDivider from './components/MenuDivider.vue'
+  import MenuPopper from './components/MenuPopper.vue'
+  import BubbleToggleButton from './components/BubbleToggleButton.vue'
 </script>
 <style>
 
