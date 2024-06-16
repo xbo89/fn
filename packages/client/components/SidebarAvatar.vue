@@ -7,11 +7,17 @@
     <template #account="{ item }">
       <div class="text-left">
         <p>
-          Signed in as
+          Signed in as{{isDark}}
         </p>
         <p class="truncate font-medium text-gray-900 dark:text-white">
           {{ item.label }}
         </p>
+      </div>
+    </template>
+    <template #theme="{ item }">
+      <div class="text-left inline-flex items-center space-x-1.5">
+        <i :class="[isDark ? 'i-ri-sun-fill' : 'i-ri-moon-fill','text-xl text-gray-400 dark:text-gray-500']"></i>
+        <span>{{isDark ? 'Light' : 'Dark'}}</span>
       </div>
     </template>
   </UDropdown>
@@ -36,14 +42,13 @@
     if (error) console.log(error)
     router.replace({ path: '/login' })
   }
-  const items = [
+  const items = ref([
     [{
       label: email,
       slot: 'account',
       disabled: true
     }], [{
-      label: isDark.value ? 'Dark' : 'Light',
-      icon: isDark.value ? 'i-ri-moon-fill' : 'i-ri-sun-fill',
+      slot: 'theme',
       click: () => {
         isDark.value = !isDark.value
       }
@@ -63,5 +68,5 @@
         signOut()
       }
     }]
-  ]
+  ])
 </script>

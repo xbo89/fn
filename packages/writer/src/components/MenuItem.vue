@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-1.5 px-1.5 rounded-md hover:bg-gray-100 cursor-pointer whitespace-nowrap text-sm text-gray-900 dark:text-gray-300 hover:dark:text-gray-200 flex items-center justify-between hover:dark:bg-gray-900 ">
+    class="py-1.5 px-1.5 rounded-md hover:bg-gray-100 hover:dark:bg-gray-900 cursor-pointer whitespace-nowrap text-sm flex items-center justify-between ">
     <div class="flex items-center space-x-2">
       <i :class="[icon, 'text-xl text-gray-500']" v-if="icon"></i>
       <span>

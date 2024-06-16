@@ -13,6 +13,9 @@ export default defineNuxtConfig({
       exclude: ['/'],
     }
   },
+  colorMode: {
+    preference: 'light'
+  },
   ui: {
     icons: ['ri'],
     safelistColors: ['clipBlue', 'clipGray']  // 这里添加 orange 颜色到 safelist
