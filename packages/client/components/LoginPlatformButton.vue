@@ -62,7 +62,7 @@
    * 支持的平台
    * Google｜Facebook｜Github｜Twitter｜Apple｜Figma
    **/
-  import { ref, defineProps } from 'vue'
+  import { ref } from 'vue'
   const props = defineProps({
     platform: String,
     size: {

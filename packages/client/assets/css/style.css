@@ -1,31 +1,42 @@
-/* html,
-body,
-#__float_note {
-  width: 100%;
-  height: 100%;
-  @apply antialiased font-sans;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.router-link-active .item {
-  @apply text-blue-700 bg-blue-50;
-}
-
-.icon-button {
-  @apply rounded-lg cursor-pointer flex items-center justify-center hover:bg-gray-100 text-sm bg-white w-8 h-8;
-} */
-html,
-body,
-#__float_note {
-  width: 100%;
-  height: 100%;
-  @apply bg-white dark:bg-gray-900;
-}
-
-.router-link-active .item {
-  @apply text-primary bg-primary-50 dark:text-gray-900 dark:bg-primary hover:dark:bg-primary-500;
+#__float_note .router-link-active .item {
+  @apply text-primary bg-primary-50 dark:text-white dark:bg-primary-400 hover:dark:bg-primary-500;
 }
 
 #__float_note .simplebar-scrollbar::before {
-  /* background-color: rgba(0, 0, 0, 0.2) !important */
   @apply bg-black/20 dark:bg-white/10;
+}
+
+.logo {
+  font-stretch: 125%;
+  font-weight: 700;
+  @apply font-mona dark:text-green-500;
+}
+
+@layer base {
+
+  html,
+  body,
+  #__float_note {
+    @apply w-full h-full bg-white dark:bg-gray-900 antialiased font-inter;
+  }
+
+  @font-face {
+    font-family: 'Mona';
+    src:
+      url('/font/Mona-Sans.woff2') format('woff2 supports variations'),
+      url('/font/Mona-Sans.woff2') format('woff2-variations');
+    font-weight: 200 900;
+    font-stretch: 75% 125%;
+  }
+
+  @font-face {
+    font-family: 'Inter';
+    src:
+      url('/font/InterVariable.ttf') format('woff2-variations');
+    font-feature-settings: 'liga' 1, 'calt' 1;
+  }
 }

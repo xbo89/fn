@@ -1,7 +1,7 @@
 <template>
   <div class="login w-full h-full flex justify-center items-center">
     <div
-      class="login-container border border-gray-200 dark:border-gray-800  rounded-2xl flex-col items-center inline-flex p-8 space-y-2 bg-gray-950">
+      class="login-container border border-gray-200 dark:border-gray-800  rounded-2xl flex-col items-center inline-flex p-8 space-y-2 dark:bg-gray-950">
       <NuxtLink class="flex items-center space-x-2 w-full hover:dark:bg-gray-900 rounded-xl" to="/">
         <i class="ri-arrow-left-line text-gray-400"></i>
         <span>Back</span>
@@ -19,7 +19,6 @@
         </div>
       </div>
     </div>
-    {{user}}
   </div>
 </template>
 <script setup>
@@ -28,7 +27,7 @@
 
   watchEffect(() => {
     if (user.value) {
-      router.push('/nooooits')
+      router.push('/clips/inbox')
     }
   })
 

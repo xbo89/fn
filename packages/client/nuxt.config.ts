@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   app: {
     rootId: '__float_note'
   },
-  css: ['~/assets/css/style.css'],
+  css: ['~/assets/css/style.css', 'simplebar-vue/dist/simplebar.min.css'],
   supabase: {
     redirectOptions: {
       login: '/login',
@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     }
   },
   ui: {
-    safelistColors: ['indigo']  // 这里添加 orange 颜色到 safelist
+    icons: ['ri'],
+    safelistColors: ['clipBlue', 'clipGray']  // 这里添加 orange 颜色到 safelist
   }
 })
