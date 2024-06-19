@@ -4,7 +4,7 @@
       <slot></slot>
     </div>
     <div class="floating" ref="floating" :style="floatingStyles" v-show="floatingDisplay" @mouseenter="mouseenterFloat"
-      @mouseleave="mouseleaveFloat">
+      @mouseleave="mouseleaveFloat" @mousedown="floatingDisplay=false">
       <slot name="floating"></slot>
     </div>
   </div>
