@@ -29,7 +29,8 @@
           </MenuContainer>
           <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
           <MenuItem icon="i-ri-list-ordered">Number List</MenuItem>
-          <MenuItem icon="i-ri-list-unordered" @click="editor.chain().focus().toggleBulletList().run()">Bulleted List
+          <MenuItem icon="i-ri-list-unordered" @mousedown="editor.chain().focus().toggleBulletList().run()">Bulleted
+          List
           </MenuItem>
           <MenuItem icon="i-ri-code-block">Code Block</MenuItem>
           <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
