@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full px-2 py-2 border-b dark:border-gray-800">
+  <div class="w-full px-2 py-2 border-b dark:border-gray-800 bg-gray-50">
     <div class="flex space-x-2 items-center">
       <FeedViewManage />
 
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <Simplebar class="inset-0 top-[50px]" style="position:absolute">
+  <Simplebar class="inset-0 top-[50px] bg-gray-50" style="position:absolute">
     <div class="px-2 py-3">
 
       <div class="list grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1.5">
