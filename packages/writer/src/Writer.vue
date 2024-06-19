@@ -10,7 +10,7 @@
 </template>
 <script setup>
 
-  import { useEditor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
+  import { useEditor, EditorContent } from '@tiptap/vue-3'
   // import GlobalDragHandle from 'tiptap-extension-global-drag-handle'
   // import AutoJoiner from 'tiptap-extension-auto-joiner'
   import Dropcursor from '@tiptap/extension-dropcursor'
@@ -22,6 +22,8 @@
   import Blockquote from '@tiptap/extension-blockquote'
   import Text from '@tiptap/extension-text'
   import Bubble from './Bubble.vue'
+
+  import { BubbleMenu } from './modules/BubbleMenu/bubbleMenuComponent.js'
 
   const editor = useEditor({
     content: '<p>I’m running Tiptap with Vue.js. 🎉</p>',

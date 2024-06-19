@@ -94,9 +94,15 @@ importers:
 
   packages/writer:
     dependencies:
+      '@floating-ui/dom':
+        specifier: ^1.6.5
+        version: 1.6.5
       '@floating-ui/vue':
         specifier: ^1.0.6
         version: 1.0.6(vue@3.4.27(typescript@5.4.5))
+      '@tiptap/core':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/pm@2.4.0)
       '@tiptap/extension-blockquote':
         specifier: ^2.4.0
         version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))

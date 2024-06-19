@@ -1,5 +1,5 @@
 <template>
-  <div class="p-96">
+  <div class="p-6">
     <Writer />
   </div>
 </template>
