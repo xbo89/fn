@@ -45,7 +45,7 @@ ol {
 }
 
 .ProseMirror blockquote {
-  @apply border-l-4 pl-2 py-0.5 text-gray-600
+  @apply border-l-4 border-gray-950/10 pl-2 py-0.5 text-gray-600
 }
 
 .ProseMirror code {

@@ -3,10 +3,10 @@
   <bubble-menu :editor="editor" v-if="editor">
     <Bubble :editor="editor" />
   </bubble-menu>
-  <div
+  <!-- <div
     class="clip-drag-handle fixed opacity-100 border rounded-md z-50 w-6 inline-flex items-center py-0.5 cursor-grab">
     <i class="i-ri-draggable text-lg"></i>
-  </div>
+  </div> -->
 </template>
 <script setup>
 
@@ -27,6 +27,7 @@
   import Underline from '@tiptap/extension-underline'
   import Code from '@tiptap/extension-code'
   import Bubble from './Bubble.vue'
+  import Callout from './modules/Callout/callout.js'
 
   import { BubbleMenu } from './modules/BubbleMenu/bubbleMenuComponent.js'
 
@@ -44,14 +45,15 @@
       Strike,
       Italic,
       Underline,
+      Callout,
       Code.extend({
         excludes: ''
       }),
-      GlobalDragHandle.configure({
-        dragHandleWidth: 30,
-        dragHandleSelector: ".clip-drag-handle"
-      }),
-      AutoJoiner,
+      // GlobalDragHandle.configure({
+      //   dragHandleWidth: 30,
+      //   dragHandleSelector: ".clip-drag-handle"
+      // }),
+      // AutoJoiner,
       Dropcursor.configure({
         color: '#3A5BC7',
       })

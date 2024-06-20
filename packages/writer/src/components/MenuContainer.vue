@@ -1,9 +1,9 @@
 <template>
   <div class="menu-container relative">
-    <div class="reference cursor-pointer" ref="reference" @mouseenter="mouseenterRef" @mouseleave="mouseleaveRef">
+    <div class="reference" ref="reference" @mouseenter="mouseenterRef" @mouseleave="mouseleaveRef">
       <slot></slot>
     </div>
-    <div class="floating" ref="floating" :style="floatingStyles" v-show="floatingDisplay" @mouseenter="mouseenterFloat"
+    <div class="floating" ref="floating" :style="floatingStyles" v-if="floatingDisplay" @mouseenter="mouseenterFloat"
       @mouseleave="mouseleaveFloat" @mousedown="floatingDisplay=false">
       <slot name="floating"></slot>
     </div>

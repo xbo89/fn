@@ -43,7 +43,9 @@
           </MenuItem>
           <MenuItem icon="i-ri-code-block">Code Block</MenuItem>
           <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
-          <MenuItem icon="i-ri-layout-bottom-2-line">Callout</MenuItem>
+          <MenuItem icon="i-ri-layout-bottom-2-line" @mousedown="editor.chain().toggleCallout().run()"
+            :active="editor.isActive('callout')">Callout
+          </MenuItem>
           <MenuItem icon="i-ri-double-quotes-l" @mousedown="editor.chain().focus().toggleBlockquote().run()"
             :active="editor.isActive('blockquote')">Blockquote
           </MenuItem>
