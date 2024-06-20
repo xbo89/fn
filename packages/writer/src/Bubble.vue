@@ -4,25 +4,34 @@
       <BubbleToggleButton icon="i-ri-heading" hasChild />
       <template #floating>
         <MenuPopper>
-          <MenuItem icon="i-ri-paragraph" @mousedown="editor.chain().focus().setParagraph().run()">Paragraph
+          <MenuItem icon="i-ri-paragraph" @mousedown="editor.chain().focus().setParagraph().run()"
+            :active="editor.isActive('paragraph')">Paragraph
           </MenuItem>
           <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
-          <MenuItem icon="i-ri-h-1" @mousedown="editor.chain().focus().toggleHeading({ level: 1 }).run()">
+          <MenuItem icon="i-ri-h-1" @mousedown="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+            :active="editor.isActive('heading', { level: 1 })">
           Heading 01
           </MenuItem>
-          <MenuItem icon="i-ri-h-2" @mousedown="editor.chain().focus().toggleHeading({ level: 2 }).run()">Heading 02
+          <MenuItem icon="i-ri-h-2" @mousedown="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+            :active="editor.isActive('heading', { level: 2 })">Heading 02
           </MenuItem>
-          <MenuItem icon="i-ri-h-3" @mousedown="editor.chain().focus().toggleHeading({ level: 3 }).run()">Heading 03
+          <MenuItem icon="i-ri-h-3" @mousedown="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+            :active="editor.isActive('heading', { level: 3 })">Heading 03
           </MenuItem>
           <MenuContainer placement="right-start" :offset="0">
-            <MenuItem icon="i-ri-more-2-fill" hasChild>Other headings</MenuItem>
+            <MenuItem icon="i-ri-more-2-fill" hasChild
+              :active="editor.isActive('heading', { level: 4 })||editor.isActive('heading', { level: 5 })||editor.isActive('heading', { level: 6 })">
+            Other headings</MenuItem>
             <template #floating>
               <MenuPopper>
-                <MenuItem icon="i-ri-h-4" @click="editor.chain().focus().toggleHeading({ level: 4 }).run()">Heading 04
+                <MenuItem icon="i-ri-h-4" @mousedown="editor.chain().focus().toggleHeading({ level: 4 }).run()"
+                  :active="editor.isActive('heading', { level: 4 })">Heading 04
                 </MenuItem>
-                <MenuItem icon="i-ri-h-5" @click="editor.chain().focus().toggleHeading({ level: 5 }).run()">Heading 05
+                <MenuItem icon="i-ri-h-5" @mousedown="editor.chain().focus().toggleHeading({ level: 5 }).run()"
+                  :active="editor.isActive('heading', { level: 5 })">Heading 05
                 </MenuItem>
-                <MenuItem icon="i-ri-h-6" @click="editor.chain().focus().toggleHeading({ level: 6 }).run()">Heading 06
+                <MenuItem icon="i-ri-h-6" @mousedown="editor.chain().focus().toggleHeading({ level: 6 }).run()"
+                  :active="editor.isActive('heading', { level: 6 })">Heading 06
                 </MenuItem>
               </MenuPopper>
             </template>
@@ -35,7 +44,8 @@
           <MenuItem icon="i-ri-code-block">Code Block</MenuItem>
           <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
           <MenuItem icon="i-ri-layout-bottom-2-line">Callout</MenuItem>
-          <MenuItem icon="i-ri-double-quotes-l" @click="editor.chain().focus().toggleBlockquote().run()">Blockquote
+          <MenuItem icon="i-ri-double-quotes-l" @mousedown="editor.chain().focus().toggleBlockquote().run()"
+            :active="editor.isActive('blockquote')">Blockquote
           </MenuItem>
         </MenuPopper>
       </template>
@@ -52,12 +62,19 @@
       </template>
     </MenuContainer>
     <MenuDivider />
-    <BubbleToggleButton icon="i-ri-bold" />
-    <BubbleToggleButton icon="i-ri-strikethrough" />
-    <BubbleToggleButton icon="i-ri-italic" />
-    <BubbleToggleButton icon="i-ri-underline" />
-    <BubbleToggleButton icon="i-ri-link" />
-    <BubbleToggleButton icon="i-ri-code-view" />
+    <div class="flex space-x-0.5">
+      <BubbleToggleButton icon="i-ri-bold" @mousedown="editor.chain().focus().toggleBold().run()"
+        :active="editor.isActive('bold')" />
+      <BubbleToggleButton icon="i-ri-strikethrough" @mousedown="editor.chain().focus().toggleStrike().run()"
+        :active="editor.isActive('strike')" />
+      <BubbleToggleButton icon="i-ri-italic" @mousedown="editor.chain().focus().toggleItalic().run()"
+        :active="editor.isActive('italic')" />
+      <BubbleToggleButton icon="i-ri-underline" @mousedown="editor.chain().focus().toggleUnderline().run()"
+        :active="editor.isActive('underline')" />
+      <BubbleToggleButton icon="i-ri-link" />
+      <BubbleToggleButton icon="i-ri-code-view" @mousedown="editor.chain().focus().toggleCode().run()"
+        :active="editor.isActive('code')" />
+    </div>
     <MenuDivider />
     <MenuContainer>
       <BubbleToggleButton icon="i-ri-font-color" hasChild />
