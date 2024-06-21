@@ -52,3 +52,7 @@ ol {
   @apply bg-gray-100 px-1 py-px rounded border mx-1 text-sm;
   font-family: 'Inter';
 }
+
+.ProseMirror .callout div[data-node-view-content] {
+  @apply w-full;
+}

@@ -1,5 +1,5 @@
 <template>
-  <NodeViewWrapper>
+  <NodeViewWrapper class="callout">
     <MenuContainer placement="top">
       <div class="border p-3 rounded-lg flex my-2 items-start space-x-2" :style="{
         borderColor: props.node.attrs.border,

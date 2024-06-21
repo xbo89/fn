@@ -57,9 +57,15 @@
       <BubbleToggleButton icon="i-ri-align-left" hasChild />
       <template #floating>
         <MenuPopper>
-          <MenuItem icon="i-ri-align-left">Align Left</MenuItem>
-          <MenuItem icon="i-ri-align-center">Align Center</MenuItem>
-          <MenuItem icon="i-ri-align-right">Align Right</MenuItem>
+          <MenuItem icon="i-ri-align-left" @mousedown="editor.chain().focus().setTextAlign('left').run()"
+            :active="editor.isActive({ textAlign: 'left' })">Align Left
+          </MenuItem>
+          <MenuItem icon="i-ri-align-center" @mousedown="editor.chain().focus().setTextAlign('center').run()"
+            :active="editor.isActive({ textAlign: 'center' })">Align
+          Center</MenuItem>
+          <MenuItem icon="i-ri-align-right" @mousedown="editor.chain().focus().setTextAlign('right').run()"
+            :active="editor.isActive({ textAlign: 'right' })">Align Right
+          </MenuItem>
         </MenuPopper>
       </template>
     </MenuContainer>

@@ -27,6 +27,7 @@
   import Underline from '@tiptap/extension-underline'
   import Code from '@tiptap/extension-code'
   import Bubble from './Bubble.vue'
+  import TextAlign from '@tiptap/extension-text-align'
   import Callout from './modules/Callout/callout.js'
 
   import { BubbleMenu } from './modules/BubbleMenu/bubbleMenuComponent.js'
@@ -48,6 +49,9 @@
       Callout,
       Code.extend({
         excludes: ''
+      }),
+      TextAlign.configure({
+        types: ['heading', 'paragraph', 'callout'],
       }),
       // GlobalDragHandle.configure({
       //   dragHandleWidth: 30,
