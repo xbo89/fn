@@ -18,7 +18,7 @@
           <MenuItem icon="i-ri-h-3" @mousedown="editor.chain().focus().toggleHeading({ level: 3 }).run()"
             :active="editor.isActive('heading', { level: 3 })">Heading 03
           </MenuItem>
-          <MenuContainer placement="right-start" :offset="0">
+          <MenuContainer placement="right-start" :offset="0" :teleport="false">
             <MenuItem icon="i-ri-more-2-fill" hasChild
               :active="editor.isActive('heading', { level: 4 })||editor.isActive('heading', { level: 5 })||editor.isActive('heading', { level: 6 })">
             Other headings</MenuItem>

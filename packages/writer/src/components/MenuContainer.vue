@@ -3,10 +3,12 @@
     <div class="reference" ref="reference" @mouseenter="mouseenterRef" @mouseleave="mouseleaveRef">
       <slot></slot>
     </div>
-    <div class="floating" ref="floating" :style="floatingStyles" v-if="floatingDisplay" @mouseenter="mouseenterFloat"
-      @mouseleave="mouseleaveFloat" @mousedown="floatingDisplay=false">
-      <slot name="floating"></slot>
-    </div>
+    <Teleport to="body" :disabled="!teleport">
+      <div class="floating" ref="floating" :style="floatingStyles" v-if="floatingDisplay" @mouseenter="mouseenterFloat"
+        @mouseleave="mouseleaveFloat" @mousedown="floatingDisplay=false">
+        <slot name="floating"></slot>
+      </div>
+    </Teleport>
   </div>
 </template>
 <script setup>
@@ -22,6 +24,11 @@
 
 
   const props = defineProps({
+    teleport: {
+      type: Boolean,
+      default: true,
+      required: false
+    },
     placement: {
       type: String,
       default: 'bottom',
