@@ -17,13 +17,6 @@ export default Node.create({
       },
     }
   },
-  addOptions() {
-    return {
-      element: null,
-      pluginKey: 'bubbleMenu',
-      updateDelay: undefined
-    }
-  },
   addAttributes() {
     // Return an object with attribute configuration
     const color = randomColor()

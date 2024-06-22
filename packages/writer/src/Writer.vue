@@ -30,6 +30,7 @@
   import TextAlign from '@tiptap/extension-text-align'
   import History from '@tiptap/extension-history'
   import Callout from './modules/Callout/callout.js'
+  import CodeBlock from './modules/CodeBlock/codeblock.js'
   import { Color } from '@tiptap/extension-color'
   import TextStyle from '@tiptap/extension-text-style'
   import Highlight from '@tiptap/extension-highlight'
@@ -57,6 +58,7 @@
       Code.extend({
         excludes: ''
       }),
+      CodeBlock,
       TextAlign.configure({
         types: ['heading', 'paragraph', 'callout'],
       }),
