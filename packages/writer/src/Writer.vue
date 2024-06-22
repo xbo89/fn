@@ -28,6 +28,7 @@
   import Code from '@tiptap/extension-code'
   import Bubble from './Bubble.vue'
   import TextAlign from '@tiptap/extension-text-align'
+  import History from '@tiptap/extension-history'
   import Callout from './modules/Callout/callout.js'
 
   import { BubbleMenu } from './modules/BubbleMenu/bubbleMenuComponent.js'
@@ -47,6 +48,7 @@
       Italic,
       Underline,
       Callout,
+      History,
       Code.extend({
         excludes: ''
       }),
@@ -65,10 +67,3 @@
     autofocus: true,
   })
 </script>
-
-<style>
-  .ProseMirror {
-    outline: none;
-    /* padding: 0 2px 2px 30px; */
-  }
-</style>

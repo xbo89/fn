@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.ProseMirror {
+  outline: none;
+}
+
 .ProseMirror h1 {
   @apply text-2xl font-medium mt-2 mb-1;
 }
