@@ -20,7 +20,17 @@
       </div>
       <template #floating>
         <BubbleContainer>
-          <BubbleToggleButton icon="i-ri-palette-line" hasChild />
+          <MenuContainer :teleport="false">
+            <BubbleToggleButton icon="i-ri-palette-line" hasChild />
+            <template #floating>
+              <MenuPopper>
+                <ColorPicker @changeColor="changeColor" @changeBorder="changeBorder"
+                  @changeBackground="changeBackground" @clearColor="clearColor" @clearBorder="clearBorder"
+                  @clearBackground="clearBackground" />
+              </MenuPopper>
+            </template>
+          </MenuContainer>
+          <BubbleToggleButton icon="i-ri-dice-line" @mousedown="randomColor" />
         </BubbleContainer>
       </template>
     </MenuContainer>
@@ -35,10 +45,56 @@
   import BubbleContainer from '../../components/BubbleContainer.vue'
   import BubbleToggleButton from '../../components/BubbleToggleButton.vue'
   import EmojiPanel from '../../components/EmojiPanel.vue'
+  import MenuPopper from '../../components/MenuPopper.vue'
+  import ColorPicker from './ColorPicker.vue'
+  import { random } from '../../utils'
+  import ColorfulBlock from '../../components/ColorfulBlock'
+
   const props = defineProps({ ...nodeViewProps })
   const changeEmoji = (emoji) => {
     props.updateAttributes({
       emoji: punycode.encode(emoji),
+    })
+  }
+
+  const randomColor = () => {
+    const border = ColorfulBlock[random(0, ColorfulBlock.length - 1)].variants.light.border
+    const background = ColorfulBlock[random(0, ColorfulBlock.length - 1)].variants.light.background
+
+    props.updateAttributes({
+      border,
+      background,
+    })
+  }
+
+  const changeColor = (color) => {
+    props.updateAttributes({
+      textColor: color,
+    })
+  }
+  const clearColor = (color) => {
+    props.updateAttributes({
+      textColor: color,
+    })
+  }
+  const changeBorder = (color) => {
+    props.updateAttributes({
+      border: color,
+    })
+  }
+  const clearBorder = (color) => {
+    props.updateAttributes({
+      border: color,
+    })
+  }
+  const changeBackground = (color) => {
+    props.updateAttributes({
+      background: color,
+    })
+  }
+  const clearBackground = (color) => {
+    props.updateAttributes({
+      background: color,
     })
   }
   // const test = () => {

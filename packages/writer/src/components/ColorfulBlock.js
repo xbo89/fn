@@ -1,5 +1,20 @@
 export default [
   {
+    name: 'gray',
+    variants: {
+      light: {
+        color: '#8D8D8D',
+        border: '#D9D9D9',
+        background: '#F0F0F0'
+      },
+      dark: {
+        color: '#6E6E6E',
+        border: '#3A3A3A',
+        background: '#222222'
+      }
+    }
+  },
+  {
     name: 'voilet',
     variants: {
       light: {
@@ -15,6 +30,21 @@ export default [
     }
   },
   {
+    name: 'indigo',
+    variants: {
+      light: {
+        color: '#3E63DD',
+        border: '#C1D0FF',
+        background: '#EDF2FE'
+      },
+      dark: {
+        color: '#3E63DD',
+        border: '#304384',
+        background: '#182449'
+      }
+    }
+  },
+  {
     name: 'green',
     variants: {
       light: {
@@ -26,6 +56,21 @@ export default [
         color: '#30A46C',
         border: '#20573E',
         background: '#132D21'
+      }
+    }
+  },
+  {
+    name: 'yellow',
+    variants: {
+      light: {
+        color: '#D5AE39',
+        border: '#F3D768',
+        background: '#FFFAB8'
+      },
+      dark: {
+        color: '#FFE629',
+        border: '#524202',
+        background: '#2D2305'
       }
     }
   },
@@ -56,51 +101,6 @@ export default [
         color: '#E54D2E',
         border: '#6E2920',
         background: '#391714'
-      }
-    }
-  },
-  {
-    name: 'indigo',
-    variants: {
-      light: {
-        color: '#3E63DD',
-        border: '#C1D0FF',
-        background: '#EDF2FE'
-      },
-      dark: {
-        color: '#3E63DD',
-        border: '#304384',
-        background: '#182449'
-      }
-    }
-  },
-  {
-    name: 'yellow',
-    variants: {
-      light: {
-        color: '#D5AE39',
-        border: '#F3D768',
-        background: '#FFFAB8'
-      },
-      dark: {
-        color: '#FFE629',
-        border: '#524202',
-        background: '#2D2305'
-      }
-    }
-  },
-  {
-    name: 'gray',
-    variants: {
-      light: {
-        color: '#8D8D8D',
-        border: '#D9D9D9',
-        background: '#F0F0F0'
-      },
-      dark: {
-        color: '#6E6E6E',
-        border: '#3A3A3A',
-        background: '#222222'
       }
     }
   }

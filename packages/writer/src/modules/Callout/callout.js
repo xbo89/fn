@@ -1,7 +1,11 @@
 import { Node, mergeAttributes } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import Component from './Component.vue'
-
+import { random } from '../../utils'
+import ColorfulBlock from '../../components/ColorfulBlock'
+function randomColor() {
+  return ColorfulBlock[random(0, ColorfulBlock.length - 1)].variants.light
+}
 export default Node.create({
   name: 'callout',
   content: '(paragraph|heading|blockquote)+',
@@ -22,12 +26,13 @@ export default Node.create({
   },
   addAttributes() {
     // Return an object with attribute configuration
+    const color = randomColor()
     return {
       textColor: { default: '' },
-      border: { default: '#2EA121' },
+      border: { default: color.border },
       borderSize: { default: 1 },
       borderStyle: { default: 'solid' },
-      background: { default: '#C5F1C1' },
+      background: { default: color.background },
       emoji: { default: '0p8h' }
     }
   },

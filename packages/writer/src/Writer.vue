@@ -30,7 +30,9 @@
   import TextAlign from '@tiptap/extension-text-align'
   import History from '@tiptap/extension-history'
   import Callout from './modules/Callout/callout.js'
-
+  import { Color } from '@tiptap/extension-color'
+  import TextStyle from '@tiptap/extension-text-style'
+  import Highlight from '@tiptap/extension-highlight'
   import { BubbleMenu } from './modules/BubbleMenu/bubbleMenuComponent.js'
 
   const editor = useEditor({
@@ -49,6 +51,9 @@
       Underline,
       Callout,
       History,
+      TextStyle,
+      Color,
+      Highlight.configure({ multicolor: true }),
       Code.extend({
         excludes: ''
       }),

@@ -88,9 +88,7 @@
       <BubbleToggleButton icon="i-ri-font-color" hasChild />
       <template #floating>
         <MenuPopper>
-          <MenuItem icon="i-ri-align-left">Align Left</MenuItem>
-          <MenuItem icon="i-ri-align-center">Align Center</MenuItem>
-          <MenuItem icon="i-ri-align-right">Align Right</MenuItem>
+          <BubbleColorPicker :editor="editor" />
         </MenuPopper>
       </template>
     </MenuContainer>
@@ -104,11 +102,13 @@
   import MenuDivider from './components/MenuDivider.vue'
   import MenuPopper from './components/MenuPopper.vue'
   import BubbleToggleButton from './components/BubbleToggleButton.vue'
-  defineProps({
+  import BubbleColorPicker from './components/BubbleColorPicker.vue'
+  const props = defineProps({
     editor: {
       type: Object
     }
   })
+
 </script>
 <style>
 
