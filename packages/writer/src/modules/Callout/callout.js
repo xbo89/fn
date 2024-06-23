@@ -3,6 +3,7 @@ import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import Component from './Component.vue'
 import { random } from '../../utils'
 import ColorfulBlock from '../../components/ColorfulBlock'
+import punycode from 'punycode/'
 function randomColor() {
   return ColorfulBlock[random(0, ColorfulBlock.length - 1)].variants.light
 }
@@ -28,6 +29,27 @@ export default Node.create({
       background: { default: color.background },
       emoji: { default: '0p8h' }
     }
+  },
+  renderHTML({ node, HTMLAttributes }) {
+    return [
+      'div',
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+        class: 'callout border p-3 rounded-lg flex my-2 items-start space-x-2',
+        style: `border-color:${HTMLAttributes.border};background:${HTMLAttributes.background};color:${HTMLAttributes.textColor}`
+      }),
+      [
+        'div',
+        {
+          class: 'callout-emoji w-7 h-7 rounded'
+        },
+        punycode.decode(HTMLAttributes.emoji)
+      ],
+      [
+        'div',
+        {},
+        0,
+      ],
+    ]
   },
   addNodeView() {
     return VueNodeViewRenderer(Component)

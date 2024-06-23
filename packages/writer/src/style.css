@@ -35,8 +35,12 @@ ol {
   @apply mx-0 my-2 px-4 py-0;
 }
 
-.ProseMirror li {
+.ProseMirror ul li {
   list-style: disc;
+}
+
+.ProseMirror ol li {
+  list-style: decimal;
 }
 
 .ProseMirror li p {
@@ -46,6 +50,10 @@ ol {
 
 .ProseMirror li ul {
   @apply my-0;
+}
+
+.ProseMirror p {
+  @apply min-h-6;
 }
 
 .ProseMirror blockquote {

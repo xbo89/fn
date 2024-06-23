@@ -1,4 +1,4 @@
-import { Node } from '@tiptap/core'
+import { Node, mergeAttributes } from '@tiptap/core'
 import { CodeblockPlugin } from './codeblockPlugin'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import Component from './Component.vue'
@@ -32,6 +32,33 @@ export default Node.create({
       },
     }
   },
+  parseHTML() {
+    return [
+      {
+        tag: 'pre',
+        preserveWhitespace: 'full',
+      },
+    ]
+  },
+
+  renderHTML({ node, HTMLAttributes }) {
+    return [
+      'div',
+      { class: 'codeblock bg-gray-50 dark:bg-gray-900 rounded-lg overflow-auto border dark:border-gray-800 my-2 relative before:block before:absolute before:right-5 before:top-2 before:text-xl before:text-gray-400 hover:before:text-gray-50' },
+      [
+        'pre',
+        mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+        [
+          'code',
+          {
+            class: 'language-' + node.attrs.language
+          },
+          0,
+        ],
+      ]
+    ]
+  },
+
   addProseMirrorPlugins() {
     return [
       CodeblockPlugin()
@@ -39,5 +66,10 @@ export default Node.create({
   },
   addNodeView() {
     return VueNodeViewRenderer(Component)
-  }
+  },
+  addKeyboardShortcuts() {
+    return {
+      'Mod-Alt-c': () => this.editor.commands.toggleCodeBlock()
+    }
+  },
 })

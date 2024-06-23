@@ -3,6 +3,7 @@
   src: url('./FiraCode-VF.woff2') format('woff2-variations');
   font-weight: 300 700;
   font-style: normal;
+
 }
 
 @supports (font-variation-settings: normal) {
@@ -11,20 +12,36 @@
   }
 }
 
-pre code.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 1em
+.ProseMirror .codeblock::before {
+  content: attr(data-language);
+  font-family: 'Fira Code', monospace;
 }
 
-code.hljs {
-  padding: 3px 5px
+.ProseMirror .codeblock .line-number {
+  @apply w-16 -ml-16 inline-block pr-5 text-right select-none static text-gray-500;
 }
 
-code img {
-  display: inline-block;
+.ProseMirror .codeblock .pre-wrap {
+  white-space: pre-wrap;
 }
 
+.ProseMirror .codeblock pre {
+  overflow: auto;
+  padding: 8px 0;
+  padding-left: 58px;
+}
+
+.ProseMirror .codeblock pre code {
+  font-family: 'Fira Code VF', monospace;
+  @apply border-0 rounded-none text-sm p-0 bg-transparent;
+  -webkit-font-feature-settings: 'liga' on, 'calt' on;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/*
+* highlight theme
+*/
 .hljs {
   color: #8B8D98;
   background: #fafafa

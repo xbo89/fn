@@ -36,12 +36,17 @@
     },
     offset: {
       type: Number,
-      default: 2,
+      default: 6,
       required: false
     },
     shift: {
-      type: Number,
-      default: 2,
+      type: Object,
+      default: () => {
+        return {
+          crossAxis: false,
+          padding: 0
+        }
+      },
       required: false
     },
     delay: {
@@ -55,7 +60,11 @@
   const floating = ref(null);
   const { floatingStyles } = useFloating(reference, floating, {
     placement: props.placement,
-    middleware: [offset(props.offset), flip(), shift()],
+    middleware: [
+      offset(props.offset),
+      !props.shift.crossAxis && flip(),
+      shift({ ...props.shift })
+    ],
     whileElementsMounted: autoUpdate,
   });
   const floatingDisplay = ref(false)

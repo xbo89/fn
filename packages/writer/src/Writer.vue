@@ -18,7 +18,9 @@
   import Paragraph from '@tiptap/extension-paragraph'
   import Heading from '@tiptap/extension-heading'
   import BulletList from '@tiptap/extension-bullet-list'
+  import OrderedList from '@tiptap/extension-ordered-list'
   import ListItem from '@tiptap/extension-list-item'
+  import ListKeymap from '@tiptap/extension-list-keymap'
   import Blockquote from '@tiptap/extension-blockquote'
   import Bold from '@tiptap/extension-bold'
   import Strike from '@tiptap/extension-strike'
@@ -36,15 +38,25 @@
   import Highlight from '@tiptap/extension-highlight'
   import { BubbleMenu } from './modules/BubbleMenu/bubbleMenuComponent.js'
 
+  // import 'simplebar-vue/dist/simplebar.min.css';
+  const emit = defineEmits(['onUpdate'])
   const editor = useEditor({
     content: '<p>I’m running Tiptap with Vue.js. 🎉</p>',
+    onUpdate: ({ editor }) => {
+      emit('onUpdate', {
+        json: editor.getJSON(),
+        html: editor.getHTML()
+      })
+    },
     extensions: [
       Document,
       Paragraph,
       Text,
       Heading,
       BulletList,
+      OrderedList,
       ListItem,
+      ListKeymap,
       Blockquote,
       Bold,
       Strike,

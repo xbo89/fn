@@ -37,17 +37,21 @@
             </template>
           </MenuContainer>
           <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
-          <MenuItem icon="i-ri-list-ordered">Number List</MenuItem>
-          <MenuItem icon="i-ri-list-unordered" @mousedown="editor.chain().focus().toggleBulletList().run()">Bulleted
+          <MenuItem icon="i-ri-list-ordered" @mousedown="editor.chain().focus().toggleOrderedList().run()"
+            :active="editor.isActive('orderedList')">Number List
+          </MenuItem>
+          <MenuItem icon="i-ri-list-unordered" @mousedown="editor.chain().focus().toggleBulletList().run()"
+            :active="editor.isActive('bulletList')">Bulleted
           List
           </MenuItem>
-          <MenuItem icon="i-ri-code-block" @mousedown="editor.chain().toggleCodeBlock().run()">Code Block</MenuItem>
+          <MenuItem icon="i-ri-code-block" @mousedown="editor.chain().toggleCodeBlock().run()"
+            :active="editor.isActive('codeBlock')">Code Block</MenuItem>
           <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
           <MenuItem icon="i-ri-layout-bottom-2-line" @mousedown="editor.chain().toggleCallout().run()"
             :active="editor.isActive('callout')">Callout
           </MenuItem>
           <MenuItem icon="i-ri-double-quotes-l" @mousedown="editor.chain().focus().toggleBlockquote().run()"
-            :active="editor.isActive('blockquote')">Blockquote
+            :active="editor.isActive('blockquote')" v-show="editor.can().setBlockquote()">Blockquote
           </MenuItem>
         </MenuPopper>
       </template>
