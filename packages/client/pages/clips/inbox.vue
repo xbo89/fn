@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <Simplebar class="inset-0 top-[50px] bg-gray-50" style="position:absolute">
+  <Simplebar class="inset-x-0 top-[50px] bottom-0 bg-gray-50" style="position:absolute">
     <div class="px-2 py-3">
 
       <div class="list grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1.5">

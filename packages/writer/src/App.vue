@@ -30,7 +30,6 @@
       console.log(p1)
       const decodedCode = decodeHtmlEntities(p1.trim());
       const code = (hljs.highlightAuto(decodedCode).value)
-      console.log(code)
       return `<pre><code>${code}</code></pre>`; // 可以根据需求进行不同的替换处理
     });
 
