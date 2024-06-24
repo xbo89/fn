@@ -37,7 +37,7 @@
   import TextStyle from '@tiptap/extension-text-style'
   import Highlight from '@tiptap/extension-highlight'
   import { BubbleMenu } from './modules/BubbleMenu/bubbleMenuComponent.js'
-
+  import SelectNodeKeymap from './modules/SelectNodeKeymap/index.js'
   // import 'simplebar-vue/dist/simplebar.min.css';
   const emit = defineEmits(['onUpdate'])
   const editor = useEditor({
@@ -74,6 +74,7 @@
       TextAlign.configure({
         types: ['heading', 'paragraph', 'callout'],
       }),
+      SelectNodeKeymap,
       // GlobalDragHandle.configure({
       //   dragHandleWidth: 30,
       //   dragHandleSelector: ".clip-drag-handle"
