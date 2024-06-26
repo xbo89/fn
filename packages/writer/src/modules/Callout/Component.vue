@@ -1,7 +1,7 @@
 <template>
   <NodeViewWrapper class="callout">
     <MenuContainer placement="top">
-      <div class="border p-3 rounded-lg flex my-2 items-start space-x-2" :style="{
+      <div class="callout-container border p-3 rounded-lg flex my-2 items-start space-x-2" :style="{
         borderColor: props.node.attrs.border,
         backgroundColor:props.node.attrs.background,
         color: props.node.attrs.textColor
@@ -109,3 +109,8 @@
   //   })
   // }
 </script>
+<style>
+  .ProseMirror-selectednode .callout-container {
+    @apply border-primary-500 bg-primary-100;
+  }
+</style>

@@ -12,13 +12,14 @@
   }
 }
 
+/* 
 .ProseMirror .codeblock::before {
   content: attr(data-language);
   font-family: 'Fira Code', monospace;
-}
+} */
 
 .ProseMirror .codeblock .line-number {
-  @apply w-16 -ml-16 inline-block pr-5 text-right select-none static text-gray-500;
+  @apply w-16 -ml-16 inline-block pr-5 text-right select-none static text-gray-950/20;
 }
 
 .ProseMirror .codeblock .pre-wrap {
@@ -37,6 +38,10 @@
   -webkit-font-feature-settings: 'liga' on, 'calt' on;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+.ProseMirror-selectednode.codeblock {
+  @apply border-primary-500 bg-primary-100;
 }
 
 /*
