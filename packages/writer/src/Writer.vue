@@ -33,15 +33,17 @@
   import History from '@tiptap/extension-history'
   import Callout from './modules/Callout/callout.js'
   import CodeBlock from './modules/CodeBlock/codeblock.js'
+  import Placeholder from '@tiptap/extension-placeholder'
   import { Color } from '@tiptap/extension-color'
   import TextStyle from '@tiptap/extension-text-style'
   import Highlight from '@tiptap/extension-highlight'
   import { BubbleMenu } from './modules/BubbleMenu/bubbleMenuComponent.js'
   import SelectNodeKeymap from './modules/SelectNodeKeymap/index.js'
+  import Title from './modules/Title/title.js'
   // import 'simplebar-vue/dist/simplebar.min.css';
   const emit = defineEmits(['onUpdate'])
   const editor = useEditor({
-    content: '<p>I’m running Tiptap with Vue.js. 🎉</p>',
+    content: '',
     onUpdate: ({ editor }) => {
       emit('onUpdate', {
         json: editor.getJSON(),
@@ -49,7 +51,23 @@
       })
     },
     extensions: [
-      Document,
+      Document.extend({
+        content: 'title block+'
+      }),
+      Placeholder.configure({
+        // Use a placeholder:
+        // placeholder: 'Write something …',
+        // Use different placeholders depending on the node type:
+        emptyEditorClass: 'is-editor-empty',
+        showOnlyCurrent: false,
+        placeholder: ({ node }) => {
+          if (node.type.name === 'title') {
+            return 'What’s the title?'
+          }
+
+          return 'Write something …'
+        },
+      }),
       Paragraph,
       Text,
       Heading,
@@ -66,6 +84,7 @@
       History,
       TextStyle,
       Color,
+      Title,
       Highlight.configure({ multicolor: true }),
       Code.extend({
         excludes: ''
