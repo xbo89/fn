@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full flex">
-    <div class="f1 w-full p-6">
+    <div class="f1 w-[620px] p-6 shrink-0">
       <Writer @on-update="onUpdate" />
     </div>
     <div class="f2 border-l border-gray-400 w-full flex flex-col">

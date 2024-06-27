@@ -1,6 +1,6 @@
 <template>
-  <div class="text-sm px-2 py-1 bg-white flex items-center rounded-lg space-x-2 cursor-pointer hover:bg-gray-100"
-    :class="[active&&'bg-primary-500 text-white hover:bg-primary-400']">
+  <div class="text-sm px-2.5 py-1 bg-white flex items-center rounded-lg space-x-2 cursor-pointer hover:bg-gray-100"
+    :class="[active&&'bg-primary-50 text-primary-500 hover:bg-primary-100']">
     <i :class="icon"></i>
     <span>
       <slot />

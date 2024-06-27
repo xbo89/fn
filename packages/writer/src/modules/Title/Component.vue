@@ -2,10 +2,9 @@
   <NodeViewWrapper class="mt-6 h-7">
     <MenuContainer placement="top">
       <div class="flex font-bold items-center space-x-1">
-        <MenuContainer placement="bottom-start">
+        <MenuContainer placement="bottom-start" v-if="props.node.attrs.emojiDisplay">
           <div
-            class="title-emoji w-7 h-7 rounded text-xl hover:bg-gray-950/10 cursor-pointer inline-flex justify-center items-center"
-            v-if="props.node.attrs.emojiDisplay">
+            class="title-emoji w-7 h-7 rounded text-xl hover:bg-gray-950/10 cursor-pointer inline-flex justify-center items-center">
             {{ punycode.decode(props.node.attrs.emoji) }}
           </div>
           <template #floating>
@@ -52,7 +51,8 @@
     color: #adb5bd;
     content: attr(data-placeholder);
     position: absolute;
-    left: 34px;
+    left: v-bind(props.node.attrs.emojiDisplay?'34px':'0');
+    top: 2px;
     pointer-events: none;
   }
 

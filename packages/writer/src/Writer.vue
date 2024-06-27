@@ -40,6 +40,7 @@
   import { BubbleMenu } from './modules/BubbleMenu/bubbleMenuComponent.js'
   import SelectNodeKeymap from './modules/SelectNodeKeymap/index.js'
   import Title from './modules/Title/title.js'
+  import Image from './modules/Image/image.js'
   // import 'simplebar-vue/dist/simplebar.min.css';
   const emit = defineEmits(['onUpdate'])
   const editor = useEditor({
@@ -62,7 +63,7 @@
         showOnlyCurrent: false,
         placeholder: ({ node }) => {
           if (node.type.name === 'title') {
-            return 'What’s the title?'
+            return 'Enter a title'
           }
 
           return 'Write something …'
@@ -85,6 +86,7 @@
       TextStyle,
       Color,
       Title,
+      Image,
       Highlight.configure({ multicolor: true }),
       Code.extend({
         excludes: ''
