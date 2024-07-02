@@ -36,8 +36,9 @@ export default Node.create({
   renderHTML({ node, HTMLAttributes }) {
     return [
       'div',
-      {},
-      0
+      { class: 'image-block' },
+      ['img', { src: HTMLAttributes.src, class: 'rounded', style: `width:${HTMLAttributes.defaultWidth === 0 ? '' : HTMLAttributes.defaultWidth}px` }],
+      ['span', { class: 'text-sm text-gray-500' }, 0]
     ]
   },
   addProseMirrorPlugins() {

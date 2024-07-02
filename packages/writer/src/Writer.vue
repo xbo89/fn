@@ -1,4 +1,7 @@
 <template>
+  <button @click="editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()">
+    Insert table
+  </button>
   <editor-content :editor="editor" />
   <bubble-menu :editor="editor" v-if="editor">
     <Bubble :editor="editor" />
@@ -41,6 +44,8 @@
   import SelectNodeKeymap from './modules/SelectNodeKeymap/index.js'
   import Title from './modules/Title/title.js'
   import Image from './modules/Image/image.js'
+  import { ExtendTable, TableCell, TableHeader, TableRow } from './modules/Table/table.js'
+  import Gapcursor from '@tiptap/extension-gapcursor'
   // import 'simplebar-vue/dist/simplebar.min.css';
   const emit = defineEmits(['onUpdate'])
   const editor = useEditor({
@@ -87,6 +92,8 @@
       Color,
       Title,
       Image,
+      Gapcursor,
+      ExtendTable, TableCell, TableHeader, TableRow,
       Highlight.configure({ multicolor: true }),
       Code.extend({
         excludes: ''

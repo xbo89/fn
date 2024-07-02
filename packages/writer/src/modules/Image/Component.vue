@@ -1,7 +1,7 @@
 <template>
   <NodeViewWrapper class="image-block relative">
     <div class="select-mask bg-primary-500/40 absolute inset-0 z-50 hidden"></div>
-    <ResizePanel>
+    <ResizePanel @onmouseup="changeImgWidth">
       <img :src="props.node.attrs.src" alt="" class="rounded block">
     </ResizePanel>
     <NodeViewContent class="text-sm text-gray-500" />
@@ -17,7 +17,11 @@
   import ResizePanel from '@/components/ResizePanel.vue'
 
   const props = defineProps({ ...nodeViewProps })
-
+  const changeImgWidth = (width) => {
+    props.updateAttributes({
+      defaultWidth: width,
+    })
+  }
 </script>
 <style>
   .ProseMirror-selectednode.image-block {

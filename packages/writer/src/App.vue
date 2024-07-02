@@ -1,11 +1,11 @@
 <template>
-  <div class="w-full h-full flex">
-    <div class="f1 w-[620px] p-6 shrink-0">
+  <div class="w-full h-full grid grid-cols-3 gap-0">
+    <div class="f1 p-6">
       <Writer @on-update="onUpdate" />
     </div>
-    <div class="f2 border-l border-gray-400 w-full flex flex-col">
-      <div class="border-b p-6 h-full">{{renderJSON}}</div>
-      <div class="p-6 h-full">{{renderHTML}}</div>
+    <div class="f2 border-l border-gray-400 w-full flex flex-col overflow-scroll">
+      <div class="border-b p-6 h-full whitespace-pre-wrap">{{renderJSON}}</div>
+      <div class="p-6 h-full whitespace-pre-wrap">{{renderHTML}}</div>
     </div>
     <div class="f3 border-l border-gray-400 w-full p-6 ProseMirror" v-html="renderHTML">
     </div>
@@ -61,6 +61,6 @@
   html,
   body,
   #app {
-    @apply antialiased w-full h-full bg-gray-300;
+    @apply antialiased w-full h-full;
   }
 </style>
