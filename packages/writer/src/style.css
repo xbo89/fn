@@ -70,59 +70,31 @@ ol {
 }
 
 .ProseMirror table {
-  border-collapse: collapse;
-  margin: 0;
-  overflow: hidden;
-  table-layout: fixed;
-  width: 100%;
+  font-size: 15px;
+  @apply border-collapse m-0 overflow-hidden table-fixed w-full bg-white;
 }
 
 .ProseMirror table td,
 .ProseMirror table th {
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  min-width: 1em;
-  padding: 6px 8px;
-  position: relative;
-  vertical-align: top;
+  @apply border border-gray-300 box-border min-w-4 p-1 relative align-top;
 }
 
 .ProseMirror table td>*,
 .ProseMirror table th>* {
-  margin-bottom: 0;
+  @apply mb-0;
 }
 
 .ProseMirror table th {
-  background-color: #ddd;
-  font-weight: bold;
-  text-align: left;
+  @apply bg-gray-100 font-medium text-left
 }
 
 .ProseMirror table .selectedCell:after {
-  background: #0066ff50;
   content: "";
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  pointer-events: none;
-  position: absolute;
-  z-index: 2;
+  @apply inset-0 absolute z-0 pointer-events-none bg-primary-500/10;
 }
 
 .ProseMirror table .column-resize-handle {
-  background-color: #aaa;
-  bottom: -2px;
-  pointer-events: none;
-  position: absolute;
-  right: -2px;
-  top: 0;
-  width: 4px;
-}
-
-.ProseMirror .tableWrapper {
-  margin: 1.5rem 0;
-  overflow-x: auto;
+  @apply pointer-events-none bg-primary-500 w-0.5 top-0 absolute z-10 -right-0.5 -bottom-0.5;
 }
 
 .ProseMirror.resize-cursor {

@@ -71,11 +71,48 @@ export class TableView {
     this.contentDOM = this.dom.querySelector('[data-nodeview-tbody]')
   }
 
-  ignoreMutation() {
-    return (
-      mutation.type === 'attributes'
-      && (mutation.target === this.table || this.colgroup.contains(mutation.target))
-    )
+  ignoreMutation(mutation) {
+    // 检查变动类型是否为属性变动
+    if (mutation.type !== 'attributes') {
+      return false;
+    }
+
+    // 忽略表格自身和 <colgroup> 相关的属性变动
+    if (mutation.target === this.table || this.colgroup.contains(mutation.target)) {
+      return true;
+    }
+
+    // 忽略新的外部结构的属性变动
+    const externalClasses = [
+      'simplebar-wrapper',
+      'simplebar-height-auto-observer-wrapper',
+      'simplebar-height-auto-observer',
+      'simplebar-mask',
+      'simplebar-offset',
+      'simplebar-content-wrapper',
+      'simplebar-content',
+      'simplebar-placeholder',
+      'simplebar-track',
+      'simplebar-scrollbar',
+      'left-shadow',
+      'right-shadow'
+    ];
+
+    if (externalClasses.some(className => mutation.target.classList.contains(className))) {
+      return true;
+    }
+
+    // 忽略具有特定 data 属性的外部结构的属性变动
+    if (
+      mutation.target.hasAttribute('data-simplebar')
+      || mutation.target.hasAttribute('data-nodeview-table')
+      || mutation.target.hasAttribute('data-nodeview-colgroup')
+      || mutation.target.hasAttribute('data-nodeview-tbody')
+    ) {
+      return true;
+    }
+
+    return false;
   }
 
 
