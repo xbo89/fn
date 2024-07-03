@@ -1,15 +1,15 @@
 <template>
   <div ref="container" class="table-container relative">
     <div v-show="(!isAtLeft&&!noScrollbar)||isInMiddle"
-      class="left-shadow w-2 left-0 inset-y-0 absolute border-l border-gray-300 bg-gradient-to-r from-black/5  z-10" />
-    <SimpleBar ref="simplebarElement" class="w-full whitespace-normal">
+      class="left-shadow w-2 left-0 inset-y-0 absolute bottom-3 border-l border-gray-300 bg-gradient-to-r from-black/5  z-10" />
+    <SimpleBar ref="simplebarElement" class="w-full whitespace-normal pb-3">
       <table data-nodeview-table ref="tableElement" class="w-96">
         <colgroup data-nodeview-colgroup />
         <tbody data-nodeview-tbody />
       </table>
     </SimpleBar>
     <div v-show="(!isAtRight && !noScrollbar)||isInMiddle"
-      class="right-shadow w-2 right-0 inset-y-0 absolute border-r border-gray-300 bg-gradient-to-l from-black/5" />
+      class="right-shadow w-2 right-0 inset-y-0 bottom-3 absolute border-r border-gray-300 bg-gradient-to-l from-black/5" />
   </div>
 </template>
 <script setup>
