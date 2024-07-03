@@ -48,9 +48,9 @@ export function updateColumns(
 
   if (fixedWidth) {
     table.style.width = `${totalWidth}px`
-    table.style.minWidth = ''
+    table.style.minWidth = `${totalWidth}px`
   } else {
-    table.style.width = ''
+    table.style.width = `${totalWidth}px`
     table.style.minWidth = `${totalWidth}px`
   }
 }
