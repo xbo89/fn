@@ -1,5 +1,6 @@
 <template>
-  <div class="h-full border-r border-gray-200 dark:border-gray-800 flex-shrink-0 sm:w-52 md:w-52 lg:w-52 ">
+  <div
+    class="h-full border-r border-gray-200 dark:border-gray-800 flex-shrink-0 sm:w-52 md:w-52 lg:w-52 bg-white dark:bg-gray-900">
     <div class="text-xl flex items-center justify-between h-12 px-5">
       <span class="logo">Cliption</span>
       <SidebarAvatar />

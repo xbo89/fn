@@ -21,7 +21,7 @@
   html,
   body,
   #__float_note {
-    @apply w-full h-full bg-white dark:bg-gray-900 antialiased font-inter;
+    @apply w-full h-full bg-gray-50 dark:bg-gray-900 antialiased font-inter;
   }
 
   @font-face {
