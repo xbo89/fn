@@ -44,7 +44,7 @@
   import SelectNodeKeymap from './modules/SelectNodeKeymap/index.js'
   import Title from './modules/Title/title.js'
   import Image from './modules/Image/image.js'
-  import { ExtendTable, TableCell, TableHeader, TableRow } from './modules/Table/table.js'
+  import { ExtendTable, ExtendTableCell, TableHeader, TableRow } from './modules/Table/table.js'
   import Gapcursor from '@tiptap/extension-gapcursor'
   // import 'simplebar-vue/dist/simplebar.min.css';
   const emit = defineEmits(['onUpdate'])
@@ -93,7 +93,7 @@
       Title,
       Image,
       Gapcursor,
-      ExtendTable, TableCell, TableHeader, TableRow,
+      ExtendTable, ExtendTableCell, TableHeader, TableRow,
       Highlight.configure({ multicolor: true }),
       Code.extend({
         excludes: ''

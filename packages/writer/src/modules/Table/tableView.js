@@ -14,14 +14,17 @@ export function updateColumns(
   let nextDOM = colgroup.firstChild
   const row = node.firstChild
 
+
   for (let i = 0, col = 0; i < row.childCount; i += 1) {
     const { colspan, colwidth } = row.child(i).attrs
-
+    console.log(row.child(i))
     for (let j = 0; j < colspan; j += 1, col += 1) {
       const hasWidth = overrideCol === col ? overrideValue : colwidth && colwidth[j]
-      const cssWidth = hasWidth ? `${hasWidth}px` : ''
+      console.log(hasWidth, overrideCol, col, colwidth)
+      const cssWidth = hasWidth ? `${hasWidth}px` : `${cellMinWidth}px`
 
       totalWidth += hasWidth || cellMinWidth
+      console.log(totalWidth)
 
       if (!hasWidth) {
         fixedWidth = false
@@ -48,9 +51,9 @@ export function updateColumns(
 
   if (fixedWidth) {
     table.style.width = `${totalWidth}px`
-    table.style.minWidth = `${totalWidth}px`
+    table.style.minWidth = ''
   } else {
-    table.style.width = `${totalWidth}px`
+    table.style.width = ''
     table.style.minWidth = `${totalWidth}px`
   }
 }
@@ -67,7 +70,7 @@ export class TableView {
     this.dom = this.container.children[0]
     this.table = this.dom.querySelector('[data-nodeview-table]')
     this.colgroup = this.dom.querySelector('[data-nodeview-colgroup]')
-    updateColumns(node, this.colgroup, this.table, cellMinWidth)
+    // updateColumns(node, this.colgroup, this.table, cellMinWidth, 2, 300)
     this.contentDOM = this.dom.querySelector('[data-nodeview-tbody]')
   }
 
@@ -111,6 +114,7 @@ export class TableView {
     ) {
       return true;
     }
+    console.log('aa', false)
 
     return false;
   }
