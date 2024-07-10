@@ -11,7 +11,7 @@
             <EmojiPanel @selectEmoji="changeEmoji" />
           </template>
         </MenuContainer>
-        <NodeViewContent class="flex-1 relative" />
+        <NodeViewContent class="flex-1 relative text-xl" />
 
       </div>
       <template #floating>
@@ -24,13 +24,15 @@
         </div>
       </template>
     </MenuContainer>
-    <div class="doc-info text-sm text-gray-400 py-2 flex items-center space-x-4"
+    <div class="doc-info text-sm text-gray-500 py-2 flex items-center space-x-4"
       v-if="props.node.attrs.createdDateDisplay">
       <div class="inline-flex items-center space-x-1">
         <i class="i-ri-time-line" /> <span>{{props.node.attrs.createdDate}}</span>
       </div>
       <div class="inline-flex items-center space-x-1">
-        <i class="i-ri-markup-line" /> <span>{{ props.editor.storage.characterCount.characters() }}</span>
+        <i class="i-ri-markup-line" />
+        <span>{{ props.editor.storage.characterCount.characters() }}</span>
+        <!-- <span>{{ props.editor.storage.characterCount.words() }}</span> -->
       </div>
     </div>
   </NodeViewWrapper>
