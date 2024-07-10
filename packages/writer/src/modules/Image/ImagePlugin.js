@@ -25,9 +25,9 @@ export const ImagePlugin = ({ editor, pluginkey }) => {
             // 读取文件内容
             reader.onload = function (event) {
               var base64String = event.target.result;
-              console.log('图片文件名：', file.name);
-              console.log('Base64编码：', base64String);
-              console.log(editor)
+              // console.log('图片文件名：', file.name);
+              // console.log('Base64编码：', base64String);
+              // console.log(editor)
               editor.view.focus()
               editor.commands.insertContent({
                 type: 'image',

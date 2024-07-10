@@ -23,7 +23,7 @@ const CBPlugin = new Plugin({
       const oldNodeName = oldState.selection.$head.parent.type.name
       const newNodeName = newState.selection.$head.parent.type.name
 
-      console.log(oldNodeName, newNodeName)
+      // console.log(oldNodeName, newNodeName)
       const oldNodes = findChildren(
         oldState.doc,
         (node) => {

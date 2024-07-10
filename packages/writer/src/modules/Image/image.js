@@ -28,8 +28,8 @@ export default Node.create({
     return {
       src: { default: '' },
       alt: { default: '' },
-      defaultWidth: { default: 0 },
-      align: { default: 'center' },
+      width: { default: 0 },
+      align: { default: 'justify-center' },
       desc: { default: false }
     }
   },
@@ -37,7 +37,7 @@ export default Node.create({
     return [
       'div',
       { class: 'image-block' },
-      ['img', { src: HTMLAttributes.src, class: 'rounded', style: `width:${HTMLAttributes.defaultWidth === 0 ? '' : HTMLAttributes.defaultWidth}px` }],
+      ['img', { src: HTMLAttributes.src, class: 'rounded', style: `width:${HTMLAttributes.width === 0 ? '' : HTMLAttributes.width}px` }],
       ['span', { class: 'text-sm text-gray-500' }, 0]
     ]
   },

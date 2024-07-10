@@ -47,7 +47,7 @@
   }
   const onUpdate = ({ json, html }) => {
     renderJSON.value = json
-    console.log('aaa')
+    // console.log('aaa')
     renderHTML.value = extractAndReplaceCodeBlocks(html)
   }
 

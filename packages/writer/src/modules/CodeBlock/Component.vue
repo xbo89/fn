@@ -28,11 +28,11 @@
   </NodeViewWrapper>
 </template>
 <script setup>
-  import MenuDivider from '../../components/MenuDivider.vue'
-  import MenuContainer from '../../components/MenuContainer.vue'
-  import BubbleContainer from '../../components/BubbleContainer.vue'
-  import BubbleToggleButton from '../../components/BubbleToggleButton.vue'
-  import MenuPopper from '../../components/MenuPopper.vue'
+  import MenuDivider from '@/components/MenuDivider.vue'
+  import MenuContainer from '@/components/MenuContainer.vue'
+  import BubbleContainer from '@/components/BubbleContainer.vue'
+  import BubbleToggleButton from '@/components/BubbleToggleButton.vue'
+  import MenuPopper from '@/components/MenuPopper.vue'
   import LanguagePicker from './LanguagePicker.vue'
 
   import { nodeViewProps, NodeViewWrapper, NodeViewContent } from '@tiptap/vue-3'
