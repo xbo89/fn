@@ -13,19 +13,8 @@ export default Node.create({
     return {
       emoji: { default: '0p8h' },
       emojiDisplay: { default: true },
-      cover: {
-        default: {
-          content: '',
-          display: false
-        }
-      },
-      documentInfo: {
-        default: {
-          createdDate: '',
-          wordCount: 0,
-          display: false
-        }
-      }
+      createdDate: { default: '2024-07-23 00:00' },
+      createdDateDisplay: { default: false }
     }
   },
   renderHTML({ node, HTMLAttributes }) {

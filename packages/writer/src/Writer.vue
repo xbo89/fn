@@ -46,6 +46,7 @@
   import Image from './modules/Image/image.js'
   import { ExtendTable, ExtendTableCell, TableHeader, TableRow } from './modules/Table/table.js'
   import Gapcursor from '@tiptap/extension-gapcursor'
+  import CharacterCount from '@tiptap/extension-character-count'
   // import 'simplebar-vue/dist/simplebar.min.css';
   const emit = defineEmits(['onUpdate'])
   const editor = useEditor({
@@ -93,6 +94,7 @@
       Title,
       Image,
       Gapcursor,
+      CharacterCount,
       ExtendTable, ExtendTableCell, TableHeader, TableRow,
       Highlight.configure({ multicolor: true }),
       Code.extend({
