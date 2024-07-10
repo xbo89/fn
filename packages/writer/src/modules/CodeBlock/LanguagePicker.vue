@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gradient-to-b from-white from-40% to-white/0 absolute inset-x-0 top-0 h-14 z-10 px-2 pt-3">
-    <input type="text" placeholder="search language" class="border  rounded-full px-4 py-1 w-full text-sm"
-      @mousedown.stop v-model="searchInput">
+    <input type="text" :placeholder="`Search ${language.length} Languages`"
+      class="border  rounded-full px-4 py-1 w-full text-sm" @mousedown.stop v-model="searchInput">
   </div>
   <simplebar class="inset-0" style="position:absolute">
     <div class="grid grid-cols-3 gap-px pt-14 px-2">
