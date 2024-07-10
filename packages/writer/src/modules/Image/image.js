@@ -21,7 +21,33 @@ export default Node.create({
   },
   addOptions() {
     return {
-      pluginKey: 'bubbleMenu'
+      pluginKey: 'bubbleMenu',
+      uploadCallback: (editor, view, e) => {
+        e.preventDefault()
+        var files = e.dataTransfer.files;
+        // 遍历文件列表
+        for (var i = 0; i < files.length; i++) {
+          var file = files[i];
+          // 判断文件类型为图片
+          if (file.type.startsWith('image/')) {
+            var reader = new FileReader();
+            // 读取文件内容
+            reader.onload = function (event) {
+              var base64String = event.target.result;
+              editor.view.focus()
+              editor.commands.insertContent({
+                type: 'image',
+                attrs: {
+                  src: base64String
+                }
+              })
+            };
+            reader.readAsDataURL(file);
+          } else {
+            console.log('忽略非图片文件：', file.name);
+          }
+        }
+      }
     }
   },
   addAttributes() {
@@ -45,7 +71,8 @@ export default Node.create({
     return [
       ImagePlugin({
         editor: this.editor,
-        pluginKey: this.options.pluginKey
+        pluginKey: this.options.pluginKey,
+        callback: this.options.uploadCallback
       })
     ]
   },
