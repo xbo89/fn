@@ -3,7 +3,7 @@
     <MenuContainer placement="top" :shift="{crossAxis: true,padding: 16}" :class="['flex',props.node.attrs.align]">
       <ResizePanel @onmouseup="changeImgWidth" :width="props.node.attrs.width">
         <div class="relative">
-          <div class="select-mask bg-primary-500/40 absolute inset-0 z-50 hidden"></div>
+          <div class="select-mask bg-primary-500/20 absolute inset-0 z-50 hidden"></div>
           <img :src="props.node.attrs.src" alt="" class="rounded block image-block" @click="selectNode">
         </div>
       </ResizePanel>
@@ -39,11 +39,6 @@
   import MenuPopper from '@/components/MenuPopper.vue'
   import ResizePanel from '@/components/ResizePanel.vue'
   import MenuDivider from '@/components/MenuDivider.vue'
-  // import MenuContainer from '@/components/MenuContainer.vue'
-  // import BubbleContainer from '@/components/BubbleContainer.vue'
-  // import BubbleToggleButton from '@/components/BubbleToggleButton.vue'
-  // import MenuPopper from '@/components/MenuPopper.vue'
-
 
   const props = defineProps({ ...nodeViewProps })
   const changeImgWidth = (width) => {

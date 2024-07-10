@@ -7,7 +7,7 @@
         'absolute w-2 h-12 border-1 rounded-full border border-primary-200 bg-black/80 z-10 top-1/2 -translate-y-1/2 right-3 cursor-ew-resize active:bg-black/60',
         resizeDragBarStyle
       ]" @mousedown.prevent="handleResizeDragBarDown" :style="{
-        height:elementHeight<48&&elementHeight!==null?elementHeight-16+'px':'48px'
+        height:elementHeight<64&&elementHeight!==null?elementHeight-16+'px':'48px'
       }" />
     <div v-show="dragMask" class="absolute inset-0" />
     <slot />
