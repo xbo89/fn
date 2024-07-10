@@ -1,10 +1,10 @@
 import { Plugin, PluginKey } from '@tiptap/pm/state'
-import { common, createLowlight } from 'lowlight'
+import { all, createLowlight } from 'lowlight'
 // import './views/style.css'
 // import { handleTabDown } from './useKeymap'
 import { getDecorations, findChildren } from './codeblockDecorations'
 // import { CodeBlockPluginView, CodeblockNodeView } from './useViews'
-const lowlight = createLowlight(common)
+const lowlight = createLowlight(all)
 const pluginKey = new PluginKey('lowlight')
 
 const defaultLanguage = 'plaintext'

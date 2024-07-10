@@ -20,9 +20,10 @@ export default Node.create({
     return {
       pluginKey: 'codeBlock',
       language: { default: 'javascript' },
-      languageIcon: { default: 'plaintext' },
+      languageIcon: { default: 'i-devicon-javascript' },
       languageClassPrefix: { default: 'language-' },
-      wrap: { default: true }
+      wrap: { default: false },
+      collapse: { default: true }
     }
   },
   addCommands() {
