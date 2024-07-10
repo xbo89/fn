@@ -20,7 +20,7 @@
         <BubbleToggleButton :icon="copied?'i-ri-checkbox-circle-fill':'i-ri-clipboard-line'" @click="handlecopy" />
       </div>
     </div>
-    <pre><NodeViewContent ref="codeElement" as="code"  :class="['hljs',props.node.attrs.wrap ? '!whitespace-pre-wrap' : '!whitespace-pre',`${props.node.attrs.languageClassPrefix}${props.node.attrs.language}`]"/></pre>
+    <pre><SimpleBar data-simplebar-auto-hide="false" ref="simplebarElement" class="w-full whitespace-normal pb-3"><NodeViewContent ref="codeElement" as="code"  :class="['hljs',props.node.attrs.wrap ? '!whitespace-pre-wrap' : '!whitespace-pre',`${props.node.attrs.languageClassPrefix}${props.node.attrs.language}`]"/></SimpleBar></pre>
   </NodeViewWrapper>
 </template>
 <script setup>
@@ -34,6 +34,9 @@
   import { nodeViewProps, NodeViewWrapper, NodeViewContent } from '@tiptap/vue-3'
   import { ref } from 'vue'
   import { useClipboard } from '@vueuse/core'
+
+  import SimpleBar from 'simplebar-vue'
+  import 'simplebar-vue/dist/simplebar.min.css'
 
   const props = defineProps({ ...nodeViewProps })
 
