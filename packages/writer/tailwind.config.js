@@ -32,7 +32,7 @@ function getCollection(dir, name) {
   return collection;
 }
 
-const customLogos = getCollection("./src/logos", "lang");
+const customLogos = getCollection("./src/modules/CodeBlock/logos", "lang");
 
 export default {
   darkMode: 'selector',
