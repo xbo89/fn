@@ -1,5 +1,38 @@
 /** @type {import('tailwindcss').Config} */
 const { iconsPlugin, getIconCollections } = require("@egoist/tailwindcss-icons")
+const fs = require("fs");
+const path = require("path");
+
+function getCollection(dir, name) {
+  const files = fs.readdirSync(dir);
+  const collection = {
+    [name]: {
+      icons: {},
+    },
+  };
+
+  let stat;
+  for (const file of files) {
+    const filePath = `${dir}/${file}`;
+    try {
+      stat = fs.lstatSync(filePath);
+    } catch (err) {
+      continue;
+    }
+    if (stat.isFile()) {
+      const svg = fs.readFileSync(filePath, "utf-8");
+      const filename = path.basename(file, ".svg");
+      collection[name].icons[filename] = {
+        body: svg.replace(/<svg[^>]*>/, "").replace(/<\/svg>/, ""),
+        width: 24,
+        height: 24,
+      };
+    }
+  }
+  return collection;
+}
+
+const customLogos = getCollection("./src/logos", "lang");
 
 export default {
   darkMode: 'selector',
@@ -47,7 +80,10 @@ export default {
       // Select the icon collections you want to use
       // You can also ignore this option to automatically discover all individual icon packages you have installed
       // If you install @iconify/json, you should explicitly specify the collections you want to use, like this:
-      collections: getIconCollections(["ri", 'devicon']),
+      collections: {
+        ...customLogos,
+        ...getIconCollections(["ri", 'devicon'])
+      },
       // If you want to use all icons from @iconify/json, you can do this:
       // collections: getIconCollections("all"),
       // and the more recommended way is to use `dynamicIconsPlugin`, see below.

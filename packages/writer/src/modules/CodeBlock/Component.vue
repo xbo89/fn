@@ -10,7 +10,7 @@
         </div>
         <template #floating>
           <BubbleContainer class="w-[400px] h-60 relative overflow-hidden">
-            <LanguagePicker @onselect="changeLanguage" />
+            <LanguagePicker @onselect="changeLanguage" :selectLanguage="props.node.attrs.language" />
           </BubbleContainer>
         </template>
       </MenuContainer>

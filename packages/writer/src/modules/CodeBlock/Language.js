@@ -77,11 +77,11 @@ export const language = [
   },
   {
     "name": "D",
-    "icon": "i-devicon-d"
+    "icon": "i-lang-d"
   },
   {
     "name": "Django",
-    "icon": "i-devicon-django"
+    "icon": "i-lang-dj"
   },
   {
     "name": "DockerFile",
@@ -89,7 +89,7 @@ export const language = [
   },
   {
     "name": "GraphQL",
-    "icon": "i-devicon-graphql"
+    "icon": "i-lang-ql"
   },
   {
     "name": "Groovy",
@@ -97,7 +97,7 @@ export const language = [
   },
   {
     "name": "HTTP",
-    "icon": "i-devicon-http"
+    "icon": "i-lang-http"
   },
   {
     "name": "Haskell",
@@ -117,11 +117,11 @@ export const language = [
   },
   {
     "name": "Lisp",
-    "icon": "i-devicon-lisp"
+    "icon": "i-lang-lisp"
   },
   {
     "name": "LESS",
-    "icon": "i-devicon-less"
+    "icon": "i-lang-less"
   },
   {
     "name": "MATLAB",
@@ -129,7 +129,7 @@ export const language = [
   },
   {
     "name": "Makefile",
-    "icon": "i-devicon-makefile"
+    "icon": "i-lang-make"
   },
   {
     "name": "Markdown",
@@ -137,15 +137,15 @@ export const language = [
   },
   {
     "name": "Shading",
-    "icon": "i-devicon-shader"
+    "icon": "i-lang-shader"
   },
   {
     "name": "Nginx",
-    "icon": "i-devicon-nginx"
+    "icon": "i-lang-nginx"
   },
   {
     "name": "Objective-C",
-    "icon": "i-devicon-objective-c"
+    "icon": "i-lang-objective-c"
   },
   {
     "name": "Perl",
@@ -169,7 +169,7 @@ export const language = [
   },
   {
     "name": "ProtoBuf",
-    "icon": "i-devicon-proto"
+    "icon": "i-lang-protobuf"
   },
   {
     "name": "R",
@@ -185,7 +185,7 @@ export const language = [
   },
   {
     "name": "SAS",
-    "icon": "i-devicon-sas"
+    "icon": "i-lang-sas"
   },
   {
     "name": "SASS",
@@ -209,11 +209,11 @@ export const language = [
   },
   {
     "name": "Scheme",
-    "icon": "i-devicon-scheme"
+    "icon": "i-lang-scheme"
   },
   {
     "name": "Shell",
-    "icon": "i-devicon-shell"
+    "icon": "i-lang-powershell"
   },
   {
     "name": "Typescript",
