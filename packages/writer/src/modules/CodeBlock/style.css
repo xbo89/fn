@@ -18,9 +18,9 @@
   font-family: 'Fira Code', monospace;
 } */
 
-.ProseMirror .codeblock .line-number {
-  @apply w-16 inline-block pr-5 text-right select-none sticky left-0 text-gray-950/20 bg-gray-50;
-}
+/* .ProseMirror .codeblock .line-number {
+  @apply w-16 inline-block pr-5 text-right select-none sticky text-gray-950/20 bg-gray-50 -ml-[58px] left-0;
+} */
 
 /* .ProseMirror .codeblock .pre-wrap {
   white-space: pre-wrap;
@@ -32,9 +32,7 @@
 
 
 .ProseMirror .codeblock pre {
-  /* overflow: auto; */
   padding-top: 8px;
-  /* padding-left: 58px; */
 }
 
 code.hljs,
@@ -47,7 +45,8 @@ pre[class*=language-] {
   white-space: pre;
   word-break: normal;
   word-spacing: normal;
-  margin-left: 0;
+  outline-color: transparent;
+  /* margin-left: 0; */
 }
 
 .ProseMirror .codeblock pre code {
@@ -56,11 +55,12 @@ pre[class*=language-] {
   -webkit-font-feature-settings: 'liga' on, 'calt' on;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* padding-left: 58px; */
+  margin: 0 8px;
 }
 
 .ProseMirror .codeblock pre .simplebar-content {
   display: flex;
-  padding: 8px 0;
 }
 
 .ProseMirror-selectednode.codeblock {

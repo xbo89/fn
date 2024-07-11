@@ -44,13 +44,9 @@
             :active="editor.isActive('bulletList')">Bulleted
           List
           </MenuItem>
-          <MenuItem icon="i-ri-list-unordered" @mousedown="editor.chain().focus().toggleBulletList().run()"
-            :active="editor.isActive('bulletList')">Bulleted
-          List
-          </MenuItem>
           <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
-          <!-- <MenuItem icon="i-ri-separator" @mousedown="editor.chain().setHorizontalRule().run()"
-            :active="editor.isActive('horizontalRule')">Divider</MenuItem> -->
+          <MenuItem icon="i-ri-code-block" @mousedown="editor.chain().toggleCodeBlock().run()"
+            :active="editor.isActive('codeBlock')">Codeblock</MenuItem>
           <MenuItem icon="i-ri-layout-bottom-2-line" @mousedown="editor.chain().toggleCallout().run()"
             :active="editor.isActive('callout')">Callout
           </MenuItem>

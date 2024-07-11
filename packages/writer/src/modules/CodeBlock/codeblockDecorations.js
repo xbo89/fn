@@ -53,16 +53,16 @@ export function getDecorations({ doc, name, lowlight, defaultLanguage }) {
     const lines = block.node.textContent.split(/\n/)
     const lineWidth = lines.length.toString().length
 
-    let startPos = block.pos + 1
-    lines.forEach((line, index) => {
-      decorations.push(
-        Decoration.widget(startPos, lineNumberSpan(index + 1, lineWidth), {
-          side: -1,
-          ignoreSelection: true
-        })
-      )
-      startPos += line.length + 1
-    })
+    // let startPos = block.pos + 1
+    // lines.forEach((line, index) => {
+    //   decorations.push(
+    //     Decoration.widget(startPos, lineNumberSpan(index + 1, lineWidth), {
+    //       side: -1,
+    //       ignoreSelection: true
+    //     })
+    //   )
+    //   startPos += line.length + 1
+    // })
     const nodes =
       language && (languages.includes(language) || registered(language))
         ? getHighlightNodes(
@@ -86,12 +86,12 @@ export function getDecorations({ doc, name, lowlight, defaultLanguage }) {
   return DecorationSet.create(doc, decorations)
 }
 
-function lineNumberSpan(index, lineWidth) {
-  return function () {
-    const span = document.createElement('span')
-    span.className = 'line-number'
-    span.innerText = '' + index
+// function lineNumberSpan(index, lineWidth) {
+//   return function () {
+//     const span = document.createElement('span')
+//     span.className = 'line-number'
+//     span.innerText = '' + index
 
-    return span
-  }
-}
+//     return span
+//   }
+// }
