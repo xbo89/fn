@@ -2,6 +2,9 @@
   <button @click="editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()">
     Insert table
   </button>
+  <button @click="editor.chain().setHorizontalRule().run()">
+    Divider
+  </button>
   <editor-content :editor="editor" />
   <bubble-menu :editor="editor" v-if="editor">
     <Bubble :editor="editor" />
@@ -44,6 +47,7 @@
   import SelectNodeKeymap from './modules/SelectNodeKeymap/index.js'
   import Title from './modules/Title/title.js'
   import Image from './modules/Image/image.js'
+  import HorizontalRule from '@tiptap/extension-horizontal-rule'
   import { ExtendTable, ExtendTableCell, TableHeader, TableRow } from './modules/Table/table.js'
   import Gapcursor from '@tiptap/extension-gapcursor'
   import CharacterCount from '@tiptap/extension-character-count'
@@ -95,6 +99,7 @@
       Image,
       Gapcursor,
       CharacterCount,
+      HorizontalRule,
       ExtendTable, ExtendTableCell, TableHeader, TableRow,
       Highlight.configure({ multicolor: true }),
       Code.extend({
