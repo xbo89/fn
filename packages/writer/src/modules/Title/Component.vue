@@ -1,5 +1,5 @@
 <template>
-  <NodeViewWrapper class="mt-6 h-7">
+  <NodeViewWrapper class="mt-6 ">
     <MenuContainer placement="top">
       <div class="flex font-bold items-center space-x-1">
         <MenuContainer placement="bottom-start" v-if="props.node.attrs.emojiDisplay">
@@ -11,16 +11,30 @@
             <EmojiPanel @selectEmoji="changeEmoji" />
           </template>
         </MenuContainer>
-        <NodeViewContent class="flex-1 relative" />
+        <NodeViewContent class="flex-1 relative text-xl" />
+
       </div>
       <template #floating>
         <div class="space-x-1 flex">
-          <DisplayButton icon="i-ri-emotion-line" :active="props.node.attrs.emojiDisplay" @mousedown.stop="toggleEmoji">
-            {{props.node.attrs.emojiDisplay?'hide':'show'}} emoji</DisplayButton>
-          <DisplayButton icon="i-ri-file-info-line">show document info</DisplayButton>
+          <DisplayButton :icon="props.node.attrs.emojiDisplay?'i-ri-emotion-fill':'i-ri-emotion-line'"
+            :active="props.node.attrs.emojiDisplay" @mousedown.stop="toggleEmoji">Emoji</DisplayButton>
+          <DisplayButton :icon="props.node.attrs.createdDateDisplay?'i-ri-file-info-fill':'i-ri-file-info-line'"
+            :active="props.node.attrs.createdDateDisplay" @mousedown="toggleCreatedDate">Document info
+          </DisplayButton>
         </div>
       </template>
     </MenuContainer>
+    <div class="doc-info text-sm text-gray-500 py-2 flex items-center space-x-4"
+      v-if="props.node.attrs.createdDateDisplay">
+      <div class="inline-flex items-center space-x-1">
+        <i class="i-ri-time-line" /> <span>{{props.node.attrs.createdDate}}</span>
+      </div>
+      <div class="inline-flex items-center space-x-1">
+        <i class="i-ri-markup-line" />
+        <span>{{ props.editor.storage.characterCount.characters() }}</span>
+        <!-- <span>{{ props.editor.storage.characterCount.words() }}</span> -->
+      </div>
+    </div>
   </NodeViewWrapper>
 </template>
 <script setup>
@@ -43,6 +57,11 @@
   const toggleEmoji = (emoji) => {
     props.updateAttributes({
       emojiDisplay: !props.node.attrs.emojiDisplay
+    })
+  }
+  const toggleCreatedDate = () => {
+    props.updateAttributes({
+      createdDateDisplay: !props.node.attrs.createdDateDisplay
     })
   }
 </script>
