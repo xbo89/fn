@@ -2,7 +2,7 @@
   <NodeViewWrapper
     class="codeblock bg-gray-50 dark:bg-gray-900 rounded-lg overflow-auto border dark:border-gray-800 my-2 relative before:block before:absolute before:right-5 before:top-2 before:text-xl before:text-gray-400 hover:before:text-gray-500"
     :data-language="props.node.attrs.language">
-    <div class="codeblock-toolbar border-b flex justify-between items-center p-1">
+    <div class="codeblock-toolbar border-b flex justify-between items-center p-1 px-3">
       <MenuContainer :teleport="true" placement="bottom-start">
         <div class="inline-flex space-x-2 items-center hover:bg-gray-200 rounded-lg px-2 h-8 text-sm cursor-pointer">
           <i :class="[props.node.attrs.languageIcon]" />
