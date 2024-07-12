@@ -9,6 +9,7 @@
   <bubble-menu :editor="editor" v-if="editor">
     <Bubble :editor="editor" />
   </bubble-menu>
+
   <!-- <div
     class="clip-drag-handle fixed opacity-100 border rounded-md z-50 w-6 inline-flex items-center py-0.5 cursor-grab">
     <i class="i-ri-draggable text-lg"></i>
@@ -49,8 +50,10 @@
   import Image from './modules/Image/image.js'
   import HorizontalRule from '@tiptap/extension-horizontal-rule'
   import { ExtendTable, ExtendTableCell, TableHeader, TableRow } from './modules/Table/table.js'
+  import { ExtendLink } from '@/modules/Link/link.js'
   import Gapcursor from '@tiptap/extension-gapcursor'
   import CharacterCount from '@tiptap/extension-character-count'
+
   // import 'simplebar-vue/dist/simplebar.min.css';
   const emit = defineEmits(['onUpdate'])
   const editor = useEditor({
@@ -101,6 +104,7 @@
       CharacterCount,
       HorizontalRule,
       ExtendTable, ExtendTableCell, TableHeader, TableRow,
+      ExtendLink,
       Highlight.configure({ multicolor: true }),
       Code.extend({
         excludes: ''
