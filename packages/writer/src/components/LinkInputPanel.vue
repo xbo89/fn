@@ -21,6 +21,7 @@
     limitShift
   } from '@floating-ui/vue';
 
+
   const props = defineProps({
     editor: {
       type: Object
