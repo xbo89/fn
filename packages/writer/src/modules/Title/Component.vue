@@ -12,7 +12,6 @@
           </template>
         </MenuContainer>
         <NodeViewContent class="flex-1 relative text-xl" />
-
       </div>
       <template #floating>
         <div class="space-x-1 flex">
@@ -40,10 +39,10 @@
 <script setup>
   import { nodeViewProps, NodeViewWrapper, NodeViewContent } from '@tiptap/vue-3'
   import MenuContainer from '../../components/MenuContainer.vue'
-  import BubbleContainer from '../../components/BubbleContainer.vue'
-  import BubbleToggleButton from '../../components/BubbleToggleButton.vue'
+  // import BubbleContainer from '../../components/BubbleContainer.vue' 
+  // import BubbleToggleButton from '../../components/BubbleToggleButton.vue'
   import EmojiPanel from '../../components/EmojiPanel.vue'
-  import MenuPopper from '../../components/MenuPopper.vue'
+  // import MenuPopper from '../../components/MenuPopper.vue'
   import DisplayButton from './Button.vue'
   import punycode from 'punycode/'
 
