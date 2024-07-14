@@ -5,7 +5,7 @@ import { random } from '../../utils'
 import ColorfulBlock from '@/components/ColorfulBlock'
 import punycode from 'punycode/'
 const randomEmoji = ['0p8h', 'yp9h', '0ci', '1r8h', 'og8h', 'dk8h', 'iq9h', 'ms9h', 'lp8h']
-export default Node.create({
+export default Node.create({ 
   name: 'title',
   content: 'inline*',
   group: 'title',

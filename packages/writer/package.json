@@ -2,7 +2,6 @@
   "name": "@floatnote/writer",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "main": "./dist/clip-writer.js",
   "scripts": {
     "dev": "vite",
@@ -13,6 +12,7 @@
     "@floating-ui/dom": "^1.6.5",
     "@floating-ui/vue": "^1.0.6",
     "@iconify-json/devicon": "^1.1.44",
+    "@rushstack/eslint-patch": "^1.10.3",
     "@tiptap/core": "^2.4.0",
     "@tiptap/extension-blockquote": "^2.4.0",
     "@tiptap/extension-bold": "^2.4.0",
@@ -57,11 +57,14 @@
     "vue": "^3.4.21"
   },
   "devDependencies": {
-    "eslint-plugin-vue": "^9.27.0",
     "@egoist/tailwindcss-icons": "^1.8.1",
     "@iconify-json/ri": "^1.1.20",
     "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/eslint-config-standard": "^8.0.1",
     "autoprefixer": "^10.4.19",
+    "babel-eslint": "^10.1.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "eslint-plugin-html": "^8.1.1",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "vite": "^5.2.0"

@@ -27,7 +27,7 @@
   import MenuDivider from '@/components/MenuDivider.vue'
   import MenuContainer from '@/components/MenuContainer.vue'
   import BubbleContainer from '@/components/BubbleContainer.vue'
-  import BubbleToggleButton from '@/components/BubbleToggleButton.vue'
+  import BubbleToggleButton from '@/components/BubbleToggleButton.vue' 
   import MenuPopper from '@/components/MenuPopper.vue'
   import LanguagePicker from './LanguagePicker.vue'
 
@@ -39,7 +39,7 @@
   import 'simplebar-vue/dist/simplebar.min.css'
 
   const props = defineProps({ ...nodeViewProps })
-
+ 
   const codeElement = ref(null)
   const source = ref('')
   const { copy, copied, isSupported } = useClipboard({
