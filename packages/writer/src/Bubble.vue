@@ -1,4 +1,6 @@
 <template>
+
+  <LinkInputPanel :editor="editor" v-if="linkInputDisplay" />
   <BubbleContainer>
     <MenuContainer placement="bottom-start">
       <BubbleToggleButton icon="i-ri-heading" hasChild />
@@ -83,7 +85,7 @@
         :active="editor.isActive('italic')" />
       <BubbleToggleButton icon="i-ri-underline" @mousedown="editor.chain().focus().toggleUnderline().run()"
         :active="editor.isActive('underline')" />
-      <BubbleToggleButton icon="i-ri-link" />
+      <BubbleToggleButton icon="i-ri-link" :active="editor.isActive('link')" @mousedown="linkInputDisplay=true" />
       <BubbleToggleButton icon="i-ri-code-view" @mousedown="editor.chain().focus().toggleCode().run()"
         :active="editor.isActive('code')" />
     </div>
@@ -109,12 +111,15 @@
   import MenuPopper from './components/MenuPopper.vue'
   import BubbleToggleButton from './components/BubbleToggleButton.vue'
   import BubbleColorPicker from './components/BubbleColorPicker.vue'
+
+  import LinkInputPanel from '@/components/LinkInputPanel.vue'
+  const linkInputDisplay = ref(false)
   const props = defineProps({
     editor: {
       type: Object
     }
   })
-
+  console.log(props.editor)
 </script>
 <style>
 

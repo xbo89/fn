@@ -79,6 +79,10 @@ ol {
   @apply border border-gray-300 box-border min-w-4 p-1 relative align-top;
 }
 
+.ProseMirror a {
+  @apply text-primary-500;
+}
+
 .ProseMirror table td>*,
 .ProseMirror table th>* {
   @apply mb-0;
