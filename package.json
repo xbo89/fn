@@ -2,20 +2,22 @@
   "name": "floatnote",
   "version": "1.0.0",
   "description": "note everywhere",
+  "author": "wangwenbo.me",
+  "license": "ISC",
+  "keywords": [],
   "main": "index.js",
   "scripts": {
     "start:client": "pnpm --filter client run dev",
     "start:extension": "pnpm --filter extension run dev",
     "start:all": "concurrently \"pnpm start:client\" \"pnpm start:extension\""
   },
-  "keywords": [],
-  "author": "wangwenbo.me",
-  "license": "ISC",
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  },
   "dependencies": {
     "radix-vue": "^1.8.2",
     "remixicon": "^4.2.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.22.2",
+    "concurrently": "^8.2.2",
+    "eslint": "^9.7.0"
   }
 }
