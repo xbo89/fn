@@ -1,15 +1,15 @@
-import {
-  chainCommands,
-  newlineInCode,
-  createParagraphNear,
-  liftEmptyBlock,
-  splitBlock,
-  deleteSelection,
-  joinBackward,
-  selectNodeBackward,
-  setBlockType,
-  lift
-} from '@tiptap/pm/commands'
+// import {
+//   chainCommands,
+//   createParagraphNear,
+//   deleteSelection,
+//   joinBackward,
+//   lift,
+//   liftEmptyBlock,
+//   newlineInCode,
+//   selectNodeBackward,
+//   setBlockType,
+//   splitBlock,
+// } from '@tiptap/pm/commands'
 
 // import { schema } from './schemas.js'
 import { NodeSelection } from '@tiptap/pm/state'
@@ -32,7 +32,8 @@ export function findCutAfter($pos) {
     for (let i = $pos.depth - 1; i >= 0; i--) {
       const parent = $pos.node(i)
       if ($pos.index(i) + 1 < parent.childCount) { return $pos.doc.resolve($pos.after(i + 1)) }
-      if (parent.type.spec.isolating) break
+      if (parent.type.spec.isolating)
+        break
     }
   }
   return null
@@ -40,27 +41,27 @@ export function findCutAfter($pos) {
 
 const selectNode = ['callout', 'bilibili', 'codeBlock', 'image', 'table']
 
-export const handleBackspaceKey = (state, dispatch) => {
+export function handleBackspaceKey(state, dispatch) {
   const $cut = findCutBefore(state.selection.$head)
   // console.log(findCutAfter(state.selection.$head))
   if (
-    $cut &&
-    selectNode.includes($cut.nodeAfter.type.name) &&
-    state.selection.$head.parentOffset === 0
+    $cut
+    && selectNode.includes($cut.nodeAfter.type.name)
+    && state.selection.$head.parentOffset === 0
   ) {
     dispatch(state.tr.setSelection(NodeSelection.create(state.doc, $cut.pos)))
     return true
   }
 
   if (
-    $cut &&
-    selectNode.includes($cut.nodeBefore.type.name) &&
-    state.selection.$head.parentOffset === 0
+    $cut
+    && selectNode.includes($cut.nodeBefore.type.name)
+    && state.selection.$head.parentOffset === 0
   ) {
     const tr = state.tr
     const $head = state.selection.$head
     tr.setSelection(
-      NodeSelection.create(state.doc, $cut.pos - $cut.nodeBefore.nodeSize)
+      NodeSelection.create(state.doc, $cut.pos - $cut.nodeBefore.nodeSize),
     )
     if ($head.parent.textContent === '') {
       tr.delete($head.before(1), $head.after(1))
