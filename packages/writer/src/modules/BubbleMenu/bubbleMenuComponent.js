@@ -1,4 +1,3 @@
-import { BubbleMenuPlugin } from './bubbleMenuPlugin'
 import {
   defineComponent,
   h,
@@ -6,6 +5,7 @@ import {
   onMounted,
   ref,
 } from 'vue'
+import { BubbleMenuPlugin } from './bubbleMenuPlugin'
 
 export const BubbleMenu = defineComponent({
   name: 'BubbleMenu',
@@ -34,7 +34,7 @@ export const BubbleMenu = defineComponent({
       editor.registerPlugin(BubbleMenuPlugin({
         editor,
         element: root.value,
-        pluginKey
+        pluginKey,
       }))
     })
 

@@ -14,7 +14,7 @@
           <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
           <MenuItem
             icon="i-ri-h-1" :active="editor.isActive('heading', { level: 1 })"
-            @mousedown="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+            @click.stop.prevent="editor.chain().focus().toggleHeading({ level: 1 }).run()"
           >
             Heading 01
           </MenuItem>
@@ -127,11 +127,11 @@
     <div class="flex space-x-0.5">
       <BubbleToggleButton
         icon="i-ri-bold" :active="editor.isActive('bold')"
-        @mousedown="editor.chain().focus().toggleBold().run()"
+        @click="editor.chain().focus().toggleBold().run()"
       />
       <BubbleToggleButton
         icon="i-ri-strikethrough" :active="editor.isActive('strike')"
-        @mousedown="editor.chain().focus().toggleStrike().run()"
+        @click="editor.chain().focus().toggleStrike().run()"
       />
       <BubbleToggleButton
         icon="i-ri-italic" :active="editor.isActive('italic')"
@@ -178,5 +178,6 @@ defineProps({
     type: Object,
   },
 })
+
 const linkInputDisplay = ref(false)
 </script>

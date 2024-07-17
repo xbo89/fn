@@ -1,5 +1,6 @@
 {
   "name": "@floatnote/writer",
+  "type": "module",
   "version": "0.0.0",
   "private": true,
   "main": "./dist/clip-writer.js",

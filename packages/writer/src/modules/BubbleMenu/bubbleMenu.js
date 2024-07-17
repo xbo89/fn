@@ -7,7 +7,7 @@ export const BubbleMenu = Extension.create({
     return {
       element: null,
       pluginKey: 'bubbleMenu',
-      updateDelay: undefined
+      updateDelay: 0,
     }
   },
   addProseMirrorPlugins() {
@@ -16,8 +16,8 @@ export const BubbleMenu = Extension.create({
         element: this.options.element,
         editor: this.editor,
         pluginKey: this.options.pluginKey,
-        updateDelay: this.options.updateDelay
-      })
+        updateDelay: this.options.updateDelay,
+      }),
     ]
-  }
+  },
 })
