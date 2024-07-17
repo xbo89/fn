@@ -48,8 +48,6 @@ import { NodeViewContent, NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 import MenuContainer from '@/components/MenuContainer.vue'
 import BubbleContainer from '@/components/BubbleContainer.vue'
 import BubbleToggleButton from '@/components/BubbleToggleButton.vue'
-import EmojiPanel from '@/components/EmojiPanel.vue'
-import MenuPopper from '@/components/MenuPopper.vue'
 import ResizePanel from '@/components/ResizePanel.vue'
 import MenuDivider from '@/components/MenuDivider.vue'
 
