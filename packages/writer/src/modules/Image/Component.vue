@@ -11,25 +11,25 @@
         <BubbleContainer>
           <BubbleToggleButton
             icon="i-ri-expand-width-line" :active="props.node.attrs.width === 0"
-            @mousedown="changeImgWidth(0)"
+            @mousedown.stop="changeImgWidth(0)"
           />
           <MenuDivider />
           <BubbleToggleButton
             icon="i-ri-align-left" :active="props.node.attrs.align === 'justify-normal'"
-            @mousedown="changeAlign('justify-normal')"
+            @mousedown.stop="changeAlign('justify-normal')"
           />
           <BubbleToggleButton
             icon="i-ri-align-center" :active="props.node.attrs.align === 'justify-center'"
-            @mousedown="changeAlign('justify-center')"
+            @mousedown.stop="changeAlign('justify-center')"
           />
           <BubbleToggleButton
             icon="i-ri-align-right" :active="props.node.attrs.align === 'justify-end'"
-            @mousedown="changeAlign('justify-end')"
+            @mousedown.stop="changeAlign('justify-end')"
           />
           <MenuDivider />
           <BubbleToggleButton
             icon="i-ri-draft-line" :active="props.node.attrs.desc"
-            @mousedown="toggleDescription(!props.node.attrs.desc)"
+            @mousedown.stop="toggleDescription(!props.node.attrs.desc)"
           />
         </BubbleContainer>
       </template>
