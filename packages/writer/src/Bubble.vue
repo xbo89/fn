@@ -14,7 +14,7 @@
           <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
           <MenuItem
             icon="i-ri-h-1" :active="editor.isActive('heading', { level: 1 })"
-            @click.stop.prevent="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+            @mousedown="editor.chain().focus().toggleHeading({ level: 1 }).run()"
           >
             Heading 01
           </MenuItem>

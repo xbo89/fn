@@ -7,6 +7,7 @@
       <div
         v-if="floatingDisplay" ref="floating" class="floating" :style="floatingStyles" @mouseenter="mouseenterFloat"
         @mouseleave="mouseleaveFloat"
+        @mousedown="floatingDisplay = false"
       >
         <!-- @mousedown="floatingDisplay = false" -->
         <slot name="floating" />

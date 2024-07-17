@@ -31,9 +31,9 @@ export class BubbleMenuView {
   }
 
   blurHandler = ({ event }) => {
-    console.log(event)
-    console.log(event.relatedTarget && this.element.parentNode.contains(event.relatedTarget))
-    console.log(event.relatedTarget, this.element.parentNode.contains(event.relatedTarget))
+    // console.log(event)
+    // console.log(event.relatedTarget && this.element.parentNode.contains(event.relatedTarget))
+    // console.log(event.relatedTarget, this.element.parentNode.contains(event.relatedTarget))
     if (this.preventHide) {
       this.preventHide = false
 
