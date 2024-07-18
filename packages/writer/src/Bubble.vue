@@ -141,7 +141,7 @@
         icon="i-ri-underline" :active="editor.isActive('underline')"
         @mousedown="editor.chain().focus().toggleUnderline().run()"
       />
-      <BubbleToggleButton icon="i-ri-link" :active="editor.isActive('link')" @mousedown="linkInputDisplay = true" />
+      <BubbleToggleButton icon="i-ri-link" :active="editor.isActive('link')" @mousedown="setLink" />
       <BubbleToggleButton
         icon="i-ri-code-view" :active="editor.isActive('code')"
         @mousedown="editor.chain().focus().toggleCode().run()"
@@ -173,11 +173,16 @@ import BubbleColorPicker from './components/BubbleColorPicker.vue'
 
 import LinkInputPanel from '@/components/LinkInputPanel.vue'
 
-defineProps({
+const props = defineProps({
   editor: {
     type: Object,
   },
 })
 
 const linkInputDisplay = ref(false)
+
+function setLink() {
+  linkInputDisplay.value = true
+  props.editor.bubbleMenu.hide()
+}
 </script>

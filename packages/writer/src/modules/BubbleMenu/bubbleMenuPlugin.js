@@ -44,7 +44,8 @@ export class BubbleMenuView {
       return
     }
 
-    this.hide()
+    // this.hide()
+    this.editor.bubbleMenu.hide()
   }
 
   createVirtualEl(view) {
@@ -91,7 +92,8 @@ export class BubbleMenuView {
       this.handleDebouncedUpdate(view, oldState)
       return
     }
-    this.hide()
+    // this.hide()
+    this.editor.bubbleMenu.hide()
   }
 
   handleDebouncedUpdate(view, oldState) {
@@ -108,8 +110,9 @@ export class BubbleMenuView {
 
     this.updateDebounceTimer = setTimeout(() => {
       this.updateHandler(view, selectionChanged, docChanged, oldState)
-      this.show()
-    }, 200)
+      // this.show()
+      this.editor.bubbleMenu.show()
+    }, this.updateDelay)
   }
 
   show() {

@@ -24,6 +24,7 @@ export const BubbleMenu = defineComponent({
 
   setup(props, { slots }) {
     const root = ref(null)
+    const show = ref(false)
 
     onMounted(() => {
       const {
@@ -36,6 +37,14 @@ export const BubbleMenu = defineComponent({
         element: root.value,
         pluginKey,
       }))
+
+      editor.bubbleMenu = {}
+      editor.bubbleMenu.show = () => {
+        show.value = true
+      }
+      editor.bubbleMenu.hide = () => {
+        show.value = false
+      }
     })
 
     onBeforeUnmount(() => {
@@ -44,6 +53,13 @@ export const BubbleMenu = defineComponent({
       editor.unregisterPlugin(pluginKey)
     })
 
-    return () => h('div', { ref: root }, slots.default())
+    return () => h(
+      'div',
+      {
+        ref: root,
+        style: show.value ? '' : 'display:none',
+      },
+      slots.default(),
+    )
   },
 })
