@@ -1,79 +1,87 @@
 /** @type {import('tailwindcss').Config} */
-const { iconsPlugin, getIconCollections } = require("@egoist/tailwindcss-icons")
-const fs = require("fs");
-const path = require("path");
+const fs = require('node:fs')
+const path = require('node:path')
+const { iconsPlugin, getIconCollections } = require('@egoist/tailwindcss-icons')
 
 function getCollection(dir, name) {
-  const files = fs.readdirSync(dir);
+  const files = fs.readdirSync(dir)
   const collection = {
     [name]: {
       icons: {},
     },
-  };
+  }
 
-  let stat;
+  let stat
   for (const file of files) {
-    const filePath = `${dir}/${file}`;
+    const filePath = `${dir}/${file}`
     try {
-      stat = fs.lstatSync(filePath);
-    } catch (err) {
-      continue;
+      stat = fs.lstatSync(filePath)
+    }
+    // eslint-disable-next-line unused-imports/no-unused-vars
+    catch (err) {
+      continue
     }
     if (stat.isFile()) {
-      const svg = fs.readFileSync(filePath, "utf-8");
-      const filename = path.basename(file, ".svg");
+      const svg = fs.readFileSync(filePath, 'utf-8')
+      const filename = path.basename(file, '.svg')
       collection[name].icons[filename] = {
-        body: svg.replace(/<svg[^>]*>/, "").replace(/<\/svg>/, ""),
+        body: svg.replace(/<svg[^>]*>/, '').replace(/<\/svg>/, ''),
         width: 24,
         height: 24,
-      };
+      }
     }
   }
-  return collection;
+  return collection
 }
 
-const customLogos = getCollection("./src/modules/CodeBlock/logos", "lang");
+const customLogos = getCollection('./src/modules/CodeBlock/logos', 'lang')
 
 export default {
   darkMode: 'selector',
   content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
+    './index.html',
+    './src/**/*.{vue,js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
       colors: {
         'primary': {
-          '50': '#D2DEFF',
-          '100': '#C1D0FF',
-          '200': '#ABBDF9',
-          '300': '#8DA4EF',
-          '400': '#3E63DD',
-          '500': '#3358D4',
-          '600': '#3A5BC7',
-          '700': '#1F2D5C',
-          '800': '#182449',
-          '900': '#141726',
-          '950': '#11131F',
+          50: '#D2DEFF',
+          100: '#C1D0FF',
+          200: '#ABBDF9',
+          300: '#8DA4EF',
+          400: '#3E63DD',
+          500: '#3358D4',
+          600: '#3A5BC7',
+          700: '#1F2D5C',
+          800: '#182449',
+          900: '#141726',
+          950: '#11131F',
         },
         'gray': {
-          '50': '#F9F9FB',
-          '100': '#F0F0F3',
-          '200': '#E8E8EC',
-          '300': '#E8E8EC',
-          '400': '#B9BBC6',
-          '500': '#8B8D98',
-          '600': '#2E3135',
-          '700': '#272A2D',
-          '800': '#212225',
-          '900': '#18191B',
-          '950': '#111113',
+          50: '#F9F9FB',
+          100: '#F0F0F3',
+          200: '#E8E8EC',
+          300: '#E8E8EC',
+          400: '#B9BBC6',
+          500: '#8B8D98',
+          600: '#2E3135',
+          700: '#272A2D',
+          800: '#212225',
+          900: '#18191B',
+          950: '#111113',
         },
         'color-panel': {
-          '': ''
-        }
-      }
-    }
+          '': '',
+        },
+      },
+      boxShadow: {
+        'panel-normal': '0 6px 6px rgba(0, 0, 0, 0.04)',
+      },
+      dropShadow: {
+        'panel-normal': '0 6px 6px rgba(0, 0, 0, 0.04)',
+      },
+    },
   },
   plugins: [
     iconsPlugin({
@@ -82,7 +90,7 @@ export default {
       // If you install @iconify/json, you should explicitly specify the collections you want to use, like this:
       collections: {
         ...customLogos,
-        ...getIconCollections(["ri", 'devicon'])
+        ...getIconCollections(['ri', 'devicon']),
       },
       // If you want to use all icons from @iconify/json, you can do this:
       // collections: getIconCollections("all"),

@@ -11,7 +11,7 @@
           >
             Paragraph
           </MenuItem>
-          <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
+          <div class="h-px bg-gray-100 dark:bg-gray-700 my-1" />
           <MenuItem
             icon="i-ri-h-1" :active="editor.isActive('heading', { level: 1 })"
             @mousedown="editor.chain().focus().toggleHeading({ level: 1 }).run()"
@@ -30,7 +30,7 @@
           >
             Heading 03
           </MenuItem>
-          <MenuContainer placement="right-start" :offset="0" :teleport="false">
+          <MenuContainer placement="right-start" :offset="8" :teleport="false">
             <MenuItem
               icon="i-ri-more-2-fill" has-child
               :active="editor.isActive('heading', { level: 4 }) || editor.isActive('heading', { level: 5 }) || editor.isActive('heading', { level: 6 })"
@@ -60,7 +60,7 @@
               </MenuPopper>
             </template>
           </MenuContainer>
-          <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
+          <div class="h-px bg-gray-100 dark:bg-gray-700 my-1" />
           <MenuItem
             icon="i-ri-list-ordered" :active="editor.isActive('orderedList')"
             @mousedown="editor.chain().focus().toggleOrderedList().run()"
@@ -74,7 +74,7 @@
             Bulleted
             List
           </MenuItem>
-          <div class="h-px bg-gray-100 dark:bg-gray-700 my-1 -mx-2" />
+          <div class="h-px bg-gray-100 dark:bg-gray-700 my-1" />
           <MenuItem
             icon="i-ri-code-block" :active="editor.isActive('codeBlock')"
             @mousedown="editor.chain().toggleCodeBlock().run()"
@@ -83,7 +83,7 @@
           </MenuItem>
           <MenuItem
             icon="i-ri-layout-bottom-2-line" :active="editor.isActive('callout')"
-            @mousedown="editor.chain().toggleCallout().run()"
+            @mousedown="setCallout"
           >
             Callout
           </MenuItem>
@@ -184,5 +184,12 @@ const linkInputDisplay = ref(false)
 function setLink() {
   linkInputDisplay.value = true
   props.editor.bubbleMenu.hide()
+}
+
+function setCallout() {
+  props.editor.commands.toggleCallout()
+  props.editor.commands.focus('end')
+  // props.editor.bubbleMenu.hide()
+  // props.editor.commands.selectTextblockEnd()
 }
 </script>

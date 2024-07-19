@@ -13,8 +13,8 @@ export class BubbleMenuView {
 
     this.element.addEventListener('mousedown', this.mousedownHandler, { capture: true })
     this.view.dom.addEventListener('dragstart', this.dragstartHandler)
-    this.editor.on('focus', this.focusHandler)
-    this.editor.on('blur', this.blurHandler)
+    // this.editor.on('focus', this.focusHandler)
+    // this.editor.on('blur', this.blurHandler)
   }
 
   mousedownHandler = () => {
@@ -115,13 +115,13 @@ export class BubbleMenuView {
     }, this.updateDelay)
   }
 
-  show() {
-    this.element.style.display = 'block'
-  }
+  // show() {
+  //   this.element.style.display = 'block'
+  // }
 
-  hide() {
-    this.element.style.display = 'none'
-  }
+  // hide() {
+  //   this.element.style.display = 'none'
+  // }
 
   updateHandler(view, selectionChanged, docChanged) {
     const { composing } = view
