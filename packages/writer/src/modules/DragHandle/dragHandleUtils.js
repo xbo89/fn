@@ -6,7 +6,7 @@ function nodeDOMAtCoords(coords) {
     .elementsFromPoint(coords.x, coords.y)
     .find(
       elem =>
-        elem.parentElement?.matches?.('.ProseMirror')
+        elem.parentElement.matches('.ProseMirror')
         || elem.matches(
           [
             'li',
@@ -29,7 +29,7 @@ function nodePosAtDOM(
   return view.posAtCoords({
     left: boundingRect.left + 50 + options.dragHandleWidth,
     top: boundingRect.top + 1,
-  })?.inside
+  }).inside
 }
 
 function calcNodePos(pos, view) {
@@ -40,7 +40,7 @@ function calcNodePos(pos, view) {
 }
 
 let listType = ''
-export function handleDragStart(event, view) {
+export function handleDragStart(event, view, options) {
   view.focus()
 
   if (!event.dataTransfer)

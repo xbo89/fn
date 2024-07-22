@@ -3,6 +3,7 @@ import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 import { TableView } from './tableView'
+
 const ExtendTableCell = TableCell.extend({
   // addAttributes() {
   //   return {
@@ -22,8 +23,9 @@ const ExtendTableCell = TableCell.extend({
   // },
 })
 const ExtendTable = Table.configure({
+  draggable: true,
   resizable: true,
-  View: TableView
+  View: TableView,
 })
 
 export { ExtendTable, ExtendTableCell, TableHeader, TableRow }
