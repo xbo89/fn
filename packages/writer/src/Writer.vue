@@ -12,16 +12,17 @@
     <Bubble :editor="editor" />
   </BubbleMenu>
 
-  <!-- <div
-    class="clip-drag-handle fixed opacity-100 border rounded-md z-50 w-6 inline-flex items-center py-0.5 cursor-grab">
-    <i class="i-ri-draggable text-lg"></i>
-  </div> -->
+  <div
+    class="clip-drag-handle fixed opacity-100 border rounded-md z-50 w-6 inline-flex items-center py-0.5 cursor-grab"
+  >
+    <i class="i-ri-draggable text-lg" />
+  </div>
 </template>
 
 <script setup>
 import { EditorContent, useEditor } from '@tiptap/vue-3'
-// import GlobalDragHandle from 'tiptap-extension-global-drag-handle'
-// import AutoJoiner from 'tiptap-extension-auto-joiner'
+import GlobalDragHandle from 'tiptap-extension-global-drag-handle'
+import AutoJoiner from 'tiptap-extension-auto-joiner'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
@@ -124,11 +125,11 @@ const editor = useEditor({
       types: ['heading', 'paragraph', 'callout'],
     }),
     SelectNodeKeymap,
-    // GlobalDragHandle.configure({
-    //   dragHandleWidth: 30,
-    //   dragHandleSelector: ".clip-drag-handle"
-    // }),
-    // AutoJoiner,
+    GlobalDragHandle.configure({
+      dragHandleWidth: 30,
+      dragHandleSelector: '.clip-drag-handle',
+    }),
+    AutoJoiner,
     Dropcursor.configure({
       color: '#3A5BC7',
     }),

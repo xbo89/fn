@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full grid grid-cols-3 gap-0">
-    <div class="f1 p-6">
+    <div class="f1 p-6 pl-12">
       <Writer @on-update="onUpdate" />
     </div>
     <div class="f2 border-l border-gray-400 w-full flex flex-col overflow-scroll">
