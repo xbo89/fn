@@ -11,12 +11,15 @@
   <BubbleMenu v-if="editor" :editor="editor">
     <Bubble :editor="editor" />
   </BubbleMenu>
+  <DragHandle v-if="editor" :editor="editor">
+    <span>a</span>
+  </DragHandle>
 
-  <div
+  <!-- <div
     class="clip-drag-handle fixed opacity-100 border rounded-md z-50 w-6 inline-flex items-center py-0.5 cursor-grab"
   >
     <i class="i-ri-draggable text-lg" />
-  </div>
+  </div> -->
 </template>
 
 <script setup>
@@ -60,6 +63,7 @@ import {
   TableHeader,
   TableRow,
 } from './modules/Table/table.js'
+import { DragHandle } from '@/modules/DragHandle/dragHandleComponent.js'
 import { ExtendLink } from '@/modules/Link/link.js'
 
 // import 'simplebar-vue/dist/simplebar.min.css';
@@ -125,11 +129,11 @@ const editor = useEditor({
       types: ['heading', 'paragraph', 'callout'],
     }),
     SelectNodeKeymap,
-    GlobalDragHandle.configure({
-      dragHandleWidth: 30,
-      dragHandleSelector: '.clip-drag-handle',
-    }),
-    AutoJoiner,
+    // GlobalDragHandle.configure({
+    //   dragHandleWidth: 30,
+    //   dragHandleSelector: '.clip-drag-handle',
+    // }),
+    // AutoJoiner,
     Dropcursor.configure({
       color: '#3A5BC7',
     }),
