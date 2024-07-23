@@ -39,25 +39,29 @@ export function nodeDOMAtCoords(coords) {
     )
 }
 
+export function setDOMStyle(element, rect, padding) {
+  element.style.left = `${rect.left - element.offsetWidth - padding}px`
+  element.style.top = `${rect.top}px`
+}
+
 export function nodePosAtDOM(
   node,
   view,
-  options,
 ) {
   const boundingRect = node.getBoundingClientRect()
 
   return view.posAtCoords({
-    left: boundingRect.left + 50 + options.dragHandleWidth,
+    left: boundingRect.left,
     top: boundingRect.top + 1,
   }).inside
 }
 
-export function calcNodePos(pos, view) {
-  const $pos = view.state.doc.resolve(pos)
-  if ($pos.depth > 1)
-    return $pos.before($pos.depth)
-  return pos
-}
+// export function calcNodePos(pos, view) {
+//   const $pos = view.state.doc.resolve(pos)
+//   if ($pos.depth > 1)
+//     return $pos.before($pos.depth)
+//   return pos
+// }
 
 // let listType = ''
 // export function handleDragStart(event, view, options) {

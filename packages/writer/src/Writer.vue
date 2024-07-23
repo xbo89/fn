@@ -12,7 +12,7 @@
     <Bubble :editor="editor" />
   </BubbleMenu>
   <DragHandle v-if="editor" :editor="editor">
-    <span>a</span>
+    <i class="i-ri-draggable" />
   </DragHandle>
 
   <!-- <div
@@ -24,8 +24,8 @@
 
 <script setup>
 import { EditorContent, useEditor } from '@tiptap/vue-3'
-import GlobalDragHandle from 'tiptap-extension-global-drag-handle'
-import AutoJoiner from 'tiptap-extension-auto-joiner'
+// import GlobalDragHandle from 'tiptap-extension-global-drag-handle'
+// import AutoJoiner from 'tiptap-extension-auto-joiner'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'

@@ -58,7 +58,9 @@ export const DragHandle = defineComponent({
       'div',
       {
         ref: root,
-        // style: show.value ? '' : 'display:none',
+        class: `fixed drag-handle size-6 border rounded-lg bg-white flex justify-center items-center`,
+        dragable: true,
+        style: show.value ? '' : 'display:none',
       },
       slots.default(),
     )
