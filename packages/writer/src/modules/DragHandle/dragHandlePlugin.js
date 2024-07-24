@@ -21,6 +21,7 @@ function debounce(fn, delay) {
 }
 export function DragHandlePlugin({ editor, element, pluginKey }) {
   const padding = 10
+  const timer = null
   return new Plugin({
     key: new PluginKey(pluginKey),
     view: view => new DragHandleView({ view, editor, element }),
@@ -29,9 +30,9 @@ export function DragHandlePlugin({ editor, element, pluginKey }) {
         mouseenter: () => {
           editor.dragHandle.show()
         },
-        mouseleave: () => {
-          editor.dragHandle.hide()
-        },
+        // mouseleave: () => {
+        //   editor.dragHandle.hide()
+        // },
         mousemove: (view, event) => {
           if (!view.editable)
             return

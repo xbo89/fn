@@ -25,6 +25,7 @@ export const DragHandle = defineComponent({
   setup(props, { slots }) {
     const root = ref(null)
     const show = ref(false)
+    const timer = ref(null)
 
     onMounted(() => {
       const {
@@ -43,9 +44,15 @@ export const DragHandle = defineComponent({
           show.value = true
         },
         hide: () => {
-          show.value = false
+          timer.value = setTimeout(() => {
+            show.value = false
+          }, 400)
         },
       }
+
+      root.value.addEventListener('mouseenter', () => {
+        clearTimeout(timer.value)
+      }, false)
     })
 
     onBeforeUnmount(() => {
@@ -58,7 +65,7 @@ export const DragHandle = defineComponent({
       'div',
       {
         ref: root,
-        class: `fixed drag-handle size-6 border rounded-lg bg-white flex justify-center items-center`,
+        class: `fixed drag-handle size-6 border rounded-lg bg-white flex justify-center items-center cursor-pointer hover:bg-gray-100`,
         dragable: true,
         style: show.value ? '' : 'display:none',
       },
