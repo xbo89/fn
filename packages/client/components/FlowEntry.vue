@@ -1,6 +1,10 @@
 <template>
   <ClientOnly fallback="Loading comments...">
+    <button @click="addNode">
+      add
+    </button>
     <VueFlow
+      :nodes="nodes"
       v-bind="flowOptions"
       @pane-click="onPaneClick"
       @pane-drag-start="onPaneDragStart"
@@ -18,30 +22,48 @@
 
 <script setup>
 import { ref } from 'vue'
-import { VueFlow } from '@vue-flow/core'
+import { VueFlow, useVueFlow } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 
 const router = useRouter()
+const { addNodes } = useVueFlow()
+
 router.replace({ path: '/clips/inbox' })
+const nodes = ref([
+  // 示例节点
+  { id: '1', label: 'Node 1', position: { x: 0, y: 0 } },
+  { id: '2', label: 'Node 2', position: { x: 100, y: 100 } },
+  {
+    id: '3',
+    data: { label: 'Node 3' },
+    // this will create the node-type `custom`
+    type: 'flownote',
+    position: { x: 50, y: 50 },
+  },
+])
 const flowOptions = ref({
-  nodes: [
-    // 示例节点
-    { id: '1', label: 'Node 1', position: { x: 0, y: 0 } },
-    { id: '2', label: 'Node 2', position: { x: 100, y: 100 } },
-    {
-      id: '3',
-      data: { label: 'Node 3' },
-      // this will create the node-type `custom`
-      type: 'flownote',
-      position: { x: 50, y: 50 },
-    },
-  ],
   edges: [],
   zoomOnScroll: true,
   panOnDrag: false, // 默认关闭画布拖动
   selectNodesOnDrag: true, // 启用框选功能
   selectionKeyCode: true,
 })
+// const { metaSymbol } = useShortcuts()
+defineShortcuts({
+  meta_j: {
+    usingInput: true,
+    handler: (event) => {
+      console.log(event)
+      addNodes({
+        id: Math.random().toString(),
+        position: { x: 150, y: 50 },
+        type: 'flownote',
+        data: { label: `Node` },
+      })
+    },
+  },
+})
+
 const spacePressed = ref(false)
 function onNodeSelect(event) {
   console.log('Selected nodes:', event.nodes)
