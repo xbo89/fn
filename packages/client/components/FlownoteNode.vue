@@ -14,7 +14,7 @@ import '@vue-flow/node-resizer/dist/style.css'
   <NodeResizer min-width="100" min-height="30" />
   <div>
     <span>a</span>
-    <div class="nodrag cursor-pointer">
+    <div class="nodrag nowheel cursor-auto">
       <Handle type="target" :position="Position.Left" />
       <UCard :ui="{ base: 'min-h-80 h-full', shadow: 'shadow-none', body: { padding: 'sm:p-4' } }">
         <Writer />
@@ -23,3 +23,9 @@ import '@vue-flow/node-resizer/dist/style.css'
     </div>
   </div>
 </template>
+
+<style>
+.vue-flow__node.selected{
+  @apply !outline !outline-offset-2 !outline-2 !outline-blue-600;
+}
+</style>
