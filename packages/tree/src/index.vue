@@ -3,9 +3,9 @@
     v-for="item in data"
     :key="item.id"
     :data="item"
-    @context="handleContextmenu"
+    @item-dragstart="test"
   />
-  <f-contextmenu ref="treeContextmenu">
+  <!-- <f-contextmenu ref="treeContextmenu">
     <f-contextmenu-item icon="file-open-outline-rounded" @onclick="onOpen">
       打开
     </f-contextmenu-item>
@@ -30,7 +30,7 @@
     <f-contextmenu-item icon="delete-outline-rounded" @onclick="onDelete">
       移除
     </f-contextmenu-item>
-  </f-contextmenu>
+  </f-contextmenu> -->
 </template>
 
 <script setup>
@@ -50,41 +50,48 @@ const emits = defineEmits([
   'onCreate',
   'onMove',
 ])
-const treeContextmenu = ref([])
+function test() {
+  console.log('start aa')
+}
+const treeData = defineModel()
+
+// const treeContextmenu = ref([])
 const renameId = ref()
 provide('renameId', renameId)
+provide('create', { createDocument })
+provide('rename', { handleRename })
+provide('move', { moveDocument })
 
-function handleContextmenu(ev, data) {
-  treeContextmenu.value.data = data
-  treeContextmenu.value.toggle(true)
-  treeContextmenu.value.position({
-    x: ev.clientX,
-    y: ev.clientY,
-  })
-}
+// function handleContextmenu(ev, data) {
+//   treeContextmenu.value.data = data
+//   treeContextmenu.value.toggle(true)
+//   treeContextmenu.value.position({
+//     x: ev.clientX,
+//     y: ev.clientY,
+//   })
+// }
 
+// function onRenameStart(data) {
+//   renameId.value = data.id
+// }
 function createDocument(data) {
   emits('onCreate', data)
 }
-provide('create', { createDocument })
-function onRenameStart(data) {
-  renameId.value = data.id
-}
+
 function moveDocument(from, to) {
   emits('onMove', { from, to })
 }
-provide('move', { moveDocument })
+
 function handleRename(data) {
   renameId.value = null
   emits('onRename', data)
 }
-provide('rename', { handleRename })
 
-const onOpen = data => emits('onOpen', data)
-const onFolder = data => emits('onFolder', data)
-const onDuplicate = data => emits('onDuplicate', data)
-const onInfo = data => emits('onInfo', data)
-const onDelete = data => emits('onDelete', data)
+// const onOpen = data => emits('onOpen', data)
+// const onFolder = data => emits('onFolder', data)
+// const onDuplicate = data => emits('onDuplicate', data)
+// const onInfo = data => emits('onInfo', data)
+// const onDelete = data => emits('onDelete', data)
 </script>
 
 <style></style>

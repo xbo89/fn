@@ -1,16 +1,9 @@
 <template>
   <div
-    class="w-6 h-6 rounded-md text-lg flex items-center justify-center cursor-pointer hover:bg-gray-300 active:bg-gray-400 flex-shrink-0"
+    class="size-6 rounded-lg text-xl flex items-center justify-center cursor-pointer hover:bg-gray-200 active:bg-gray-300 flex-shrink-0 text-gray-400"
     :style="{ visibility: visibility ? '' : 'hidden' }"
-    :class="[transparent ? '' : 'bg-gray-100']"
   >
-    <i
-      :class="[`i-material-symbols-${icon}`, rotate ? 'rotate-90' : '']"
-      :style="{
-        fontSize: size === '' ? 'current' : `${size}px`,
-      }"
-    />
-    <slot />
+    <i :class="[icon, rotate ? 'rotate-90' : '']" />
   </div>
 </template>
 
@@ -18,20 +11,16 @@
 defineProps({
   icon: {
     type: String,
-    default: '',
-  },
-  size: {
-    type: String,
-    default: '',
+    default: 'i-ri-arrow-drop-right-line',
   },
   visibility: {
     type: Boolean,
     default: true,
   },
-  transparent: {
-    type: Boolean,
-    default: false,
-  },
+  // transparent: {
+  //   type: Boolean,
+  //   default: true,
+  // },
   rotate: {
     type: Boolean,
     default: false,

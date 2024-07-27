@@ -6,6 +6,7 @@ export function useDnd(data) {
   const dragoverId = ref(null)
   const handleDragstart = (ev, data) => {
     ev.dataTransfer.setData('text/plain', JSON.stringify(data))
+    emits('itemDragstart')
   }
   const handleDragover = (ev, data) => {
     ev.preventDefault()
