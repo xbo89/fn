@@ -6,13 +6,13 @@
       false
         ? 'hover:bg-blue-200 text-blue-700 active:bg-blue-100 bg-blue-200 font-medium'
         : 'hover:bg-gray-100 active:bg-gray-200',
-      isDragover ? 'bg-blue-300 text-blue-800' : '',
+      isDragover && itemDirectionIndex === 0 ? 'bg-blue-300 text-blue-800' : '',
     ]"
     :style="{
-      paddingLeft: `${levelRef === 1 ? 4 : (levelRef - 1) * 22}px`,
+      paddingLeft: `${levelRef === 1 ? 4 : (levelRef - 1) * 16 + 4}px`,
     }"
     @dragstart="itemDragstart"
-    @dragover.stop="itemDragover"
+    @dragover="itemDragover"
     @dragleave="itemDragleave"
     @drop="itemDrop"
     @mouseenter="mouseenter"
@@ -23,9 +23,9 @@
       :visibility="data.children.length > 0"
       :transparent="true"
       :rotate="data.toggle"
-      @click.stop.prevent="itemFold"
+      @click.prevent.stop="itemFold"
     />
-    <i class="i-ri-file-3-line" />
+    <i class="i-ri-file-3-line text-gray-400" />
     <div
       v-if="!isRename"
       class="pl-1 truncate"
@@ -64,15 +64,15 @@
       @item-dragstart="emits('itemDragstart')"
       @item-dragover="emits('itemDragover')"
       @item-dragleave="emits('itemDragleave')"
-      @item-drop="emits('itemDrop')"
-      @item-fold="emits('itemFold', child.id)"
-      @add-item="emits('addItem', child.id)"
+      @item-drop="childrenDrop"
+      @item-fold="childrenFold"
+      @add-item="childrenAdd"
     />
   </template>
 </template>
 
 <script setup>
-import { computed, inject, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import IconBtn from './iconBtn.vue'
 import { useItemHover, useRename } from './useItem'
@@ -90,55 +90,75 @@ const emits = defineEmits([
   'itemFold',
   'addItem',
 ])
-function debounce(fn, delay) {
-  let timeoutId
-  return function (...args) {
-    clearTimeout(timeoutId)
-    timeoutId = setTimeout(() => {
-      fn.apply(this, args)
-    }, delay)
-  }
-}
+
+const dragStartItemId = ref(null)
 const dragOverItemId = ref(null)
+const itemDirectionIndex = ref(null)
+const levelRef = ref(props.treeLevel)
+levelRef.value += 1
+
 function itemDragstart(ev) {
   ev.dataTransfer.setData('text/plain', JSON.stringify(props.data))
+  dragStartItemId.value = props.data.id
   emits('itemDragstart')
 }
 
 function itemDragover(ev) {
   ev.preventDefault()
+
+  const itemHeight = ev.target.offsetHeight
+  const itemInnerPosY = ev.offsetY
+
+  if (itemInnerPosY <= itemHeight * 0.25) {
+    itemDirectionIndex.value = -1
+  }
+  if (itemInnerPosY > itemHeight * 0.25 && itemInnerPosY < itemHeight - itemHeight * 0.25) {
+    itemDirectionIndex.value = 0
+  }
+  if (itemInnerPosY >= itemHeight - itemHeight * 0.25) {
+    itemDirectionIndex.value = 1
+  }
+
   dragOverItemId.value = props.data.id
-  console.log(ev.target.offsetHeight, ev.offsetY)
   emits('itemDragover')
 }
 
 function itemDragleave(ev) {
   ev.preventDefault()
-  dragOverItemId.value = null
   emits('itemDragleave')
 }
 
 function itemDrop(ev) {
-  itemDragleave(ev)
   ev.preventDefault()
   const dragData = JSON.parse(ev.dataTransfer.getData('text/plain'))
   if (props.data.id === dragData.id)
     return
-  console.log(dragData)
-  emits('itemDrop')
+  emits('itemDrop', { from: dragData, to: props.data, dir: itemDirectionIndex.value })
+  dragOverItemId.value = null
+  dragStartItemId.value = null
 }
+
+function childrenDrop({ from, to, dir }) {
+  emits('itemDrop', { from, to, dir })
+}
+function childrenFold(id) {
+  emits('itemFold', id)
+}
+function childrenAdd(id) {
+  emits('addItem', id)
+}
+
 function itemFold() {
   emits('itemFold', props.data.id)
 }
+
 function addItem() {
   emits('addItem', props.data.id)
 }
+
 const isDragover = computed(() => {
   return dragOverItemId.value === props.data.id
 })
-
-const levelRef = ref(props.treeLevel)
-levelRef.value += 1
 
 const target = ref(null)
 const { isRename, inputValue, handleEnter } = useRename(target, props.data)

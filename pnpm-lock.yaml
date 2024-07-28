@@ -115,6 +115,9 @@ importers:
       '@vueuse/core':
         specifier: ^10.11.0
         version: 10.11.0(vue@3.4.34(typescript@5.4.5))
+      nanoid:
+        specifier: ^5.0.7
+        version: 5.0.7
       vue:
         specifier: ^3.4.31
         version: 3.4.34(typescript@5.4.5)

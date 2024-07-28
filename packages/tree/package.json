@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.11.0",
+    "nanoid": "^5.0.7",
     "vue": "^3.4.31"
   },
   "devDependencies": {
