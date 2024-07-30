@@ -27,7 +27,7 @@
     />
     <i class="i-ri-file-3-line text-gray-400" />
     <div
-      v-if="!isRename"
+      v-if="!itemIsRename"
       class="pl-1 truncate"
       style="max-width: calc(100% - 3rem)"
     >
@@ -48,7 +48,7 @@
     >
     <div class="ml-auto flex items-center space-x-1 pr-1">
       <IconBtn
-        v-show="isHover && !isRename"
+        v-show="isHover && !itemIsRename"
         icon="i-ri-add-line"
         @click.stop.prevent="addItem"
       />
@@ -75,7 +75,7 @@
 import { computed, ref } from 'vue'
 
 import IconBtn from './iconBtn.vue'
-import { useItemHover, useRename } from './useItem'
+// import { useItemHover, useRename } from './useItem'
 
 const props = defineProps({
   data: { type: Object },
@@ -94,33 +94,47 @@ const emits = defineEmits([
 const dragStartItemId = ref(null)
 const dragOverItemId = ref(null)
 const itemDirectionIndex = ref(null)
+const itemIsRename = ref(false)
+const itemPosHelper = ref(null)
+const treeContainerOffsetTop = ref(null)
 const levelRef = ref(props.treeLevel)
 levelRef.value += 1
 
 function itemDragstart(ev) {
   ev.dataTransfer.setData('text/plain', JSON.stringify(props.data))
   dragStartItemId.value = props.data.id
+  treeContainerOffsetTop.value = ev.target.parentNode.getBoundingClientRect().top
   emits('itemDragstart')
 }
 
 function itemDragover(ev) {
   ev.preventDefault()
 
+  const itemRect = ev.target.getBoundingClientRect()
+  const itemOffsetTop = itemRect.top
+
   const itemHeight = ev.target.offsetHeight
   const itemInnerPosY = ev.offsetY
 
   if (itemInnerPosY <= itemHeight * 0.25) {
     itemDirectionIndex.value = -1
+    itemPosHelper.value = itemOffsetTop - treeContainerOffsetTop.value
   }
   if (itemInnerPosY > itemHeight * 0.25 && itemInnerPosY < itemHeight - itemHeight * 0.25) {
     itemDirectionIndex.value = 0
+    itemPosHelper.value = null
   }
   if (itemInnerPosY >= itemHeight - itemHeight * 0.25) {
     itemDirectionIndex.value = 1
+    itemPosHelper.value = itemOffsetTop - treeContainerOffsetTop.value + itemHeight
   }
 
   dragOverItemId.value = props.data.id
-  emits('itemDragover')
+  console.log(itemOffsetTop - treeContainerOffsetTop.value)
+  emits('itemDragover', {
+    helperPosTop: itemPosHelper.value,
+    helperPosLeft: (levelRef.value - 1) * 24,
+  })
 }
 
 function itemDragleave(ev) {
@@ -133,7 +147,11 @@ function itemDrop(ev) {
   const dragData = JSON.parse(ev.dataTransfer.getData('text/plain'))
   if (props.data.id === dragData.id)
     return
-  emits('itemDrop', { from: dragData, to: props.data, dir: itemDirectionIndex.value })
+  emits('itemDrop', {
+    from: dragData,
+    to: props.data,
+    dir: itemDirectionIndex.value,
+  })
   dragOverItemId.value = null
   dragStartItemId.value = null
 }
@@ -161,8 +179,21 @@ const isDragover = computed(() => {
 })
 
 const target = ref(null)
-const { isRename, inputValue, handleEnter } = useRename(target, props.data)
-const { isHover, mouseenter, mouseleave } = useItemHover()
+const isHover = ref(false)
+const timer = ref(null)
+function mouseenter() {
+  clearTimeout(timer.value)
+  timer.value = setTimeout(() => {
+    isHover.value = true
+  }, 600)
+}
+
+function mouseleave() {
+  clearTimeout(timer.value)
+  isHover.value = false
+}
+// const { isRename, inputValue, handleEnter } = useRename(target, props.data)
+// const { isHover, mouseenter, mouseleave } = useItemHover()
 // const { createDocument } = inject('create')
 
 // function handleContextmenu(ev, data) {

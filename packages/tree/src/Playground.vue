@@ -1,4 +1,5 @@
 <template>
+  <div class="h-96" />
   <Tree v-model="data" :data="data" />
 </template>
 
