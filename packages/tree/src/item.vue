@@ -3,7 +3,7 @@
     draggable="true"
     class="pr-1 py-1 rounded-lg flex items-center text-sm w-full flex-1 relative  "
     :class="[
-      isDragover && itemDirectionIndex === 0 ? 'bg-blue-50 outline outline-blue-600 text-blue-800' : '',
+      isDragover && itemDirectionIndex === 0 ? 'bg-blue-50 outline-1 outline-dashed outline-blue-600 text-blue-800' : '',
       itemStartDrag ? '' : 'hover:bg-gray-100 active:bg-gray-200 ',
     ]"
     :style="{

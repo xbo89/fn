@@ -40,6 +40,7 @@ export function useItem(props, emits) {
   const itemDragstart = (ev) => {
     ev.dataTransfer.setDragImage(transparentImage, 0, 0)
     ev.dataTransfer.setData('text/plain', JSON.stringify(props.data))
+    ev.dataTransfer.dropEffect = 'move'
     sEl.textContent = props.data.title
     sEl.style.display = 'block'
     itemStartDrag.value = 1
@@ -56,6 +57,7 @@ export function useItem(props, emits) {
   const itemDragover = (ev) => {
     ev.stopPropagation()
     ev.preventDefault()
+    ev.dataTransfer.dropEffect = 'move'
     const itemRect = ev.target.getBoundingClientRect()
     updateDirectionAndPosition(ev.offsetY, ev.target.offsetHeight, itemRect.top)
     dragOverItemId.value = props.data.id
@@ -88,12 +90,18 @@ export function useItem(props, emits) {
     dragStartItemId.value = null
     itemDirectionIndex.value = null
   }
-  document.body.addEventListener('drop', (ev) => {
+
+  document.addEventListener('dragover', (ev) => {
     ev.preventDefault()
-    itemStartDrag.value = 0
+  })
+  document.addEventListener('drop', (event) => {
+    event.preventDefault()
+    setTimeout(() => {
+      itemStartDrag.value = 0
+    }, 300)
     sEl.style.display = 'none'
-    console.log('up')
-  }, false)
+    // console.log('aaaaaaaadropaaaaaaa')
+  })
 
   const childrenDrop = ({ from, to, dir }) => emits('itemDrop', { from, to, dir })
 
