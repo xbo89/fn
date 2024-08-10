@@ -14,24 +14,20 @@ export function useItem(props, emits) {
   const dragOverItemId = ref(null)
   const itemDirectionIndex = ref(null)
   const itemIsRename = ref(false)
-  // const itemPosHelper = ref(null)
   const itemStartDrag = ref(0)
   const levelRef = ref(props.treeLevel + 1) // 直接在定义时计算
 
   const isDragover = computed(() => dragOverItemId.value === props.data.id)
 
-  const updateDirectionAndPosition = (itemInnerPosY, itemHeight, itemOffsetTop) => {
+  const updateDirectionAndPosition = (itemInnerPosY, itemHeight) => {
     if (itemInnerPosY <= itemHeight * 0.25) {
       itemDirectionIndex.value = -1
-      // itemPosHelper.value = itemOffsetTop - props.parentOffsetTop
     }
     else if (itemInnerPosY >= itemHeight - itemHeight * 0.25) {
       itemDirectionIndex.value = 1
-      // itemPosHelper.value = itemOffsetTop - props.parentOffsetTop + itemHeight
     }
     else {
       itemDirectionIndex.value = 0
-      // itemPosHelper.value = null
     }
   }
   const transparentImage = new Image(0, 0)
@@ -61,10 +57,7 @@ export function useItem(props, emits) {
     const itemRect = ev.target.getBoundingClientRect()
     updateDirectionAndPosition(ev.offsetY, ev.target.offsetHeight, itemRect.top)
     dragOverItemId.value = props.data.id
-    emits('itemDragover', {
-      // helperPosTop: itemPosHelper.value,
-      // helperPosLeft: (levelRef.value - 1) * 24,
-    })
+    emits('itemDragover')
   }
 
   const itemDragleave = (ev) => {
@@ -96,11 +89,8 @@ export function useItem(props, emits) {
   })
   document.addEventListener('drop', (event) => {
     event.preventDefault()
-    setTimeout(() => {
-      itemStartDrag.value = 0
-    }, 300)
+    itemStartDrag.value = 0
     sEl.style.display = 'none'
-    // console.log('aaaaaaaadropaaaaaaa')
   })
 
   const childrenDrop = ({ from, to, dir }) => emits('itemDrop', { from, to, dir })
