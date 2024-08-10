@@ -1,6 +1,7 @@
 <template>
-  <div class="h-96" />
-  <Tree v-model="data" :data="data" />
+  <div class="container w-96 h-[600px] border p-6 mx-auto mt-20">
+    <Tree v-model="data" :data="data" />
+  </div>
 </template>
 
 <script setup>
@@ -37,5 +38,4 @@ const data = ref([
 </script>
 
 <style scoped>
-
 </style>

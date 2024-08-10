@@ -1,101 +1,110 @@
-import { onClickOutside } from '@vueuse/core'
-import { computed, inject, nextTick, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 
-export function useDnd(data) {
-  const { moveDocument } = inject('move')
-  const dragoverId = ref(null)
-  const handleDragstart = (ev, data) => {
-    ev.dataTransfer.setData('text/plain', JSON.stringify(data))
+export function useItem(props, emits) {
+  const dragStartItemId = ref(null)
+  const dragOverItemId = ref(null)
+  const itemDirectionIndex = ref(null)
+  const itemIsRename = ref(false)
+  const itemPosHelper = ref(null)
+  const levelRef = ref(props.treeLevel + 1) // 直接在定义时计算
+
+  const isDragover = computed(() => dragOverItemId.value === props.data.id)
+
+  const updateDirectionAndPosition = (itemInnerPosY, itemHeight, itemOffsetTop) => {
+    if (itemInnerPosY <= itemHeight * 0.25) {
+      itemDirectionIndex.value = -1
+      itemPosHelper.value = itemOffsetTop - props.parentOffsetTop
+    }
+    else if (itemInnerPosY >= itemHeight - itemHeight * 0.25) {
+      itemDirectionIndex.value = 1
+      itemPosHelper.value = itemOffsetTop - props.parentOffsetTop + itemHeight
+    }
+    else {
+      itemDirectionIndex.value = 0
+      itemPosHelper.value = null
+    }
   }
-  const handleDragover = (ev, data) => {
+
+  const itemDragstart = (ev) => {
+    ev.dataTransfer.setData('text/plain', JSON.stringify(props.data))
+    dragStartItemId.value = props.data.id
+    emits('itemDragstart')
+  }
+
+  const itemDragover = (ev) => {
     ev.preventDefault()
-    dragoverId.value = data.id
+    const itemRect = ev.target.getBoundingClientRect()
+    updateDirectionAndPosition(ev.offsetY, ev.target.offsetHeight, itemRect.top)
+    dragOverItemId.value = props.data.id
+    emits('itemDragover', {
+      helperPosTop: itemPosHelper.value,
+      helperPosLeft: (levelRef.value - 1) * 24,
+    })
   }
-  const handleDragleave = (ev, data) => {
+
+  const itemDragleave = (ev) => {
     ev.preventDefault()
-    dragoverId.value = null
+    emits('itemDragleave')
   }
-  const handleDrop = (ev, data) => {
-    handleDragleave(ev, data)
+
+  const itemDrop = (ev) => {
     ev.preventDefault()
     const dragData = JSON.parse(ev.dataTransfer.getData('text/plain'))
-    if (data.id === dragData.id)
-      return
-    moveDocument(dragData, JSON.parse(JSON.stringify(data)))
+    if (props.data.id !== dragData.id) {
+      emits('itemDrop', {
+        from: dragData,
+        to: props.data,
+        dir: itemDirectionIndex.value,
+      })
+    }
+    dragOverItemId.value = null
+    dragStartItemId.value = null
   }
-  const isDragover = computed(() => {
-    return dragoverId.value === data.id
-  })
-  return {
-    isDragover,
-    dragoverId,
-    handleDragstart,
-    handleDragover,
-    handleDragleave,
-    handleDrop,
-  }
-}
 
-export function useRename(el, data) {
-  const { handleRename } = inject('rename')
-  const renameId = inject('renameId')
-  const inputValue = ref(data.title)
-  const handleEnter = () => {
-    handleRename({ id: data.id, title: inputValue.value })
-  }
-  onClickOutside(el, (event) => {
-    handleRename({ id: data.id, title: inputValue.value })
-  })
-  const isRename = computed(() => {
-    return renameId.value === data.id
-  })
-  watch(isRename, (val) => {
-    if (!val)
-      return
-    nextTick(() => {
-      el.value.focus()
-      el.value.select()
-    })
-  })
-  return {
-    renameId,
-    isRename,
-    inputValue,
-    handleEnter,
-    onClickOutside,
-  }
-}
+  const childrenDrop = ({ from, to, dir }) => emits('itemDrop', { from, to, dir })
 
-export function useItemHover() {
+  const childrenFold = id => emits('itemFold', id)
+
+  const childrenAdd = id => emits('addItem', id)
+
+  const itemFold = () => emits('itemFold', props.data.id)
+
+  const itemDragend = () => emits('itemDragend')
+
+  const addItem = () => emits('addItem', props.data.id)
+
   const isHover = ref(false)
   const timer = ref(null)
+
   const mouseenter = () => {
     clearTimeout(timer.value)
     timer.value = setTimeout(() => {
       isHover.value = true
     }, 600)
   }
+
   const mouseleave = () => {
     clearTimeout(timer.value)
     isHover.value = false
   }
+
   return {
+    levelRef,
+    isDragover,
+    itemIsRename,
+    itemDirectionIndex,
     isHover,
+    itemDragstart,
+    itemDragover,
+    itemDragleave,
+    itemDrop,
+    childrenDrop,
+    childrenFold,
+    childrenAdd,
+    itemFold,
+    itemDragend,
+    addItem,
     mouseenter,
     mouseleave,
   }
-}
-
-export function useItemFold(data) {
-  data.toggle = !data.toggle
-  let treeCache = localStorage.getItem('treeToggleCache') || JSON.stringify({})
-  treeCache = JSON.parse(treeCache)
-  const currentBookTreeCache = treeCache[`book${data.bookId}`] || []
-  currentBookTreeCache.includes(data.id)
-    ? currentBookTreeCache.splice(currentBookTreeCache.indexOf(data.id), 1)
-    : currentBookTreeCache.push(data.id)
-
-  treeCache[`book${data.bookId}`] = currentBookTreeCache
-
-  localStorage.setItem('treeToggleCache', JSON.stringify(treeCache))
 }
