@@ -9,22 +9,16 @@
       v-for="item in data"
       :key="item.id"
       :data="item"
-      :parent-offset-top="offsetTop"
+
       @add-item="add"
       @item-drop="drop"
       @item-fold="fold"
-      @item-dragover="dragover"
-    />
-    <div
-      v-if="helperState"
-      :style="{ top: `${posTop}px`, left: `${posLeft}px` }"
-      class="pos-helper absolute h-px bg-slate-600 inset-x-0 h-0.5"
     />
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { nanoid } from 'nanoid'
 import { deleteById, findById, findIndexById } from './utils'
 import Item from './item.vue'
@@ -34,59 +28,10 @@ defineProps({
 })
 
 const treeData = defineModel()
-const posTop = ref(null)
-const posLeft = ref(null)
-const helperState = ref(false)
 const container = ref(null)
-const offsetTop = ref(0)
-onMounted(() => {
-  offsetTop.value = container.value.offsetTop
-})
-/**
- * tree container 相关 Event
- */
-// let timer = null
-function showHelper() {
-  // clearTimeout(timer)
-  // timer = setTimeout(() => {
-  //   helperState.value = true
-  // }, 400)
-  helperState.value = true
-}
-function hideHelper() {
-  // clearTimeout(timer)
-  // timer = setTimeout(() => {
-  //   helperState.value = false
-  // }, 400)
-  helperState.value = false
-}
-
-document.addEventListener('dragstart', (event) => {
-  showHelper()
-  offsetTop.value = container.value.offsetTop
-})
-
-function containerDragleave() {
-  hideHelper()
-}
-function containerDrop() {
-  hideHelper()
-  offsetTop.value = 0
-}
-/**
- * item 相关 Event
- */
-function dragover({ helperPosTop, helperPosLeft }) {
-  posTop.value = helperPosTop
-  console.log(helperPosTop)
-  // eslint-disable-next-line ts/no-unused-expressions
-  helperPosTop ? showHelper() : hideHelper()
-  posLeft.value = helperPosLeft
-}
 
 function drop({ from, to, dir }) {
   moveItem(treeData.value, from, to, dir)
-  hideHelper()
 }
 
 function fold(id) {

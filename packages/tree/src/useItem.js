@@ -1,48 +1,68 @@
 import { computed, ref } from 'vue'
 
+function itemBeDragShadow(text) {
+  const shadowEl = document.createElement('div')
+  shadowEl.textContent = text
+  shadowEl.style.position = 'fixed'
+  shadowEl.setAttribute('class', 'pointer-events-none px-4 py-px bg-white border rounded-lg text-xs shadow-lg hidden min-w-[220px]')
+  document.body.appendChild(shadowEl)
+  return shadowEl
+}
+const sEl = itemBeDragShadow('')
 export function useItem(props, emits) {
   const dragStartItemId = ref(null)
   const dragOverItemId = ref(null)
   const itemDirectionIndex = ref(null)
   const itemIsRename = ref(false)
-  const itemPosHelper = ref(null)
+  const itemStartDrag = ref(0)
   const levelRef = ref(props.treeLevel + 1) // 直接在定义时计算
 
   const isDragover = computed(() => dragOverItemId.value === props.data.id)
 
-  const updateDirectionAndPosition = (itemInnerPosY, itemHeight, itemOffsetTop) => {
+  const updateDirectionAndPosition = (itemInnerPosY, itemHeight) => {
     if (itemInnerPosY <= itemHeight * 0.25) {
       itemDirectionIndex.value = -1
-      itemPosHelper.value = itemOffsetTop - props.parentOffsetTop
     }
     else if (itemInnerPosY >= itemHeight - itemHeight * 0.25) {
       itemDirectionIndex.value = 1
-      itemPosHelper.value = itemOffsetTop - props.parentOffsetTop + itemHeight
     }
     else {
       itemDirectionIndex.value = 0
-      itemPosHelper.value = null
     }
   }
+  const transparentImage = new Image(0, 0)
+  transparentImage.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 
   const itemDragstart = (ev) => {
+    ev.dataTransfer.setDragImage(transparentImage, 0, 0)
     ev.dataTransfer.setData('text/plain', JSON.stringify(props.data))
+    ev.dataTransfer.dropEffect = 'move'
+    sEl.textContent = props.data.title
+    sEl.style.display = 'block'
+    itemStartDrag.value = 1
     dragStartItemId.value = props.data.id
     emits('itemDragstart')
   }
+  const itemDrag = (ev) => {
+    if (ev.pageX === 0 && ev.pageY === 0)
+      return
+    sEl.style.left = `${ev.pageX}px`
+    sEl.style.top = `${ev.pageY}px`
+  }
 
   const itemDragover = (ev) => {
+    ev.stopPropagation()
     ev.preventDefault()
+    ev.dataTransfer.dropEffect = 'move'
     const itemRect = ev.target.getBoundingClientRect()
     updateDirectionAndPosition(ev.offsetY, ev.target.offsetHeight, itemRect.top)
     dragOverItemId.value = props.data.id
-    emits('itemDragover', {
-      helperPosTop: itemPosHelper.value,
-      helperPosLeft: (levelRef.value - 1) * 24,
-    })
+    emits('itemDragover')
   }
 
   const itemDragleave = (ev) => {
+    itemDirectionIndex.value = null
+
     ev.preventDefault()
     emits('itemDragleave')
   }
@@ -57,9 +77,21 @@ export function useItem(props, emits) {
         dir: itemDirectionIndex.value,
       })
     }
+    sEl.style.display = 'none'
+    itemStartDrag.value = 0
     dragOverItemId.value = null
     dragStartItemId.value = null
+    itemDirectionIndex.value = null
   }
+
+  document.addEventListener('dragover', (ev) => {
+    ev.preventDefault()
+  })
+  document.addEventListener('drop', (event) => {
+    event.preventDefault()
+    itemStartDrag.value = 0
+    sEl.style.display = 'none'
+  })
 
   const childrenDrop = ({ from, to, dir }) => emits('itemDrop', { from, to, dir })
 
@@ -93,7 +125,9 @@ export function useItem(props, emits) {
     isDragover,
     itemIsRename,
     itemDirectionIndex,
+    itemStartDrag,
     isHover,
+    itemDrag,
     itemDragstart,
     itemDragover,
     itemDragleave,
