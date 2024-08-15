@@ -30,6 +30,12 @@ importers:
 
   packages/canvas:
     dependencies:
+      d3-selection:
+        specifier: ^3.0.0
+        version: 3.0.0
+      d3-zoom:
+        specifier: ^3.0.0
+        version: 3.0.0
       resize-observer-polyfill:
         specifier: ^1.5.1
         version: 1.5.1
