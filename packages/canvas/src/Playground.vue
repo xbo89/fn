@@ -1,11 +1,9 @@
 <script setup>
 import FCanvas from './Canvas.vue'
-import Test from './test.vue'
 </script>
 
 <template>
-  <!-- <FCanvas /> -->
-  <Test />
+  <FCanvas />
 </template>
 
 <style>

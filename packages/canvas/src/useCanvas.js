@@ -13,7 +13,7 @@ export function documentGestureBase(props) {
   const originX = ref(0)
   const originY = ref(0)
   const canvasScale = ref(1)
-  const canvasScaleStep = ref(0.02)
+  const canvasScaleStep = ref(0.016)
   onMounted(() => {
     canvasWidth.value = canvasContainer.value.offsetWidth
     canvasHeight.value = canvasContainer.value.offsetHeight
@@ -110,6 +110,7 @@ export function documentGestureBase(props) {
   /**
    * 处理鼠标滚轮事件
    */
+
   document.addEventListener('wheel', mouseWheel, { passive: false })
   function mouseWheel(event) {
     event.preventDefault()
