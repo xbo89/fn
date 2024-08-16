@@ -2,8 +2,6 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const SPACEKEY_CODE = 32 // 32 表示空格键
 const MOUSELEFTBUTTON_CODE = 0 // 0 表示鼠标左键
-const CANVASSCAL_MAX = 2
-const CANVASSCAL_MIN = 0.2
 
 export function useCanvas(props) {
   const canvasRef = ref(null)
@@ -43,7 +41,7 @@ export function useCanvas(props) {
   /**
    * 根据空格键和鼠标左键状态更改鼠标指针样式
    */
-  const cursorStyle = computed(() => {
+  const cursor = computed(() => {
     if (spaceKeyDown.value && !mouseLeftButton.value) {
       return 'cursor-grab'
     }
@@ -60,6 +58,14 @@ export function useCanvas(props) {
    */
   function keydown(event) {
     toggleSpaceKeyState(event, true)
+    if (event.metaKey && (event.key === '+' || event.key === '=')) {
+      event.preventDefault()
+      zoomIn()
+    }
+    if (event.metaKey && (event.key === '-')) {
+      event.preventDefault()
+      zoomOut()
+    }
   }
   function keyup(event) {
     toggleSpaceKeyState(event, false)
@@ -129,11 +135,11 @@ export function useCanvas(props) {
       const dy = -deltaY || wheelDeltaY
 
       // 缩放逻辑
-      if (dy > 0 && scale.value < CANVASSCAL_MAX) {
-        scale.value = Math.min(scale.value * (1 + zoomFactor), CANVASSCAL_MAX)
+      if (dy > 0 && scale.value < props.scaleMax) {
+        scale.value = Math.min(scale.value * (1 + zoomFactor), props.scaleMax)
       }
-      else if (dy < 0 && scale.value > CANVASSCAL_MIN) {
-        scale.value = Math.max(scale.value * (1 - zoomFactor), CANVASSCAL_MIN)
+      else if (dy < 0 && scale.value > props.scaleMin) {
+        scale.value = Math.max(scale.value * (1 - zoomFactor), props.scaleMin)
       }
 
       // 调整 x 和 y，使得鼠标位置保持为缩放中心
@@ -149,15 +155,80 @@ export function useCanvas(props) {
       y.value -= event.deltaY
     }
   }
+  // const scaleAniState = ref(false)
+  // let timer = null
+  function performZoom(isZoomIn) {
+    const old = scale.value
+    const { left, top } = canvasContainerRect.value
+    const offsetX = canvasContainerRef.value.offsetWidth / 2 - left
+    const offsetY = canvasContainerRef.value.offsetHeight / 2 - top
+    const relativeX = (offsetX - x.value) / scale.value
+    const relativeY = (offsetY - y.value) / scale.value
 
+    const targetScale = isZoomIn
+      ? Math.min(scale.value + props.scaleStep, props.scaleMax)
+      : Math.max(scale.value - props.scaleStep, props.scaleMin)
+
+    animateValue({
+      startValue: old,
+      endValue: targetScale,
+      duration: 300,
+      easingFunction: easeInOutQuad,
+      onUpdate: (value) => {
+        scale.value = value
+        const newRelativeX = relativeX * scale.value
+        const newRelativeY = relativeY * scale.value
+
+        x.value = offsetX - newRelativeX
+        y.value = offsetY - newRelativeY
+      },
+    })
+  }
+  function zoomIn() {
+    performZoom(true)
+  }
+
+  function zoomOut() {
+    performZoom(false)
+  }
   return {
     canvasRef,
     canvasContainerRef,
     spaceKeyDown,
     mouseLeftButton,
-    cursorStyle,
+    cursor,
     x,
     y,
     scale,
+
+    zoomIn,
+    zoomOut,
   }
+}
+function animateValue({ startValue, endValue, duration, easingFunction, onUpdate = () => {}, onComplete = () => {} }) {
+  const startTime = performance.now()
+
+  function tick(currentTime) {
+    const elapsed = currentTime - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    const easedProgress = easingFunction(progress)
+
+    const currentValue = startValue + (endValue - startValue) * easedProgress
+    onUpdate(currentValue)
+
+    if (progress < 1) {
+      requestAnimationFrame(tick)
+    }
+    else {
+      if (onComplete)
+        onComplete()
+    }
+  }
+
+  requestAnimationFrame(tick)
+}
+
+// 示例缓动函数（例如：easeInOutQuad）
+function easeInOutQuad(t) {
+  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
 }
