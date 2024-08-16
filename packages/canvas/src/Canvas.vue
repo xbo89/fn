@@ -1,8 +1,8 @@
 <template>
-  <div ref="canvasContainer" class="w-full h-full block touch-none" :class="[cursorStyle]">
+  <div ref="canvasContainerRef" class="w-full h-full block touch-none overflow-hidden relative" :class="[cursorStyle]">
     <div
-      ref="scrollableElement" class="fixed touch-none origin-top-left top-0 left-0" :style="{
-        transform: `translate(${originX}px, ${originY}px) scale(${canvasScale})`,
+      ref="canvasRef" class="absloute origin-top-left inset-0" :style="{
+        transform: `translate(${x}px, ${y}px) scale(${scale})`,
       }"
     >
       <div class="absolute z-50 size-60 bg-gray-400">
@@ -11,8 +11,8 @@
     </div>
 
     <svg width="100%" height="100%">
-      <pattern id="grid-dot-pattern" :width="20 * canvasScale" :height="20 * canvasScale" patternUnits="userSpaceOnUse" :patternTransform="`translate(${originX},${originY})`">
-        <circle :cx="canvasScale" :cy="canvasScale" :r=" canvasScale" fill-opacity="0.2" />
+      <pattern id="grid-dot-pattern" :width="20 * scale" :height="20 * scale" patternUnits="userSpaceOnUse" :patternTransform="`translate(${x},${y})`">
+        <circle :cx="scale" :cy="scale" :r=" scale" fill-opacity="0.2" />
       </pattern>
       <rect width="100%" height="100%" fill="url(#grid-dot-pattern)" />
     </svg>
@@ -21,19 +21,9 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { documentGestureBase } from './useCanvas'
+import { useCanvas } from './useCanvas'
 
-const props = defineProps({
-  width: {
-    type: Number,
-    default: 12500,
-  },
-  height: {
-    type: Number,
-    default: 12500,
-  },
-})
-const { scrollableElement, canvasContainer, canvasScale, cursorStyle, originX, originY, patternX, patternY, patternSize, patternTransform } = documentGestureBase(props)
+const { canvasRef, canvasContainerRef, scale, cursorStyle, x, y } = useCanvas()
 </script>
 
 <style>
