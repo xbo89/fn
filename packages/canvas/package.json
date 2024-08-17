@@ -1,16 +1,20 @@
 {
   "name": "canvas",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@egoist/tailwindcss-icons": "^1.8.1",
+    "@floatnote/writer": "workspace:*",
+    "@iconify-json/ri": "^1.1.20",
     "d3-selection": "^3.0.0",
     "d3-zoom": "^3.0.0",
+    "interactjs": "^1.10.27",
     "resize-observer-polyfill": "^1.5.1",
     "simplebar": "^6.2.7",
     "vue": "^3.4.35"

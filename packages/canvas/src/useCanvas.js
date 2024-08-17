@@ -66,6 +66,10 @@ export function useCanvas(props) {
       event.preventDefault()
       zoomOut()
     }
+    if (event.metaKey && (event.key === '0')) {
+      event.preventDefault()
+      scale.value = 1
+    }
   }
   function keyup(event) {
     toggleSpaceKeyState(event, false)
@@ -116,11 +120,11 @@ export function useCanvas(props) {
   function mouseWheel(event) {
     const { metaKey, ctrlKey, deltaY, wheelDeltaY } = event
     const isZooming = metaKey || ctrlKey
-    const touchpadThreshold = 10
+    const touchpadThreshold = 20
 
     // 检测是否是触控板
     const isTouchpad = Math.abs(deltaY) < touchpadThreshold
-    const zoomFactor = isTouchpad ? 0.02 : 0.3
+    const zoomFactor = isTouchpad ? 0.06 : 0.3
 
     // 只有在缩放时才阻止默认行为
     if (isZooming) {
