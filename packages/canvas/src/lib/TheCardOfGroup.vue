@@ -1,6 +1,6 @@
 <template>
   <Resize
-    class="border border-green-600 bg-green-100"
+    class="border border-green-600 bg-green-100 relative"
     :pos="data.position"
     :size="{ w: data.size.w, h: data.size.h }"
     :selected="isSelected"
@@ -10,8 +10,13 @@
     @move-end="cardMoveEnd"
   >
     <template #drag-element="{ pointerDown, cursorStyle }">
-      <div :class="[cursorStyle]" class="border-b p-1 flex space-x-1" @pointerdown="pointerDown">
-        <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
+      <div
+        :class="[cursorStyle]" class=" bg-green-500 border border-green-800 rounded-lg p-1 flex space-x-1 absolute -top-2" :style="{
+          transform: ` scale(${1 / scale})`,
+        }" @pointerdown="pointerDown"
+      >
+        a test green group
+        <!-- <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
           <i class="i-ri-arrow-down-s-line" />
         </button>
         <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
@@ -19,7 +24,7 @@
         </button>
         <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
           <i class="i-ri-more-line" />
-        </button>
+        </button> -->
       </div>
     </template>
     <template #default>
@@ -60,6 +65,7 @@ const props = defineProps({
 })
 const emits = defineEmits(['onUpdate', 'onMoveEnd'])
 const selectedId = inject('selectedNodeId')
+const { scale } = inject('canvasBaseInfo')
 // const { isDragging } = inject('cardDraging')
 const isSelected = computed(() => {
   return selectedId.value === props.data.id
