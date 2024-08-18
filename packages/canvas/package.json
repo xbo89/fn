@@ -15,6 +15,7 @@
     "d3-selection": "^3.0.0",
     "d3-zoom": "^3.0.0",
     "interactjs": "^1.10.27",
+    "pinia": "^2.2.2",
     "resize-observer-polyfill": "^1.5.1",
     "simplebar": "^6.2.7",
     "vue": "^3.4.35"

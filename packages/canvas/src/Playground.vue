@@ -1,27 +1,9 @@
 <script setup>
 import { ref } from 'vue'
-import FCanvas from './Canvas.vue'
+import FCanvas from './lib/Canvas.vue'
 
-const data = ref([
-  {
-    id: '9wL2xqXH',
-    pid: 0,
-    type: 'card',
-    title: '',
-    position: {
-      x: 0,
-      y: 0,
-    },
-    size: {
-      w: 300,
-      h: 300,
-    },
-    color: {
-      border: 1,
-      background: 2,
-    },
-    fold: false,
-  },
+const nodes = ref([
+
   {
     id: 'b7gO3uPc',
     pid: 0,
@@ -42,6 +24,26 @@ const data = ref([
     fold: false,
   },
   {
+    id: '9wL2xqXH',
+    pid: 0,
+    type: 'card',
+    title: '',
+    position: {
+      x: 0,
+      y: 0,
+    },
+    size: {
+      w: 300,
+      h: 300,
+    },
+    color: {
+      border: 1,
+      background: 2,
+    },
+    fold: false,
+  },
+
+  {
     id: 'X3v9pFq7',
     pid: 'b7gO3uPc',
     type: 'card',
@@ -60,12 +62,15 @@ const data = ref([
     },
     fold: false,
   },
-
 ])
+const edges = ref([])
 </script>
 
 <template>
-  <FCanvas v-model="data" />
+  <FCanvas
+    v-model:nodes="nodes"
+    v-model:edges="edges"
+  />
 </template>
 
 <style>

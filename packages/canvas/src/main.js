@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import './style.css'
+import './lib/style.css'
 import App from './Playground.vue'
 // import ContextMenu from './contextmenu/index.js'
 

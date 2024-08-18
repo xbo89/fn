@@ -10,7 +10,7 @@ export function useCanvas(props) {
   // 基础坐标
   const x = ref(0)
   const y = ref(0)
-  const scale = ref(1)
+  const scale = ref(props.patternStyle.scale.default)
   // 按键状态
   const spaceKeyDown = ref(false)
   const mouseLeftButton = ref(false)
@@ -139,11 +139,11 @@ export function useCanvas(props) {
       const dy = -deltaY || wheelDeltaY
 
       // 缩放逻辑
-      if (dy > 0 && scale.value < props.scaleMax) {
-        scale.value = Math.min(scale.value * (1 + zoomFactor), props.scaleMax)
+      if (dy > 0 && scale.value < props.patternStyle.scale.max) {
+        scale.value = Math.min(scale.value * (1 + zoomFactor), props.patternStyle.scale.max)
       }
-      else if (dy < 0 && scale.value > props.scaleMin) {
-        scale.value = Math.max(scale.value * (1 - zoomFactor), props.scaleMin)
+      else if (dy < 0 && scale.value > props.patternStyle.scale.min) {
+        scale.value = Math.max(scale.value * (1 - zoomFactor), props.patternStyle.scale.min)
       }
 
       // 调整 x 和 y，使得鼠标位置保持为缩放中心
@@ -170,8 +170,8 @@ export function useCanvas(props) {
     const relativeY = (offsetY - y.value) / scale.value
 
     const targetScale = isZoomIn
-      ? Math.min(scale.value + props.scaleStep, props.scaleMax)
-      : Math.max(scale.value - props.scaleStep, props.scaleMin)
+      ? Math.min(scale.value + props.patternStyle.scale.step, props.patternStyle.scale.max)
+      : Math.max(scale.value - props.patternStyle.scale.step, props.patternStyle.scale.min)
 
     animateValue({
       startValue: old,
