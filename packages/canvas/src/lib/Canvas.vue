@@ -18,11 +18,14 @@
           :data="node"
           :data-node-index="index"
           @on-update="updateNodeData"
+          @on-move-end="cardMoveEnd"
         />
         <TheCardOfGroup
           v-if="node.type === 'group'"
           :data="node"
           :data-node-index="index"
+          @on-update="updateNodeData"
+          @on-move-end="cardMoveEnd"
         />
       </template>
     </div>
@@ -101,11 +104,27 @@ function clickContainer() {
   // 清空选择
   nodeId.value = -1
 }
-
-function updateNodeData({ id, position }) {
+let cachepos = []
+function updateNodeData({ id, position, delta }) {
   const node = nodeData.value.find(i => i.id === id)
   node.position.x = position.x
   node.position.y = position.y
+  const nodeChild = nodeData.value.filter(i => i.pid === id)
+  for (let i = 0; i < nodeChild.length; i++) {
+    if (!cachepos[i]) {
+      cachepos[i] = {
+        x: nodeChild[i].position.x,
+        y: nodeChild[i].position.y,
+      }
+    }
+    else {
+      nodeChild[i].position.x = cachepos[i].x + delta.x
+      nodeChild[i].position.y = cachepos[i].y + delta.y
+    }
+  }
+}
+function cardMoveEnd() {
+  cachepos = []
 }
 </script>
 

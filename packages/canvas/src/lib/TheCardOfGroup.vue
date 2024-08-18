@@ -1,11 +1,13 @@
 <template>
   <Resize
-    :position="{ x: pos.x, y: pos.y }"
+    class="border border-green-600 bg-green-100"
+    :pos="data.position"
     :size="{ w: data.size.w, h: data.size.h }"
     :selected="isSelected"
-    class="border border-green-600 bg-green-100"
     :style="{ zIndex: isSelected ? 166 : 1 }"
     @click.stop.prevent="selectNode(data.id)"
+    @move="cardMove"
+    @move-end="cardMoveEnd"
   >
     <template #drag-element="{ pointerDown, cursorStyle }">
       <div :class="[cursorStyle]" class="border-b p-1 flex space-x-1" @pointerdown="pointerDown">
@@ -21,7 +23,6 @@
       </div>
     </template>
     <template #default>
-      <!-- <Writer /> -->
       aa
     </template>
   </Resize>
@@ -57,25 +58,26 @@ const props = defineProps({
     },
   },
 })
-
+const emits = defineEmits(['onUpdate', 'onMoveEnd'])
 const selectedId = inject('selectedNodeId')
-const { isDragging, deltaX, deltaY } = inject('cardDraging')
+// const { isDragging } = inject('cardDraging')
 const isSelected = computed(() => {
   return selectedId.value === props.data.id
 })
-const pos = computed(() => {
-  if (isDragging.value && props.data.pid === selectedId.value) {
-    return { x: deltaX.value + props.data.position.x, y: deltaY.value + props.data.position.y }
-  }
-  else {
-    return { x: props.data.position.x, y: props.data.position.y }
-  }
-})
+
 function selectNode(nodeid) {
   selectedId.value = nodeid
 }
-
-// function testchange(v) {
-//   // console.log(v.position.x, v.position.y, v.size.width, v.size.height, v.isDragging.value)
+function cardMove({ position, delta }) {
+  emits('onUpdate', { id: props.data.id, position, delta })
+}
+function cardMoveEnd() {
+  emits('onMoveEnd')
+}
+// function mouseenter() {
+//   console.log('start')
+//   if (isDragging.value) {
+//     console.log('enter')
+//   }
 // }
 </script>

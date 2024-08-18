@@ -44,7 +44,7 @@ const nodes = ref([
   },
 
   {
-    id: 'X3v9pFq7',
+    id: 'X3v9pFq7dghgf',
     pid: 'b7gO3uPc',
     type: 'card',
     title: '',
@@ -62,6 +62,196 @@ const nodes = ref([
     },
     fold: false,
   },
+  {
+    id: 'X3v9pFq7hfgh',
+    pid: 'b7gO3uPc',
+    type: 'card',
+    title: '',
+    position: {
+      x: 0,
+      y: 0,
+    },
+    size: {
+      w: 600,
+      h: 400,
+    },
+    color: {
+      border: 1,
+      background: 2,
+    },
+    fold: false,
+  },
+  {
+    id: 'X3v9pFq7rt',
+    pid: 'b7gO3uPc',
+    type: 'card',
+    title: '',
+    position: {
+      x: 0,
+      y: 0,
+    },
+    size: {
+      w: 600,
+      h: 400,
+    },
+    color: {
+      border: 1,
+      background: 2,
+    },
+    fold: false,
+  },
+  {
+    id: 'X3v9pFq7gfd',
+    pid: 'b7gO3uPc',
+    type: 'card',
+    title: '',
+    position: {
+      x: 0,
+      y: 0,
+    },
+    size: {
+      w: 600,
+      h: 400,
+    },
+    color: {
+      border: 1,
+      background: 2,
+    },
+    fold: false,
+  },
+  // {
+  //   id: 'X3v9pFq7cxv',
+  //   pid: 'b7gO3uPc',
+  //   type: 'card',
+  //   title: '',
+  //   position: {
+  //     x: 0,
+  //     y: 0,
+  //   },
+  //   size: {
+  //     w: 600,
+  //     h: 400,
+  //   },
+  //   color: {
+  //     border: 1,
+  //     background: 2,
+  //   },
+  //   fold: false,
+  // },
+  // {
+  //   id: 'X3v9pFq7asdf',
+  //   pid: 'b7gO3uPc',
+  //   type: 'card',
+  //   title: '',
+  //   position: {
+  //     x: 0,
+  //     y: 0,
+  //   },
+  //   size: {
+  //     w: 600,
+  //     h: 400,
+  //   },
+  //   color: {
+  //     border: 1,
+  //     background: 2,
+  //   },
+  //   fold: false,
+  // },
+  // {
+  //   id: 'X3v9pFq7asdfd',
+  //   pid: 'b7gO3uPc',
+  //   type: 'card',
+  //   title: '',
+  //   position: {
+  //     x: 0,
+  //     y: 0,
+  //   },
+  //   size: {
+  //     w: 600,
+  //     h: 400,
+  //   },
+  //   color: {
+  //     border: 1,
+  //     background: 2,
+  //   },
+  //   fold: false,
+  // },
+  // {
+  //   id: 'X3v9pFq7asd',
+  //   pid: 'b7gO3uPc',
+  //   type: 'card',
+  //   title: '',
+  //   position: {
+  //     x: 0,
+  //     y: 0,
+  //   },
+  //   size: {
+  //     w: 600,
+  //     h: 400,
+  //   },
+  //   color: {
+  //     border: 1,
+  //     background: 2,
+  //   },
+  //   fold: false,
+  // },
+  // {
+  //   id: 'X3v9pFq7sad',
+  //   pid: 'b7gO3uPc',
+  //   type: 'card',
+  //   title: '',
+  //   position: {
+  //     x: 0,
+  //     y: 0,
+  //   },
+  //   size: {
+  //     w: 600,
+  //     h: 400,
+  //   },
+  //   color: {
+  //     border: 1,
+  //     background: 2,
+  //   },
+  //   fold: false,
+  // },
+  // {
+  //   id: 'X3v9pFq7dsa',
+  //   pid: 'b7gO3uPc',
+  //   type: 'card',
+  //   title: '',
+  //   position: {
+  //     x: 0,
+  //     y: 0,
+  //   },
+  //   size: {
+  //     w: 600,
+  //     h: 400,
+  //   },
+  //   color: {
+  //     border: 1,
+  //     background: 2,
+  //   },
+  //   fold: false,
+  // },
+  // {
+  //   id: 'X3v9pFq7dsasdfgjj',
+  //   pid: 'b7gO3uPc',
+  //   type: 'card',
+  //   title: '',
+  //   position: {
+  //     x: 0,
+  //     y: 0,
+  //   },
+  //   size: {
+  //     w: 600,
+  //     h: 400,
+  //   },
+  //   color: {
+  //     border: 1,
+  //     background: 2,
+  //   },
+  //   fold: false,
+  // },
 ])
 const edges = ref([])
 </script>

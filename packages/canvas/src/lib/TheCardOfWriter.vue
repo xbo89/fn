@@ -1,12 +1,13 @@
 <template>
   <Resize
-    :pos="pos"
     class="border bg-white"
+    :pos="data.position"
     :size="{ w: data.size.w, h: data.size.h }"
     :selected="isSelected"
     :style="{ zIndex: isSelected ? 166 : 1 }"
     @click.stop.prevent="selectNode(data.id)"
     @move="cardMove"
+    @move-end="cardMoveEnd"
   >
     <template #drag-element="{ pointerDown, cursorStyle }">
       <div :class="[cursorStyle]" class="border-b p-1 flex space-x-1" @pointerdown="pointerDown">
@@ -22,9 +23,7 @@
       </div>
     </template>
     <template #default>
-      <!-- <Writer /> -->
-      pos:{{ pos.x }},{{ pos.y }}<br>
-      id:{{ data.id }}
+      aa
     </template>
   </Resize>
 </template>
@@ -59,38 +58,19 @@ const props = defineProps({
     },
   },
 })
-const emits = defineEmits(['onUpdate'])
-// const cardDelta = reactive({ x: 0, y: 0 })
+const emits = defineEmits(['onUpdate', 'onMoveEnd'])
 const selectedId = inject('selectedNodeId')
-const { isDragging, deltaX, deltaY } = inject('cardDraging')
 const isSelected = computed(() => {
   return selectedId.value === props.data.id
-})
-
-let x = props.data.position.x
-let y = props.data.position.y
-const pos = computed(() => {
-  if (props.data.pid === selectedId.value && isDragging.value) {
-    x = deltaX.value + props.data.position.x
-    y = deltaY.value + props.data.position.y
-    return { x, y }
-  }
-  else {
-    return { x: props.data.position.x, y: props.data.position.y }
-  }
-})
-
-watchEffect(() => {
-  if (props.data.pid === selectedId.value && !isDragging.value) {
-    console.log(x, y)
-    emits('onUpdate', { id: props.data.id, position: { x, y } })
-  }
 })
 
 function selectNode(nodeid) {
   selectedId.value = nodeid
 }
-function cardMove({ position }) {
-  emits('onUpdate', { id: props.data.id, position })
+function cardMove({ position, delta }) {
+  emits('onUpdate', { id: props.data.id, position, delta })
+}
+function cardMoveEnd() {
+  emits('onMoveEnd')
 }
 </script>
