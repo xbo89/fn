@@ -194,8 +194,6 @@ export function useCanvas(props) {
       () => scale.value = 1,
     ],
   })
-  let oldx = 0
-  let oldy = 0
   _handleCanvasMouse(canvasContainerRef, {
     mousedown: [
       (event) => {
@@ -206,12 +204,10 @@ export function useCanvas(props) {
         _startX.value = event.clientX
         _startY.value = event.clientY
       },
-      () => {
+      (event) => {
         selectHelper.display = true
         selectHelper.x = _startX.value
         selectHelper.y = _startY.value
-        oldx = selectHelper.x
-        oldy = selectHelper.y
       },
     ],
     mousemove: [
@@ -229,17 +225,14 @@ export function useCanvas(props) {
         }
       },
       (event) => {
-        if (selectHelper.display) {
-          selectHelper.w = event.clientX - _startX.value
-          selectHelper.h = event.clientY - _startY.value
-          if (selectHelper.w < 0) {
-            selectHelper.x = oldx - selectHelper.w * -1
-            selectHelper.w = selectHelper.w * -1
-          }
-          if (selectHelper.h < 0) {
-            selectHelper.y = oldy - selectHelper.h * -1
-            selectHelper.h = selectHelper.h * -1
-          }
+        if (selectHelper.display && mouse.left && keyboard.space === false) {
+          const currentX = event.clientX
+          const currentY = event.clientY
+          // 计算选框的位置和大小
+          selectHelper.w = Math.abs(currentX - _startX.value)
+          selectHelper.h = Math.abs(currentY - _startY.value)
+          selectHelper.x = Math.min(currentX, _startX.value)
+          selectHelper.y = Math.min(currentY, _startY.value)
         }
       },
     ],

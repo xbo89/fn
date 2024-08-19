@@ -8,6 +8,7 @@
     @click.stop.prevent="selectNode(data.id)"
     @move="cardMove"
     @move-end="cardMoveEnd"
+    @mousdown.stop.prevent
   >
     <template #drag-element="{ pointerDown, cursorStyle }">
       <div :class="[cursorStyle]" class="border-b p-1 flex space-x-1" @pointerdown="pointerDown">
