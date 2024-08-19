@@ -28,6 +28,15 @@
           @on-move-end="cardMoveEnd"
         />
       </template>
+      <div
+        v-show="selectHelper.display"
+        :style="{
+          width: `${selectHelper.w}px`,
+          height: `${selectHelper.h}px`,
+          transform: `translate(${selectHelper.x}px,${selectHelper.y}px)`,
+        }"
+        class="border border-blue-400 bg-blue-800/10 absolute pointer-events-none rounded-sm"
+      />
       <!-- <svg width="284.4309383881681" height="311.05503576432693"><defs><linearGradient id="100001_-145026_" x1="0%" y1="100%" x2="100%" y2="100%" gradientUnits="userSpaceOnUse"><stop stop-color="#4d53e8" offset="0%" /><stop stop-color="#4d53e8" offset="100%" /></linearGradient></defs><g><path d="M22 299.05503576432693 C 142.215469194084 299.05503576432693,142.215469194084 12, 262.4309383881681 12" fill="none" stroke="url(#100001_-145026_)" stroke-width="2" class="" /><path d="M 256.4309383881681,6 L 262.4309383881681,12 L 256.4309383881681,18" stroke-linecap="round" stroke="url(#100001_-145026_)" fill="none" stroke-width="2" /></g></svg> -->
     </div>
     <ToolBar
@@ -35,16 +44,7 @@
       @on-zoom-in="zoomIn"
       @on-zoom-out="zoomOut"
     />
-    <div
-      v-show="selectHelper.display"
-      :style="{
-        width: `${selectHelper.w}px`,
-        height: `${selectHelper.h}px`,
-        left: `${selectHelper.x}px`,
-        top: `${selectHelper.y}px`,
-      }"
-      class="border border-blue-400 bg-blue-800/10 absolute pointer-events-none rounded-sm"
-    />
+
     <slot name="ui-extend" />
     <svg v-if="pattern" width="100%" height="100%">
       <pattern id="grid-dot-pattern" :width="patternStyle.gap * scale" :height="patternStyle.gap * scale" patternUnits="userSpaceOnUse" :patternTransform="`translate(${x},${y})`">

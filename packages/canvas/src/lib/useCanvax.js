@@ -2,9 +2,9 @@ import { computed, onBeforeUnmount, onMounted, reactive, ref, watchEffect } from
 import hotkeys from 'hotkeys-js'
 import { animate, easeInOutQuad } from './useAnimation'
 
-hotkeys.filter = function (event) {
-  return true
-}
+// hotkeys.filter = function (event) {
+//   return true
+// }
 
 function _handleKeyboard(cbArr = {
   metaDown: [],
@@ -209,9 +209,7 @@ export function useCanvas(props) {
         _startY.value = event.clientY
       },
       () => {
-        selectHelper.display = true
-        selectHelper.x = _startX.value
-        selectHelper.y = _startY.value
+
       },
     ],
     mousemove: [
@@ -229,15 +227,7 @@ export function useCanvas(props) {
         }
       },
       (event) => {
-        if (selectHelper.display && mouse.left && keyboard.space === false) {
-          mousePosition.x = event.clientX
-          mousePosition.y = event.clientY
-          // 计算选框的位置和大小
-          selectHelper.w = Math.abs(mousePosition.x - _startX.value)
-          selectHelper.h = Math.abs(mousePosition.y - _startY.value)
-          selectHelper.x = Math.min(mousePosition.x, _startX.value)
-          selectHelper.y = Math.min(mousePosition.y, _startY.value)
-        }
+
       },
     ],
     mouseup: [
@@ -247,11 +237,7 @@ export function useCanvas(props) {
           mouse.left = false
         }
       },
-      () => {
-        selectHelper.display = false
-        selectHelper.w = 0
-        selectHelper.h = 0
-      },
+
     ],
     mousewheel: [
       (event) => {
@@ -298,7 +284,29 @@ export function useCanvas(props) {
       },
     ],
   })
-
+  document.addEventListener('mousedown', (event) => {
+    selectHelper.display = true
+    // TODO:坐标位置计算，需要把事件添加到document
+    selectHelper.x = event.clientX - x.value
+    selectHelper.y = event.clientY
+    console.log(event.clientX)
+  })
+  document.addEventListener('mousemove', (event) => {
+    if (selectHelper.display && mouse.left && keyboard.space === false) {
+      mousePosition.x = event.clientX
+      mousePosition.y = event.clientY
+      // 计算选框的位置和大小
+      selectHelper.w = Math.abs(mousePosition.x - _startX.value)
+      selectHelper.h = Math.abs(mousePosition.y - _startY.value)
+      // selectHelper.x = Math.min(mousePosition.x, _startX.value)
+      // selectHelper.y = Math.min(mousePosition.y, _startY.value)
+    }
+  })
+  document.addEventListener('mouseup', (event) => {
+    selectHelper.display = false
+    selectHelper.w = 0
+    selectHelper.h = 0
+  })
   function performZoom(isZoomIn) {
     const old = scale.value
     const { left, top } = canvasContainerRect.value
