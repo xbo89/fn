@@ -284,20 +284,24 @@ export function useCanvas(props) {
       },
     ],
   })
+  let xxx = 0
   document.addEventListener('mousedown', (event) => {
     selectHelper.display = true
     // TODO:坐标位置计算，需要把事件添加到document
-    selectHelper.x = event.clientX - x.value
-    selectHelper.y = event.clientY
+    selectHelper.x = (event.clientX - x.value) / scale.value
+    selectHelper.y = (event.clientY - y.value) / scale.value
+    xxx = selectHelper.x
+    // mousePosition.y = selectHelper.y
     console.log(event.clientX)
   })
   document.addEventListener('mousemove', (event) => {
     if (selectHelper.display && mouse.left && keyboard.space === false) {
-      mousePosition.x = event.clientX
+      mousePosition.x = event.clientX / scale.value
       mousePosition.y = event.clientY
       // 计算选框的位置和大小
-      selectHelper.w = Math.abs(mousePosition.x - _startX.value)
-      selectHelper.h = Math.abs(mousePosition.y - _startY.value)
+      console.log(mousePosition.x - xxx - x.value)
+      selectHelper.w = Math.abs(mousePosition.x - xxx - x.value)
+      selectHelper.h = Math.abs(mousePosition.y - _startY.value) / scale.value
       // selectHelper.x = Math.min(mousePosition.x, _startX.value)
       // selectHelper.y = Math.min(mousePosition.y, _startY.value)
     }
