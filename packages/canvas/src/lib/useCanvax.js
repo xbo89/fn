@@ -194,6 +194,8 @@ export function useCanvas(props) {
       () => scale.value = 1,
     ],
   })
+  let oldx = 0
+  let oldy = 0
   _handleCanvasMouse(canvasContainerRef, {
     mousedown: [
       (event) => {
@@ -208,6 +210,8 @@ export function useCanvas(props) {
         selectHelper.display = true
         selectHelper.x = _startX.value
         selectHelper.y = _startY.value
+        oldx = selectHelper.x
+        oldy = selectHelper.y
       },
     ],
     mousemove: [
@@ -228,6 +232,14 @@ export function useCanvas(props) {
         if (selectHelper.display) {
           selectHelper.w = event.clientX - _startX.value
           selectHelper.h = event.clientY - _startY.value
+          if (selectHelper.w < 0) {
+            selectHelper.x = oldx - selectHelper.w * -1
+            selectHelper.w = selectHelper.w * -1
+          }
+          if (selectHelper.h < 0) {
+            selectHelper.y = oldy - selectHelper.h * -1
+            selectHelper.h = selectHelper.h * -1
+          }
         }
       },
     ],
