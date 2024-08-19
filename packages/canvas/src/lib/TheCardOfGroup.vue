@@ -11,20 +11,25 @@
   >
     <template #drag-element="{ pointerDown, cursorStyle }">
       <div
-        :class="[cursorStyle]" class=" bg-green-500 border border-green-800 rounded-lg p-1 flex space-x-1 absolute -top-2" :style="{
-          transform: ` scale(${1 / scale})`, left: `${0}px`,
+        :class="[cursorStyle]" class=" bg-green-400 border border-green-600 rounded-lg py-1 px-2 font-bold flex items-center text-sm space-x-1 absolute -top-2 origin-top-left" :style="{
+          transform: ` scale(${1 / scale})`,
+          left: `${0}px`,
+          top: `calc(-36px / ${scale} )`,
+          height: `${28}px`,
+
         }" @pointerdown="pointerDown"
       >
-        a test green group
+        <span>a test green group</span>
+        <button class="size-5 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
+          <i class="i-ri-more-line" />
+        </button>
         <!-- <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
           <i class="i-ri-arrow-down-s-line" />
         </button>
         <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
           <i class="i-ri-information-line" />
         </button>
-        <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
-          <i class="i-ri-more-line" />
-        </button> -->
+         -->
       </div>
     </template>
     <template #default>
