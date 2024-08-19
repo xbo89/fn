@@ -43,7 +43,7 @@
         left: `${selectHelper.x}px`,
         top: `${selectHelper.y}px`,
       }"
-      class="border border-blue-400 bg-blue-800/10 absolute pointer-events-none"
+      class="border border-blue-400 bg-blue-800/10 absolute pointer-events-none rounded-sm"
     />
     <slot name="ui-extend" />
     <svg v-if="pattern" width="100%" height="100%">

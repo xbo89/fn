@@ -15,22 +15,21 @@
     <slot name="drag-element" :pointer-down="onPointerDown" :cursor-style="cursorStyle">
       <div class="w-full h-6 " />
     </slot>
-    <!-- </div> -->
 
     <div class="w-full h-full" @click.stop.prevent @dragover.prevent="dragover">
       <slot />
     </div>
     <template v-if="selected">
       <!-- 各个边的 resize handle -->
-      <div class="resize-handle-border top" @pointerdown="onResizePointerDown($event, 'top')" />
-      <div class="resize-handle-border bottom" @pointerdown="onResizePointerDown($event, 'bottom')" />
-      <div class="resize-handle-border left" @pointerdown="onResizePointerDown($event, 'left')" />
-      <div class="resize-handle-border right" @pointerdown="onResizePointerDown($event, 'right')" />
+      <div class="resize-handle-border top" @pointerdown.stop.prevent="onResizePointerDown($event, 'top')" />
+      <div class="resize-handle-border bottom" @pointerdown.stop.prevent="onResizePointerDown($event, 'bottom')" />
+      <div class="resize-handle-border left" @pointerdown.stop.prevent="onResizePointerDown($event, 'left')" />
+      <div class="resize-handle-border right" @pointerdown.stop.prevent="onResizePointerDown($event, 'right')" />
       <!-- 各个角的 resize handle -->
-      <div class="resize-handle-corner top-left cursor-nwse-resize" @pointerdown="onResizePointerDown($event, 'top-left')" />
-      <div class="resize-handle-corner top-right cursor-nesw-resize" @pointerdown="onResizePointerDown($event, 'top-right')" />
-      <div class="resize-handle-corner bottom-left cursor-nesw-resize" @pointerdown="onResizePointerDown($event, 'bottom-left')" />
-      <div class="resize-handle-corner bottom-right cursor-nwse-resize" @pointerdown="onResizePointerDown($event, 'bottom-right')" />
+      <div class="resize-handle-corner top-left cursor-nwse-resize" @pointerdown.stop.prevent="onResizePointerDown($event, 'top-left')" />
+      <div class="resize-handle-corner top-right cursor-nesw-resize" @pointerdown.stop.prevent="onResizePointerDown($event, 'top-right')" />
+      <div class="resize-handle-corner bottom-left cursor-nesw-resize" @pointerdown.stop.prevent="onResizePointerDown($event, 'bottom-left')" />
+      <div class="resize-handle-corner bottom-right cursor-nwse-resize" @pointerdown.stop.prevent="onResizePointerDown($event, 'bottom-right')" />
     </template>
   </div>
 </template>
@@ -97,19 +96,11 @@ const props = defineProps({
 const emits = defineEmits(['change', 'moveStart', 'move', 'moveEnd', 'resizeStart', 'resize', 'resizeEnd'])
 const { draggableRef, onPointerDown, onResizePointerDown, style, position } = useResize(props, emits)
 const cursorStyle = ref('cursor-grab active:cursor-grabbing select-none')
-// const pos = defineModel('position')
 
 watchEffect(() => {
   position.x = props.pos.x
   position.y = props.pos.y
 })
-function dragover() {
-  console.log('aaa')
-}
-
-// setInterval(() => {
-//   position.x += 10
-// }, 100)
 </script>
 
 <style scoped>

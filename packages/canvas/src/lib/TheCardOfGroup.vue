@@ -1,18 +1,17 @@
 <template>
   <Resize
-    class="border border-green-600 bg-green-100 relative"
+    class="border border-teal-600 bg-teal-700/30 relative"
     :pos="data.position"
     :size="{ w: data.size.w, h: data.size.h }"
     :selected="isSelected"
     :style="{ zIndex: isSelected ? 166 : 1 }"
     @click.stop.prevent="selectNode(data.id)"
     @move="cardMove"
-    @move-end="cardMoveEnd"
   >
     <template #drag-element="{ pointerDown, cursorStyle }">
       <div
         :class="[cursorStyle]"
-        class=" bg-green-400 border border-green-600 rounded py-1 pl-2 pr-1 font-bold flex items-center text-sm space-x-2 absolute -top-2 origin-top-left"
+        class=" bg-teal-700/30 border border-teal-600 rounded py-1 pl-2 pr-1 font-bold flex items-center text-sm space-x-2 absolute -top-2 origin-top-left"
         :style="{
           transform: ` scale(${1 / scale})`,
           left: `${0}px`,
@@ -27,9 +26,6 @@
         </button>
       </div>
     </template>
-    <!-- <template #default>
-      aa
-    </template> -->
   </Resize>
 </template>
 
@@ -66,7 +62,7 @@ const props = defineProps({
 const emits = defineEmits(['onUpdate', 'onMoveEnd'])
 const selectedId = inject('selectedNodeId')
 const { scale } = inject('canvasBaseInfo')
-// const { isDragging } = inject('cardDraging')
+
 const isSelected = computed(() => {
   return selectedId.value === props.data.id
 })
@@ -77,13 +73,4 @@ function selectNode(nodeid) {
 function cardMove({ position, delta }) {
   emits('onUpdate', { id: props.data.id, position, delta })
 }
-function cardMoveEnd() {
-  emits('onMoveEnd')
-}
-// function mouseenter() {
-//   console.log('start')
-//   if (isDragging.value) {
-//     console.log('enter')
-//   }
-// }
 </script>

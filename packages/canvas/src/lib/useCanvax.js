@@ -15,27 +15,20 @@ function _handleKeyboard(cbArr = {
   zoomIn: [],
   zoomOut: [],
 }) {
-  hotkeys('*', { keydown: true, keyup: false }, (event, handler) => {
+  hotkeys('*', { keyup: true }, (event, handler) => {
     event.preventDefault()
-    if (hotkeys.command || hotkeys.ctrl) {
-      console.log(event, handler)
-      if (cbArr.metaDown.length > 0) {
-        cbArr.metaDown.forEach((callback) => {
-          callback(event, handler)
-        })
-      }
+    if (event.type === 'keydown' && (hotkeys.command || hotkeys.ctrl) && cbArr.metaDown.length > 0) {
+      cbArr.metaDown.forEach((callback) => {
+        callback(event, handler)
+      })
+    }
+    if (event.type === 'keyup' && (hotkeys.command || hotkeys.ctrl) && cbArr.metaUp.length > 0) {
+      cbArr.metaUp.forEach((callback) => {
+        callback(event, handler)
+      })
     }
   })
-  hotkeys('*', { keydown: false, keyup: true }, (event, handler) => {
-    event.preventDefault()
-    if (hotkeys.command || hotkeys.ctrl) {
-      if (cbArr.metaUp.length > 0) {
-        cbArr.metaUp.forEach((callback) => {
-          callback(event, handler)
-        })
-      }
-    }
-  })
+
   hotkeys('space', { keyup: true }, (event, handler) => {
     event.preventDefault()
     if (event.type === 'keydown' && cbArr.spaceDown.length > 0) {
@@ -44,7 +37,6 @@ function _handleKeyboard(cbArr = {
       })
     }
     if (event.type === 'keyup' && cbArr.spaceUp.length > 0) {
-      // console.log('keyup:', event.type, handler, handler.key);
       cbArr.spaceUp.forEach((callback) => {
         callback(event, handler)
       })
@@ -66,8 +58,7 @@ function _handleKeyboard(cbArr = {
       })
     }
   })
-  hotkeys('ctrl-+,command-+', { splitKey: '-' }, (event, handler) => {
-    console.log('aa')
+  hotkeys('ctrl+=,command+=', (event, handler) => {
     event.preventDefault()
     if (cbArr.zoomIn.length > 0) {
       cbArr.zoomIn.forEach((callback) => {
@@ -124,7 +115,9 @@ function _handleCanvasMouse(target, cbArr = {
     }
   }
 }
+function _handleDocumentMouse(cbArr = {}) {
 
+}
 export function useCanvas(props) {
   // 基础坐标
   const x = ref(0)
@@ -204,7 +197,7 @@ export function useCanvas(props) {
         _startX.value = event.clientX
         _startY.value = event.clientY
       },
-      (event) => {
+      () => {
         selectHelper.display = true
         selectHelper.x = _startX.value
         selectHelper.y = _startY.value
