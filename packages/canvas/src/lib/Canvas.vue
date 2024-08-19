@@ -28,11 +28,22 @@
           @on-move-end="cardMoveEnd"
         />
       </template>
+      <!-- <svg width="284.4309383881681" height="311.05503576432693"><defs><linearGradient id="100001_-145026_" x1="0%" y1="100%" x2="100%" y2="100%" gradientUnits="userSpaceOnUse"><stop stop-color="#4d53e8" offset="0%" /><stop stop-color="#4d53e8" offset="100%" /></linearGradient></defs><g><path d="M22 299.05503576432693 C 142.215469194084 299.05503576432693,142.215469194084 12, 262.4309383881681 12" fill="none" stroke="url(#100001_-145026_)" stroke-width="2" class="" /><path d="M 256.4309383881681,6 L 262.4309383881681,12 L 256.4309383881681,18" stroke-linecap="round" stroke="url(#100001_-145026_)" fill="none" stroke-width="2" /></g></svg> -->
     </div>
     <ToolBar
       :scale="scale"
       @on-zoom-in="zoomIn"
       @on-zoom-out="zoomOut"
+    />
+    <div
+      v-show="selectHelper.display"
+      :style="{
+        width: `${selectHelper.w}px`,
+        height: `${selectHelper.h}px`,
+        left: `${selectHelper.x}px`,
+        top: `${selectHelper.y}px`,
+      }"
+      class="border border-blue-400 bg-blue-800/10 absolute"
     />
     <slot name="ui-extend" />
     <svg v-if="pattern" width="100%" height="100%">
@@ -46,7 +57,7 @@
 
 <script setup>
 import { provide, ref } from 'vue'
-import { useCanvas } from './useCanvas'
+import { useCanvas } from './useCanvax'
 import ToolBar from './ToolBar.vue'
 import TheCardOfWriter from './TheCardOfWriter.vue'
 import TheCardOfGroup from './TheCardOfGroup.vue'
@@ -83,7 +94,7 @@ const props = defineProps({
 const nodeData = defineModel('nodes', { required: true })
 // const edgesData = defineModel('edges', { required: true })
 
-const { canvasRef, canvasContainerRef, scale, cursor, x, y, zoomIn, zoomOut } = useCanvas(props)
+const { canvasRef, canvasContainerRef, scale, cursor, x, y, selectHelper, zoomIn, zoomOut } = useCanvas(props)
 /**
  * 全局提供的组件值传递
  */

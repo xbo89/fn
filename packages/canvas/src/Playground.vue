@@ -22,6 +22,7 @@ const nodes = ref([
       background: 2,
     },
     fold: false,
+    zinde: 1,
   },
   {
     id: '9wL2xqXH',
@@ -41,6 +42,7 @@ const nodes = ref([
       background: 2,
     },
     fold: false,
+    zinde: 1,
   },
 
   {
@@ -61,6 +63,7 @@ const nodes = ref([
       background: 2,
     },
     fold: false,
+    zinde: 1,
   },
   {
     id: 'X3v9pFq7hfgh',
@@ -80,6 +83,7 @@ const nodes = ref([
       background: 2,
     },
     fold: false,
+    zinde: 1,
   },
   // {
   //   id: 'X3v9pFq7rt',
