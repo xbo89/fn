@@ -81,44 +81,44 @@ const nodes = ref([
     },
     fold: false,
   },
-  {
-    id: 'X3v9pFq7rt',
-    pid: 'b7gO3uPc',
-    type: 'card',
-    title: '',
-    position: {
-      x: 0,
-      y: 0,
-    },
-    size: {
-      w: 600,
-      h: 400,
-    },
-    color: {
-      border: 1,
-      background: 2,
-    },
-    fold: false,
-  },
-  {
-    id: 'X3v9pFq7gfd',
-    pid: 'b7gO3uPc',
-    type: 'card',
-    title: '',
-    position: {
-      x: 0,
-      y: 0,
-    },
-    size: {
-      w: 600,
-      h: 400,
-    },
-    color: {
-      border: 1,
-      background: 2,
-    },
-    fold: false,
-  },
+  // {
+  //   id: 'X3v9pFq7rt',
+  //   pid: 'b7gO3uPc',
+  //   type: 'card',
+  //   title: '',
+  //   position: {
+  //     x: 0,
+  //     y: 0,
+  //   },
+  //   size: {
+  //     w: 600,
+  //     h: 400,
+  //   },
+  //   color: {
+  //     border: 1,
+  //     background: 2,
+  //   },
+  //   fold: false,
+  // },
+  // {
+  //   id: 'X3v9pFq7gfd',
+  //   pid: 'b7gO3uPc',
+  //   type: 'card',
+  //   title: '',
+  //   position: {
+  //     x: 0,
+  //     y: 0,
+  //   },
+  //   size: {
+  //     w: 600,
+  //     h: 400,
+  //   },
+  //   color: {
+  //     border: 1,
+  //     background: 2,
+  //   },
+  //   fold: false,
+  // },
   // {
   //   id: 'X3v9pFq7cxv',
   //   pid: 'b7gO3uPc',

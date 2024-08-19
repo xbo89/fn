@@ -12,7 +12,7 @@
     <template #drag-element="{ pointerDown, cursorStyle }">
       <div
         :class="[cursorStyle]" class=" bg-green-500 border border-green-800 rounded-lg p-1 flex space-x-1 absolute -top-2" :style="{
-          transform: ` scale(${1 / scale})`,
+          transform: ` scale(${1 / scale})`, left: `${0}px`,
         }" @pointerdown="pointerDown"
       >
         a test green group
