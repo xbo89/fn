@@ -1,4 +1,4 @@
-import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watchEffect } from 'vue'
 import hotkeys from 'hotkeys-js'
 import { animate, easeInOutQuad } from './useAnimation'
 
@@ -115,9 +115,7 @@ function _handleCanvasMouse(target, cbArr = {
     }
   }
 }
-function _handleDocumentMouse(cbArr = {}) {
 
-}
 export function useCanvas(props) {
   // 基础坐标
   const x = ref(0)
@@ -145,12 +143,25 @@ export function useCanvas(props) {
   const _deltaX = ref(0)
   const _deltaY = ref(0)
 
+  const mousePosition = reactive({ x: 0, y: 0 })
+
   const selectHelper = reactive({
     display: false,
     x: 0,
     y: 0,
     w: 0,
     h: 0,
+  })
+  let timer = null
+  watchEffect(() => {
+    // 每次执行 watchEffect 时，先清除上一个定时器
+    clearInterval(timer)
+
+    if (mousePosition.x > window.innerWidth - 100 && selectHelper.display) {
+      timer = setInterval(() => {
+        x.value -= 3
+      }, 10)
+    }
   })
   // 鼠标指针管理
   const cursor = computed(() => {
@@ -219,13 +230,13 @@ export function useCanvas(props) {
       },
       (event) => {
         if (selectHelper.display && mouse.left && keyboard.space === false) {
-          const currentX = event.clientX
-          const currentY = event.clientY
+          mousePosition.x = event.clientX
+          mousePosition.y = event.clientY
           // 计算选框的位置和大小
-          selectHelper.w = Math.abs(currentX - _startX.value)
-          selectHelper.h = Math.abs(currentY - _startY.value)
-          selectHelper.x = Math.min(currentX, _startX.value)
-          selectHelper.y = Math.min(currentY, _startY.value)
+          selectHelper.w = Math.abs(mousePosition.x - _startX.value)
+          selectHelper.h = Math.abs(mousePosition.y - _startY.value)
+          selectHelper.x = Math.min(mousePosition.x, _startX.value)
+          selectHelper.y = Math.min(mousePosition.y, _startY.value)
         }
       },
     ],
