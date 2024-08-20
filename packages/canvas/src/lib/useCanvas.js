@@ -1,4 +1,4 @@
-import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { EASING, animate } from './useAnimation'
 
 export function useCanvas(props) {
@@ -11,6 +11,7 @@ export function useCanvas(props) {
     space: false,
     meta: false,
   })
+  const mousePosition = reactive({ x: 0, y: 0 })
   const mouse = reactive({
     left: false,
     middle: false,
@@ -33,7 +34,8 @@ export function useCanvas(props) {
       return 'cursor-grabbing'
     }
   })
-
+  const edgeThreshold = 20
+  let timer = null
   onMounted(() => {
     containerRect.value = containerRef.value.getBoundingClientRect()
     document.addEventListener('wheel', mousewheel, { passive: false })
@@ -46,18 +48,25 @@ export function useCanvas(props) {
   })
 
   // 鼠标+空格位移
+  let selectionStartX = 0
+  let selectionStartY = 0
+  let selectionX = 0
+  let selectionY = 0
   function canvasMouseDragMove(event) {
     let startX = event.clientX
     let startY = event.clientY
 
-    const selectionStartX = (event.clientX - x.value - containerRect.value.left) / scale.value
-    const selectionStartY = (event.clientY - y.value - containerRect.value.top) / scale.value
-    let selectionX = selectionStartX
-    let selectionY = selectionStartY
+    selectionStartX = (event.clientX - x.value - containerRect.value.left) / scale.value
+    selectionStartY = (event.clientY - y.value - containerRect.value.top) / scale.value
+    selectionX = selectionStartX
+    selectionY = selectionStartY
 
     selectHelper.display = true
 
     mouse.left = true
+    mousePosition.x = startX
+    mousePosition.y = startY
+    animateMoveCanvas(event)
     document.onmousemove = function (event) {
       if (keyboard.space) {
         // 计算鼠标移动的距离
@@ -70,39 +79,16 @@ export function useCanvas(props) {
         x.value += deltaX
         y.value += deltaY
       }
-      else {
-        // 更新当前鼠标位置
-        selectionX = (event.clientX - x.value - containerRect.value.left) / scale.value
-        selectionY = (event.clientY - y.value - containerRect.value.top) / scale.value
-        console.log(containerRect.value.left)
-        // 更新选框的尺寸和位置
-        const minX = Math.min(selectionStartX, selectionX)
-        const minY = Math.min(selectionStartY, selectionY)
-        const width = Math.abs(selectionX - selectionStartX)
-        const height = Math.abs(selectionY - selectionStartY)
-
-        selectHelper.x = minX
-        selectHelper.y = minY
-        selectHelper.w = width
-        selectHelper.h = height
-
+      if (mouse.left && !keyboard.space) {
+        updateselection({ mx: event.clientX, my: event.clientY })
         // 检测鼠标是否接近窗口边缘，并相应地平移画布
-        const edgeThreshold = 20
-        if (event.clientX < edgeThreshold) {
-          x.value += 10 // 向右平移画布
-        }
-        else if (event.clientX > window.innerWidth - edgeThreshold) {
-          x.value -= 10 // 向左平移画布
-        }
-
-        if (event.clientY < edgeThreshold) {
-          y.value += 10 // 向下平移画布
-        }
-        else if (event.clientY > window.innerHeight - edgeThreshold) {
-          y.value -= 10 // 向上平移画布
-        }
+      }
+      if (mouse.left) {
+        mousePosition.x = event.clientX
+        mousePosition.y = event.clientY
       }
     }
+
     document.onmouseup = function () {
       document.onmousemove = null
       document.onmouseup = null
@@ -110,9 +96,54 @@ export function useCanvas(props) {
       selectHelper.display = false
       selectHelper.w = 0
       selectHelper.h = 0
+      cancelAnimationFrame(timer)
     }
   }
 
+  // watchEffect(() => {
+  //   mouse.left && !keyboard.space && animateMoveCanvas()
+  // })
+  watch([x, y], ([newX, newY]) => {
+    updateselection({ mx: mousePosition.x, my: mousePosition.y })
+  })
+  function updateselection({ mx, my }) {
+    // 更新当前鼠标位置
+    selectionX = (mx - x.value - containerRect.value.left) / scale.value
+    selectionY = (my - y.value - containerRect.value.top) / scale.value
+    // 更新选框的尺寸和位置
+    const minX = Math.min(selectionStartX, selectionX)
+    const minY = Math.min(selectionStartY, selectionY)
+    const width = Math.abs(selectionX - selectionStartX)
+    const height = Math.abs(selectionY - selectionStartY)
+
+    selectHelper.x = minX
+    selectHelper.y = minY
+    selectHelper.w = width
+    selectHelper.h = height
+  }
+  function animateMoveCanvas(event) {
+    if (mousePosition.x < edgeThreshold) {
+      x.value += 10 // 向右平移画布
+    }
+    else if (mousePosition.x > window.innerWidth - edgeThreshold) {
+      x.value -= 10 // 向左平移画布
+    }
+    else {
+      cancelAnimationFrame(timer)
+    }
+
+    if (mousePosition.y < edgeThreshold) {
+      y.value += 10 // 向下平移画布
+    }
+    else if (mousePosition.y > window.innerHeight - edgeThreshold) {
+      y.value -= 10 // 向上平移画布
+    }
+    else {
+      cancelAnimationFrame(timer)
+    }
+
+    timer = requestAnimationFrame(() => animateMoveCanvas(event))
+  }
   function mousewheel(event) {
     const { metaKey, ctrlKey } = event
     const isZooming = metaKey || ctrlKey
