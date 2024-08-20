@@ -26,6 +26,7 @@
           :data-node-index="index"
           @on-update="updateNodePositionData"
           @on-move-end="cardMoveEnd"
+          @on-resize-end="updateNodeSizeData"
         />
       </template>
       <div

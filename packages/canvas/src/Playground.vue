@@ -8,9 +8,9 @@ const nodes = ref([
     id: 'b7gO3uPc',
     pid: 0,
     type: 'group',
-    title: '',
-    position: { x: 49.17950624974926, y: -422.56731640169943 },
-    size: { w: 400, h: 400 },
+    title: 'Card Group For Green Test',
+    position: { x: 482.23419374974924, y: 449.14362109830057 },
+    size: { w: 941.039137978995, h: 1044.7700159269161 },
     color: {
       border: 1,
       background: 2,
@@ -23,14 +23,8 @@ const nodes = ref([
     pid: 0,
     type: 'card',
     title: '',
-    position: {
-      x: 0,
-      y: 0,
-    },
-    size: {
-      w: 300,
-      h: 300,
-    },
+    position: { x: 169.02206361267915, y: 446.89501465479816 },
+    size: { w: 300, h: 766.3144746449944 },
     color: {
       border: 1,
       background: 2,
@@ -44,14 +38,8 @@ const nodes = ref([
     pid: 'b7gO3uPc',
     type: 'card',
     title: '',
-    position: {
-      x: 0,
-      y: 0,
-    },
-    size: {
-      w: 600,
-      h: 400,
-    },
+    position: { x: 514.5126363710378, y: 1057.8557079081634 },
+    size: { w: 600, h: 400 },
     color: {
       border: 1,
       background: 2,
@@ -64,14 +52,8 @@ const nodes = ref([
     pid: 'b7gO3uPc',
     type: 'card',
     title: '',
-    position: {
-      x: 0,
-      y: 0,
-    },
-    size: {
-      w: 600,
-      h: 400,
-    },
+    position: { x: 517.7319240528658, y: 471.8555739117456 },
+    size: { w: 870.759395014655, h: 571.542757260401 },
     color: {
       border: 1,
       background: 2,

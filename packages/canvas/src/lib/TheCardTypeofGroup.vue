@@ -2,7 +2,7 @@
   <CardContainer
     class="border border-teal-600 bg-teal-700/30 relative"
     :pos="data.position"
-    :size="{ w: data.size.w, h: data.size.h }"
+    :size="data.size"
     :selected="isSelected"
     :style="{ zIndex: isSelected ? 166 : 1 }"
     @click.stop.prevent="selectNode(data.id)"
@@ -22,7 +22,7 @@
         }"
         @pointerdown="pointerDown"
       >
-        <span>a test green group</span>
+        <span>{{ data.title }}</span>
         <button class="size-5 hover:bg-green-500 rounded-sm flex justify-center items-center text-xl">
           <i class="i-ri-more-line" />
         </button>

@@ -27,6 +27,8 @@ export function useResize(props, emits) {
   watchEffect(() => {
     position.x = props.pos.x
     position.y = props.pos.y
+    size.width = props.size.w
+    size.height = props.size.h
   })
   let mouseDownPoint = { x: 0, y: 0 }
   function dragStart(event) {
