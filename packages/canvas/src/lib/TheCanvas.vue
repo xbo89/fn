@@ -34,7 +34,7 @@
           height: `${selectHelper.h}px`,
           transform: `translate(${selectHelper.x}px,${selectHelper.y}px)`,
         }"
-        class="border border-blue-400 bg-blue-800/10 absolute pointer-events-none rounded-sm origin-top-left"
+        class="border border-blue-400 bg-blue-800/10 absolute pointer-events-none rounded-sm origin-top-left z-50"
       />
     </div>
     <ToolBar

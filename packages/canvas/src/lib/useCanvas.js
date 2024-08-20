@@ -49,6 +49,14 @@ export function useCanvas(props) {
   function canvasMouseDragMove(event) {
     let startX = event.clientX
     let startY = event.clientY
+
+    const selectionStartX = (event.clientX - x.value - containerRect.value.left) / scale.value
+    const selectionStartY = (event.clientY - y.value - containerRect.value.top) / scale.value
+    let selectionX = selectionStartX
+    let selectionY = selectionStartY
+
+    selectHelper.display = true
+
     mouse.left = true
     document.onmousemove = function (event) {
       if (keyboard.space) {
@@ -62,11 +70,46 @@ export function useCanvas(props) {
         x.value += deltaX
         y.value += deltaY
       }
+      else {
+        // 更新当前鼠标位置
+        selectionX = (event.clientX - x.value - containerRect.value.left) / scale.value
+        selectionY = (event.clientY - y.value - containerRect.value.top) / scale.value
+        console.log(containerRect.value.left)
+        // 更新选框的尺寸和位置
+        const minX = Math.min(selectionStartX, selectionX)
+        const minY = Math.min(selectionStartY, selectionY)
+        const width = Math.abs(selectionX - selectionStartX)
+        const height = Math.abs(selectionY - selectionStartY)
+
+        selectHelper.x = minX
+        selectHelper.y = minY
+        selectHelper.w = width
+        selectHelper.h = height
+
+        // 检测鼠标是否接近窗口边缘，并相应地平移画布
+        const edgeThreshold = 20
+        if (event.clientX < edgeThreshold) {
+          x.value += 10 // 向右平移画布
+        }
+        else if (event.clientX > window.innerWidth - edgeThreshold) {
+          x.value -= 10 // 向左平移画布
+        }
+
+        if (event.clientY < edgeThreshold) {
+          y.value += 10 // 向下平移画布
+        }
+        else if (event.clientY > window.innerHeight - edgeThreshold) {
+          y.value -= 10 // 向上平移画布
+        }
+      }
     }
     document.onmouseup = function () {
       document.onmousemove = null
       document.onmouseup = null
       mouse.left = false
+      selectHelper.display = false
+      selectHelper.w = 0
+      selectHelper.h = 0
     }
   }
 
