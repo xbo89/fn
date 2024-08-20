@@ -74,14 +74,14 @@ function _handleCanvasMouse(target, cbArr = {
   mousewheel: [],
 }) {
   onMounted(() => {
-    document.addEventListener('wheel', mousewheel, { passive: false })
+    // document.addEventListener('wheel', mousewheel, { passive: false })
     target.value.addEventListener('mousedown', mousedown)
     target.value.addEventListener('mouseup', mouseup)
     target.value.addEventListener('mousemove', mousemove)
   })
 
   onBeforeUnmount(() => {
-    document.removeEventListener('wheel', mousewheel)
+    // document.removeEventListener('wheel', mousewheel)
     target.value.removeEventListener('mousedown', mousedown)
     target.value.removeEventListener('mouseup', mouseup)
     target.value.removeEventListener('mousemove', mousemove)
@@ -299,7 +299,7 @@ export function useCanvas(props) {
       mousePosition.x = event.clientX / scale.value
       mousePosition.y = event.clientY
       // 计算选框的位置和大小
-      console.log(mousePosition.x - xxx - x.value)
+      console.log()
       selectHelper.w = Math.abs(mousePosition.x - xxx - x.value)
       selectHelper.h = Math.abs(mousePosition.y - _startY.value) / scale.value
       // selectHelper.x = Math.min(mousePosition.x, _startX.value)

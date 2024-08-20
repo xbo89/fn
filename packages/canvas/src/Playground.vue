@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import FCanvas from './lib/Canvas.vue'
+import FCanvas from './lib/TheCanvas.vue'
 
 const nodes = ref([
 

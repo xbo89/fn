@@ -3,7 +3,10 @@
     ref="canvasContainerRef"
     class="w-full h-full block touch-none overflow-hidden relative bg-slate-100"
     :class="[cursor]"
+    tabindex="1"
     @click="clickContainer"
+    @mousedown.space.exact="test"
+    @wheel.meta.exact="test"
   >
     <div
       ref="canvasRef"
@@ -58,9 +61,9 @@
 <script setup>
 import { provide, ref } from 'vue'
 import { useCanvas } from './useCanvax'
-import ToolBar from './ToolBar.vue'
-import TheCardOfWriter from './TheCardOfWriter.vue'
-import TheCardOfGroup from './TheCardOfGroup.vue'
+import ToolBar from './TheCanvasToolbar.vue'
+import TheCardOfWriter from './TheCardTypeofWriter.vue'
+import TheCardOfGroup from './TheCardTypeofGroup.vue'
 
 const props = defineProps({
   pattern: {
@@ -136,6 +139,9 @@ function updateNodeData({ id, position, delta }) {
 }
 function cardMoveEnd() {
   cachepos = []
+}
+function test() {
+  console.log('enter')
 }
 </script>
 

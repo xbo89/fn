@@ -31,7 +31,7 @@
 
 <script setup>
 import { computed, inject } from 'vue'
-import Resize from './Resize.vue'
+import Resize from './TheCardResize.vue'
 
 const props = defineProps({
   data: {
