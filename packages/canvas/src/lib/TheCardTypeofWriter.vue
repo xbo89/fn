@@ -10,24 +10,26 @@
     @move-end="cardMoveEnd"
   >
     <template #default="{ pointerDown, cursorStyle, mousenter }">
-      <div class="card-content h-full">
-        <div
-          v-show="mousenter"
-          :class="[cursorStyle]"
-          class="border-b p-1 flex space-x-1"
-          @pointerdown.stop.prevent="pointerDown"
-        >
-          <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
-            <i class="i-ri-arrow-down-s-line" />
-          </button>
-          <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
-            <i class="i-ri-information-line" />
-          </button>
-          <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
-            <i class="i-ri-more-line" />
-          </button>
-        </div>
-        <div class="px-4">
+      <div class="card-content h-full relative">
+        <Transition name="fade">
+          <div
+            v-show="mousenter"
+            :class="[cursorStyle]"
+            class="border p-1 flex space-x-1 absolute top-1 inset-x-1 rounded-md bg-gray-50"
+            @pointerdown.stop.prevent="pointerDown"
+          >
+            <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
+              <i class="i-ri-arrow-down-s-line" />
+            </button>
+            <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
+              <i class="i-ri-information-line" />
+            </button>
+            <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
+              <i class="i-ri-more-line" />
+            </button>
+          </div>
+        </Transition>
+        <div class="absolute px-4 top-10 bottom-0 inset-x-0">
           <Writer />
         </div>
       </div>
