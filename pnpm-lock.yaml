@@ -45,6 +45,9 @@ importers:
       d3-zoom:
         specifier: ^3.0.0
         version: 3.0.0
+      easing-utils:
+        specifier: ^1.0.0
+        version: 1.0.0
       hotkeys-js:
         specifier: ^3.13.7
         version: 3.13.7
@@ -3481,6 +3484,9 @@ packages:
 
   duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
+
+  easing-utils@1.0.0:
+    resolution: {integrity: sha512-9oabISTqjTJSZyu85nJMfYtlV2tT/Uwo0M3uqODrBWCxme0eyLqEXRuG2/uYpyqzc7iSHjV/KW2mEKTqhdtESA==}
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
@@ -10827,6 +10833,8 @@ snapshots:
     optional: true
 
   duplexer@0.1.2: {}
+
+  easing-utils@1.0.0: {}
 
   eastasianwidth@0.2.0: {}
 

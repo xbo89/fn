@@ -1,3 +1,5 @@
+import * as easeUtils from 'easing-utils'
+
 export function animate({ startValue, endValue, duration, easingFunction, onUpdate = () => {}, onComplete = () => {} }) {
   const startTime = performance.now()
 
@@ -22,6 +24,4 @@ export function animate({ startValue, endValue, duration, easingFunction, onUpda
 }
 
 // 示例缓动函数（例如：easeInOutQuad）
-export function easeInOutQuad(t) {
-  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
-}
+export const EASING = easeUtils

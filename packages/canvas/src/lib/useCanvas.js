@@ -1,5 +1,5 @@
 import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
-import { animate, easeInOutQuad } from './useAnimation'
+import { EASING, animate } from './useAnimation'
 
 export function useCanvas(props) {
   const x = ref(0)
@@ -152,7 +152,7 @@ export function useCanvas(props) {
       startValue: old,
       endValue: targetScale,
       duration: 300,
-      easingFunction: easeInOutQuad,
+      easingFunction: EASING.easeOutQuint,
       onUpdate: (value) => {
         scale.value = value
         const newRelativeX = relativeX * scale.value
