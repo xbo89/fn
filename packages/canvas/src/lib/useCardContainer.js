@@ -32,7 +32,7 @@ export function useResize(props, emits) {
   })
   let mouseDownPoint = { x: 0, y: 0 }
   function dragStart(event) {
-    event.preventDefault()
+    // event.preventDefault()
     isDragging.value = true
     start.x = (event.clientX - position.x * scale.value)
     start.y = (event.clientY - position.y * scale.value)

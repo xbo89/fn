@@ -5,7 +5,7 @@
     :size="data.size"
     :selected="isSelected"
     :style="{ zIndex: isSelected ? 166 : 1 }"
-    @click.stop.prevent="selectNode(data.id)"
+    @click="selectNode(data.id)"
     @move="cardMove"
     @move-end="cardMoveEnd"
     @resize-end="cardResizeEnd"
@@ -22,7 +22,7 @@
         }"
         @pointerdown="pointerDown"
       >
-        <span>{{ data.title }}</span>
+        <span><input v-model="label" type="text" class="bg-transparent" @focus.stop.prevent></span>
         <button class="size-5 hover:bg-green-500 rounded-sm flex justify-center items-center text-xl">
           <i class="i-ri-more-line" />
         </button>
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { computed, inject } from 'vue'
+import { computed, inject, ref } from 'vue'
 import CardContainer from './TheCardContainer.vue'
 
 const props = defineProps({
@@ -62,6 +62,7 @@ const props = defineProps({
   },
 })
 const emits = defineEmits(['onUpdate', 'onMoveEnd', 'onResizeEnd'])
+const label = ref(props.data.title)
 const selectedId = inject('selectedNodeId')
 const { scale } = inject('canvasBaseInfo')
 
