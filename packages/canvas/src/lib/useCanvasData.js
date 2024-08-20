@@ -2,7 +2,7 @@ import { ref } from 'vue'
 
 export function useCanvasData(nodeData) {
   const cachePosition = ref([])
-  function updateNodeData({ id, position, delta }) {
+  function updateNodePositionData({ id, position, delta }) {
     const node = nodeData.value.find(i => i.id === id)
     node.position.x = position.x
     node.position.y = position.y
@@ -20,11 +20,17 @@ export function useCanvasData(nodeData) {
       }
     }
   }
+  function updateNodeSizeData({ id, size }) {
+    const node = nodeData.value.find(i => i.id === id)
+    node.size.w = size.width
+    node.size.h = size.height
+  }
   function updateClear() {
     cachePosition.value = []
   }
   return {
-    updateNodeData,
+    updateNodePositionData,
+    updateNodeSizeData,
     updateClear,
   }
 }

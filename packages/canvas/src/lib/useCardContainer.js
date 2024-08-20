@@ -76,7 +76,7 @@ export function useResize(props, emits) {
     isDragging.value = false
     isResizing.value = false
     emits('moveEnd')
-    emits('resizeEnd')
+    emits('resizeEnd', { size })
   }
 
   function containerMove(event, canvaScale) {

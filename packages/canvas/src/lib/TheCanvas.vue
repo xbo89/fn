@@ -16,14 +16,15 @@
           v-if="node.type === 'card'"
           :data="node"
           :data-node-index="index"
-          @on-update="updateNodeData"
+          @on-update="updateNodePositionData"
           @on-move-end="cardMoveEnd"
+          @on-resize-end="updateNodeSizeData"
         />
         <TheCardOfGroup
           v-if="node.type === 'group'"
           :data="node"
           :data-node-index="index"
-          @on-update="updateNodeData"
+          @on-update="updateNodePositionData"
           @on-move-end="cardMoveEnd"
         />
       </template>
@@ -86,7 +87,7 @@ const nodeData = defineModel('nodes', { required: true })
 // const edgesData = defineModel('edges', { required: true })
 
 const { scale, cursor, x, y, selectHelper, containerRef, zoomControl } = useCanvas(props)
-const { updateNodeData, updateClear } = useCanvasData(nodeData)
+const { updateNodePositionData, updateNodeSizeData, updateClear } = useCanvasData(nodeData)
 
 const nodeId = ref(-1)
 provide('selectedNodeId', nodeId)

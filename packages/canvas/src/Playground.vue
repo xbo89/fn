@@ -9,14 +9,8 @@ const nodes = ref([
     pid: 0,
     type: 'group',
     title: '',
-    position: {
-      x: 0,
-      y: 0,
-    },
-    size: {
-      w: 400,
-      h: 400,
-    },
+    position: { x: 49.17950624974926, y: -422.56731640169943 },
+    size: { w: 400, h: 400 },
     color: {
       border: 1,
       background: 2,

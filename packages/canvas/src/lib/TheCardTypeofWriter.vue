@@ -8,6 +8,7 @@
     @click.stop.prevent="selectNode(data.id)"
     @move="cardMove"
     @move-end="cardMoveEnd"
+    @resize-end="cardResizeEnd"
   >
     <template #default="{ pointerDown, cursorStyle, mousenter }">
       <div class="card-content h-full relative">
@@ -69,7 +70,7 @@ const props = defineProps({
     },
   },
 })
-const emits = defineEmits(['onUpdate', 'onMoveEnd'])
+const emits = defineEmits(['onUpdate', 'onMoveEnd', 'onResizeEnd'])
 const selectedId = inject('selectedNodeId')
 const isSelected = computed(() => {
   return selectedId.value === props.data.id
@@ -83,5 +84,8 @@ function cardMove({ position, delta }) {
 }
 function cardMoveEnd() {
   emits('onMoveEnd')
+}
+function cardResizeEnd({ size }) {
+  emits('onResizeEnd', { id: props.data.id, size })
 }
 </script>
