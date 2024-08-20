@@ -123,20 +123,20 @@ export function useCanvas(props) {
   }
   function animateMoveCanvas(event) {
     if (mousePosition.x < edgeThreshold) {
-      x.value += 10 // 向右平移画布
+      x.value += 6 // 向右平移画布
     }
     else if (mousePosition.x > window.innerWidth - edgeThreshold) {
-      x.value -= 10 // 向左平移画布
+      x.value -= 6 // 向左平移画布
     }
     else {
       cancelAnimationFrame(timer)
     }
 
     if (mousePosition.y < edgeThreshold) {
-      y.value += 10 // 向下平移画布
+      y.value += 6 // 向下平移画布
     }
     else if (mousePosition.y > window.innerHeight - edgeThreshold) {
-      y.value -= 10 // 向上平移画布
+      y.value -= 6 // 向上平移画布
     }
     else {
       cancelAnimationFrame(timer)

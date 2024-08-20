@@ -54,6 +54,7 @@
 <script setup>
 import { provide, ref } from 'vue'
 import { useCanvas } from './useCanvas'
+import { useCanvasData } from './useCanvasData'
 import ToolBar from './TheCanvasToolbar.vue'
 import TheCardOfWriter from './TheCardTypeofWriter.vue'
 import TheCardOfGroup from './TheCardTypeofGroup.vue'
@@ -91,6 +92,7 @@ const nodeData = defineModel('nodes', { required: true })
 // const edgesData = defineModel('edges', { required: true })
 
 const { scale, cursor, x, y, selectHelper, containerRef, zoomControl } = useCanvas(props)
+const { updateNodeData, updateClear } = useCanvasData(nodeData)
 /**
  * 全局提供的组件值传递
  */
@@ -111,27 +113,8 @@ function clickContainer() {
   // 清空选择
   nodeId.value = -1
 }
-let cachepos = []
-function updateNodeData({ id, position, delta }) {
-  const node = nodeData.value.find(i => i.id === id)
-  node.position.x = position.x
-  node.position.y = position.y
-  const nodeChild = nodeData.value.filter(i => i.pid === id)
-  for (let i = 0; i < nodeChild.length; i++) {
-    if (!cachepos[i]) {
-      cachepos[i] = {
-        x: nodeChild[i].position.x,
-        y: nodeChild[i].position.y,
-      }
-    }
-    else {
-      nodeChild[i].position.x = cachepos[i].x + delta.x
-      nodeChild[i].position.y = cachepos[i].y + delta.y
-    }
-  }
-}
 function cardMoveEnd() {
-  cachepos = []
+  updateClear()
 }
 </script>
 

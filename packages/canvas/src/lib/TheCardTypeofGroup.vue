@@ -7,6 +7,7 @@
     :style="{ zIndex: isSelected ? 166 : 1 }"
     @click.stop.prevent="selectNode(data.id)"
     @move="cardMove"
+    @move-end="cardMoveEnd"
   >
     <template #drag-element="{ pointerDown, cursorStyle }">
       <div
@@ -72,5 +73,8 @@ function selectNode(nodeid) {
 }
 function cardMove({ position, delta }) {
   emits('onUpdate', { id: props.data.id, position, delta })
+}
+function cardMoveEnd() {
+  emits('onMoveEnd')
 }
 </script>
