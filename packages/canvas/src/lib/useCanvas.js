@@ -66,7 +66,7 @@ export function useCanvas(props) {
     mouse.left = true
     mousePosition.x = startX
     mousePosition.y = startY
-    animateMoveCanvas(event)
+    !keyboard.space && animateMoveCanvas(event)
     document.onmousemove = function (event) {
       if (keyboard.space) {
         // 计算鼠标移动的距离
@@ -100,11 +100,10 @@ export function useCanvas(props) {
     }
   }
 
-  // watchEffect(() => {
-  //   mouse.left && !keyboard.space && animateMoveCanvas()
-  // })
-  watch([x, y], ([newX, newY]) => {
-    updateselection({ mx: mousePosition.x, my: mousePosition.y })
+  watch([x, y], () => {
+    if (!keyboard.space) {
+      updateselection({ mx: mousePosition.x, my: mousePosition.y })
+    }
   })
   function updateselection({ mx, my }) {
     // 更新当前鼠标位置

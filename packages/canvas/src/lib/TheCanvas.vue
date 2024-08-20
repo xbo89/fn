@@ -82,20 +82,12 @@ const props = defineProps({
     },
   },
 })
-
-/**
- * 组件的核心数据
- * nodes:节点卡片
- * edges:连线数据
- */
 const nodeData = defineModel('nodes', { required: true })
 // const edgesData = defineModel('edges', { required: true })
 
 const { scale, cursor, x, y, selectHelper, containerRef, zoomControl } = useCanvas(props)
 const { updateNodeData, updateClear } = useCanvasData(nodeData)
-/**
- * 全局提供的组件值传递
- */
+
 const nodeId = ref(-1)
 provide('selectedNodeId', nodeId)
 provide('canvasBaseInfo', {

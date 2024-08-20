@@ -1,5 +1,5 @@
 <template>
-  <Resize
+  <CardContainer
     class="border bg-white"
     :pos="data.position"
     :size="{ w: data.size.w, h: data.size.h }"
@@ -8,30 +8,38 @@
     @click.stop.prevent="selectNode(data.id)"
     @move="cardMove"
     @move-end="cardMoveEnd"
-    @mousedown.stop.prevent
   >
-    <template #drag-element="{ pointerDown, cursorStyle }">
-      <div :class="[cursorStyle]" class="border-b p-1 flex space-x-1" @pointerdown="pointerDown">
-        <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
-          <i class="i-ri-arrow-down-s-line" />
-        </button>
-        <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
-          <i class="i-ri-information-line" />
-        </button>
-        <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
-          <i class="i-ri-more-line" />
-        </button>
+    <template #default="{ pointerDown, cursorStyle, mousenter }">
+      <div class="card-content h-full">
+        <div
+          v-show="mousenter"
+          :class="[cursorStyle]"
+          class="border-b p-1 flex space-x-1"
+          @pointerdown.stop.prevent="pointerDown"
+        >
+          <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
+            <i class="i-ri-arrow-down-s-line" />
+          </button>
+          <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
+            <i class="i-ri-information-line" />
+          </button>
+          <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl">
+            <i class="i-ri-more-line" />
+          </button>
+        </div>
+        <div class="px-4">
+          <Writer />
+        </div>
       </div>
     </template>
-    <template #default>
-      aa
-    </template>
-  </Resize>
+  </CardContainer>
 </template>
 
 <script setup>
-import { computed, inject, reactive, watch, watchEffect } from 'vue'
-import Resize from './TheCardResize.vue'
+import { computed, inject } from 'vue'
+import { Writer } from '@floatnote/writer'
+import CardContainer from './TheCardContainer.vue'
+import '@floatnote/writer/dist/style.css'
 
 const props = defineProps({
   data: {
