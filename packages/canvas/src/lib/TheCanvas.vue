@@ -1,15 +1,11 @@
 <template>
   <div
-    ref="canvasContainerRef"
+    ref="containerRef"
     class="w-full h-full block touch-none overflow-hidden relative bg-slate-100"
     :class="[cursor]"
-    tabindex="1"
     @click="clickContainer"
-    @mousedown.space.exact="test"
-    @wheel.meta.exact="test"
   >
     <div
-      ref="canvasRef"
       class="absloute origin-top-left inset-0"
       :style="{
         transform: `translate(${x}px, ${y}px) scale(${scale})`,
@@ -44,8 +40,8 @@
     </div>
     <ToolBar
       :scale="scale"
-      @on-zoom-in="zoomIn"
-      @on-zoom-out="zoomOut"
+      @on-zoom-in="zoomControl(true)"
+      @on-zoom-out="zoomControl(false)"
     />
 
     <slot name="ui-extend" />
@@ -60,7 +56,7 @@
 
 <script setup>
 import { provide, ref } from 'vue'
-import { useCanvas } from './useCanvax'
+import { useCanvas } from './useCanvas'
 import ToolBar from './TheCanvasToolbar.vue'
 import TheCardOfWriter from './TheCardTypeofWriter.vue'
 import TheCardOfGroup from './TheCardTypeofGroup.vue'
@@ -97,7 +93,7 @@ const props = defineProps({
 const nodeData = defineModel('nodes', { required: true })
 // const edgesData = defineModel('edges', { required: true })
 
-const { canvasRef, canvasContainerRef, scale, cursor, x, y, selectHelper, zoomIn, zoomOut } = useCanvas(props)
+const { scale, cursor, x, y, selectHelper, containerRef, zoomControl } = useCanvas(props)
 /**
  * 全局提供的组件值传递
  */
@@ -139,9 +135,6 @@ function updateNodeData({ id, position, delta }) {
 }
 function cardMoveEnd() {
   cachepos = []
-}
-function test() {
-  console.log('enter')
 }
 </script>
 
