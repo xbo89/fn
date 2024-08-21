@@ -3,7 +3,7 @@
     ref="containerRef"
     class="w-full h-full touch-none overflow-hidden absolute bg-slate-100"
     :class="[cursor]"
-    @click="clickContainer"
+    @mousedown="clickContainer"
   >
     <div
       class="fixed origin-top-left left-0 top-0"
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { provide, ref } from 'vue'
+import { provide, ref, watch } from 'vue'
 import { useCanvas } from './useCanvas'
 import { useCanvasData } from './useCanvasData'
 import ToolBar from './TheCanvasToolbar.vue'
@@ -103,10 +103,37 @@ provide('cardDraging', {
   deltaX: ref(0),
   deltaY: ref(0),
 })
+const selectedNodeIndices = ref([])
+watch(selectHelper, (v) => {
+  if (v.w !== 0 || v.h !== 0) {
+    selectedNodeIndices.value = []
+    nodeData.value.forEach((node, index) => {
+      if (node.type === 'card') {
+        const nodeBox = {
+          position: node.position,
+          size: node.size,
+        }
+
+        if (isIntersecting(selectHelper, nodeBox)) {
+          selectedNodeIndices.value.push(index)
+        }
+      }
+    })
+  }
+})
+function isIntersecting(box1, box2) {
+  return !(
+    box1.x + box1.w < box2.position.x // box1 is to the left of box2
+    || box1.x > box2.position.x + box2.size.w // box1 is to the right of box2
+    || box1.y + box1.h < box2.position.y // box1 is above box2
+    || box1.y > box2.position.y + box2.size.h // box1 is below box2
+  )
+}
 
 function clickContainer() {
   // 清空选择
   nodeId.value = -1
+  selectedNodeIndices.value = []
 }
 function cardMoveEnd() {
   updateClear()
