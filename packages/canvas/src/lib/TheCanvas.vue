@@ -108,15 +108,22 @@ watch(selectHelper, (v) => {
   if (v.w !== 0 || v.h !== 0) {
     selectedNodeIndices.value = []
     nodeData.value.forEach((node, index) => {
-      if (node.type === 'card') {
-        const nodeBox = {
-          position: node.position,
-          size: node.size,
-        }
+      // if (node.type === 'card') {
 
-        if (isIntersecting(selectHelper, nodeBox)) {
-          selectedNodeIndices.value.push(index)
-        }
+      //   if (isIntersecting(selectHelper, nodeBox)) {
+      //     selectedNodeIndices.value.push(index)
+      //   }
+      // }
+      const nodeBox = {
+        position: node.position,
+        size: node.size,
+      }
+      if (node.type === 'card' && isIntersecting(selectHelper, nodeBox)) {
+        selectedNodeIndices.value.push(index)
+      }
+
+      if (node.type === 'group' && isCompletelyInside(nodeBox, selectHelper)) {
+        selectedNodeIndices.value.push(index)
       }
     })
   }
@@ -129,7 +136,14 @@ function isIntersecting(box1, box2) {
     || box1.y > box2.position.y + box2.size.h // box1 is below box2
   )
 }
-
+function isCompletelyInside(innerBox, outerBox) {
+  return (
+    innerBox.position.x >= outerBox.x
+    && innerBox.position.x + innerBox.size.w <= outerBox.x + outerBox.w
+    && innerBox.position.y >= outerBox.y
+    && innerBox.position.y + innerBox.size.h <= outerBox.y + outerBox.h
+  )
+}
 function clickContainer() {
   // 清空选择
   nodeId.value = -1
