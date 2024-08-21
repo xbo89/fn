@@ -1,6 +1,5 @@
 <template>
   <CardContainer
-    class="border border-teal-600 bg-teal-700/30 relative"
     :pos="data.position"
     :size="data.size"
     :selected="isSelected"
@@ -11,21 +10,25 @@
     @resize-end="cardResizeEnd"
   >
     <template #default="{ pointerDown, cursorStyle }">
-      <div
-        class="bg-teal-700/30 border border-teal-600 rounded py-1 pl-2 pr-1 font-bold flex items-center text-sm space-x-2 absolute -top-2 origin-top-left"
-        :class="[cursorStyle]"
-        :style="{
-          transform: ` scale(${1 / scale})`,
-          left: `${0}px`,
-          top: `calc(-36px / ${scale} )`,
-          height: `${28}px`,
-        }"
-        @pointerdown="pointerDown"
-      >
-        <span><input v-model="label" type="text" class="bg-transparent" @focus.stop.prevent></span>
-        <button class="size-5 hover:bg-green-500 rounded-sm flex justify-center items-center text-xl">
-          <i class="i-ri-more-line" />
-        </button>
+      <div class="border border-teal-600 bg-teal-700/30 h-full relative rounded-md">
+        <div
+          class="bg-teal-700/30 border border-teal-600 rounded py-1 pl-2 pr-1 font-bold flex items-center text-sm space-x-2 absolute -top-2 origin-top-left"
+          :class="[cursorStyle]"
+          :style="{
+            transform: ` scale(${1 / scale})`,
+            left: `${0}px`,
+            top: `calc(-36px / ${scale} )`,
+            height: `${28}px`,
+          }"
+          @pointerdown="pointerDown"
+        >
+          <span>
+            <input v-model="label" type="text" class="bg-transparent" @mousemove.prevent>
+          </span>
+          <button class="size-5 hover:bg-green-500 rounded-sm flex justify-center items-center text-xl">
+            <i class="i-ri-more-line" />
+          </button>
+        </div>
       </div>
     </template>
   </CardContainer>

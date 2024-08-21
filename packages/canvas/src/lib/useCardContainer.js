@@ -13,8 +13,9 @@ export function useResize(props, emits) {
   const style = computed(() => {
     return {
       position: 'absolute',
-      left: `${position.x}px`,
-      top: `${position.y}px`,
+      transform: `translate(${position.x}px,${position.y}px)`,
+      // left: `${position.x}px`,
+      // top: `${position.y}px`,
       width: `${size.width}px`,
       height: `${size.height}px`,
       borderRadius: `${props.config.radius}px`,

@@ -1,12 +1,12 @@
 <template>
   <div
     ref="containerRef"
-    class="w-full h-full block touch-none overflow-hidden relative bg-slate-100"
+    class="w-full h-full touch-none overflow-hidden absolute bg-slate-100"
     :class="[cursor]"
     @click="clickContainer"
   >
     <div
-      class="absloute origin-top-left inset-0"
+      class="fixed origin-top-left left-0 top-0"
       :style="{
         transform: `translate(${x}px, ${y}px) scale(${scale})`,
       }"
@@ -40,6 +40,7 @@
       />
     </div>
     <ToolBar
+      class="z-10"
       :scale="scale"
       @on-zoom-in="zoomControl(true)"
       @on-zoom-out="zoomControl(false)"
