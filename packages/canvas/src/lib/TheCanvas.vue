@@ -108,12 +108,6 @@ watch(selectHelper, (v) => {
   if (v.w !== 0 || v.h !== 0) {
     selectedNodeIndices.value = []
     nodeData.value.forEach((node, index) => {
-      // if (node.type === 'card') {
-
-      //   if (isIntersecting(selectHelper, nodeBox)) {
-      //     selectedNodeIndices.value.push(index)
-      //   }
-      // }
       const nodeBox = {
         position: node.position,
         size: node.size,
