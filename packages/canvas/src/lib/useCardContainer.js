@@ -16,8 +16,6 @@ export function useResize(props, emits) {
     return {
       position: 'absolute',
       transform: `translate(${position.x}px,${position.y}px)`,
-      // left: `${position.x}px`,
-      // top: `${position.y}px`,
       width: `${size.width}px`,
       height: `${size.height}px`,
       borderRadius: `${props.config.radius}px`,
@@ -27,14 +25,7 @@ export function useResize(props, emits) {
       maxHeight: `${props.limitMax.maxH}px`,
     }
   })
-  // const isSelect = ref(false)
-  // watchEffect(() => {
-  //   // console.log(selected)
-  //   if (selected.value.includes(props.cardIndex))
-  //     isSelect.value = true
-  // })
   const isSelect = computed(() => {
-    console.log(props.cardIndex, selected)
     return selected.value.includes(props.cardIndex)
   })
   watchEffect(() => {
