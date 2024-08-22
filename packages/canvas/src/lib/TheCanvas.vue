@@ -100,10 +100,12 @@ const { scale, cursor, x, y, selectHelper, containerRef, zoomControl } = useCanv
 const { updateNodePositionData, updateNodeSizeData, updateClear } = useCanvasData(nodeData)
 
 const nodeId = ref(-1)
+// const selectedNodeIndices = ref([])
 const canvasbase = reactive({
   scale,
   x,
   y,
+  selected: [],
 })
 provide('canvasbase', canvasbase) // 用这个
 provide('selectedNodeId', nodeId)
@@ -117,21 +119,21 @@ provide('cardDraging', {
   deltaX: ref(0),
   deltaY: ref(0),
 })
-const selectedNodeIndices = ref([])
+
 watch(selectHelper, (v) => {
   if (v.w !== 0 || v.h !== 0) {
-    selectedNodeIndices.value = []
+    canvasbase.selected = []
     nodeData.value.forEach((node, index) => {
       const nodeBox = {
         position: node.position,
         size: node.size,
       }
       if (node.type === 'card' && isIntersecting(selectHelper, nodeBox)) {
-        selectedNodeIndices.value.push(index)
+        canvasbase.selected.push(index)
       }
 
       if (node.type === 'group' && isCompletelyInside(nodeBox, selectHelper)) {
-        selectedNodeIndices.value.push(index)
+        canvasbase.selected.push(index)
       }
     })
   }
@@ -155,7 +157,7 @@ function isCompletelyInside(innerBox, outerBox) {
 function clickContainer() {
   // 清空选择
   nodeId.value = -1
-  selectedNodeIndices.value = []
+  canvasbase.selected = []
 }
 function cardMoveEnd() {
   updateClear()

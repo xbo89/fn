@@ -1,4 +1,4 @@
-import { computed, inject, reactive, ref, watchEffect } from 'vue'
+import { computed, inject, reactive, ref, toRef, watchEffect } from 'vue'
 
 export function useResize(props, emits) {
   const containerRef = ref(null)
@@ -8,7 +8,9 @@ export function useResize(props, emits) {
   const isDragging = ref(false)
   const isResizing = ref(false)
   const dragDirection = ref('')
-  const { scale } = inject('canvasBaseInfo')
+  const canvasbase = inject('canvasbase')
+  const scale = toRef(canvasbase, 'scale')
+  const selected = toRef(canvasbase, 'selected')
 
   const style = computed(() => {
     return {
@@ -24,6 +26,16 @@ export function useResize(props, emits) {
       maxWidth: `${props.limitMax.maxW}px`,
       maxHeight: `${props.limitMax.maxH}px`,
     }
+  })
+  // const isSelect = ref(false)
+  // watchEffect(() => {
+  //   // console.log(selected)
+  //   if (selected.value.includes(props.cardIndex))
+  //     isSelect.value = true
+  // })
+  const isSelect = computed(() => {
+    console.log(props.cardIndex, selected)
+    return selected.value.includes(props.cardIndex)
   })
   watchEffect(() => {
     position.x = props.pos.x
@@ -145,6 +157,7 @@ export function useResize(props, emits) {
   return {
     containerRef,
     style,
+    isSelect,
     dragStart,
     resizeStart,
   }

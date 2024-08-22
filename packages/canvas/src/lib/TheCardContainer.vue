@@ -2,24 +2,22 @@
   <div
     ref="containerRef"
     class="absolute box-border"
-    :class="[selected ? 'outline outline-2 outline-blue-500' : '']"
+    :class="[isSelect ? 'outline outline-2 outline-blue-600' : '']"
     :style="style"
-    @mouseenter="isMouseenter = true"
-    @mouseleave="isMouseenter = false"
   >
     <slot
       :pointer-down="dragStart"
-      :mousenter="isMouseenter"
       :scale="scale"
       cursor-style="cursor-grab active:cursor-grabbing select-none"
     />
-    <template v-if="selected">
+    <template v-if="isSelect">
       <!-- 各个边的 resize handle -->
       <div
         class="resize-handle-border absolute top !w-full left-1/2 transform -translate-x-1/2 cursor-ns-resize"
         :style="{
           height: `${config.handleSize}px`,
           top: `-${config.handleSize / 2 + 2}px`,
+          background: `${debugMode && '#b942745f'}`,
         }"
         @pointerdown.stop.prevent="resizeStart($event, 'top')"
       />
@@ -28,6 +26,7 @@
         :style="{
           height: `${config.handleSize}px`,
           bottom: `-${config.handleSize / 2 + 2}px`,
+          background: `${debugMode && '#b942745f'}`,
         }"
         @pointerdown.stop.prevent="resizeStart($event, 'bottom')"
       />
@@ -36,6 +35,7 @@
         :style="{
           width: `${config.handleSize}px`,
           left: `-${config.handleSize / 2 + 2}px`,
+          background: `${debugMode && '#b942745f'}`,
         }"
         @pointerdown.stop.prevent="resizeStart($event, 'left')"
       />
@@ -44,6 +44,7 @@
         :style="{
           width: `${config.handleSize}px`,
           right: `-${config.handleSize / 2 + 2}px`,
+          background: `${debugMode && '#b942745f'}`,
         }"
         @pointerdown.stop.prevent="resizeStart($event, 'right')"
       />
@@ -53,6 +54,7 @@
         :style="{
           top: `-${config.handleSize / 2 + 2}px`,
           left: `-${config.handleSize / 2 + 2}px`,
+          background: `${debugMode && '#0d622d5f'}`,
         }"
         @pointerdown.stop.prevent="resizeStart($event, 'top-left')"
       />
@@ -61,6 +63,7 @@
         :style="{
           top: `-${config.handleSize / 2 + 2}px`,
           right: `-${config.handleSize / 2 + 2}px`,
+          background: `${debugMode && '#0d622d5f'}`,
         }"
         @pointerdown.stop.prevent="resizeStart($event, 'top-right')"
       />
@@ -69,6 +72,7 @@
         :style="{
           bottom: `-${config.handleSize / 2 + 2}px`,
           left: `-${config.handleSize / 2 + 2}px`,
+          background: `${debugMode && '#0d622d5f'}`,
         }"
         @pointerdown.stop.prevent="resizeStart($event, 'bottom-left')"
       />
@@ -77,6 +81,7 @@
         :style="{
           bottom: `-${config.handleSize / 2 + 2}px`,
           right: `-${config.handleSize / 2 + 2}px`,
+          background: `${debugMode && '#0d622d5f'}`,
         }"
         @pointerdown.stop.prevent="resizeStart($event, 'bottom-right')"
       />
@@ -109,7 +114,7 @@ const props = defineProps({
   },
   cardIndex: {
     type: Number,
-    default: 0,
+    default: -1,
   },
   limitMin: {
     type: Object,
@@ -142,10 +147,6 @@ const props = defineProps({
       }
     },
   },
-  selected: {
-    type: Boolean,
-    default: false,
-  },
 })
 const emits = defineEmits([
   'change',
@@ -160,17 +161,8 @@ const { scale } = inject('canvasbase')
 const {
   containerRef,
   style,
+  isSelect,
   dragStart,
   resizeStart,
 } = useResize(props, emits)
-const isMouseenter = ref(false)
 </script>
-
-<style scoped>
-.resize-handle-corner {
-  background-color:v-bind('`${debugMode && "#0d622d5f"}`');
-}
-.resize-handle-border {
-  background-color:v-bind('`${debugMode && "#b942745f"}`');
-}
-</style>
