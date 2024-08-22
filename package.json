@@ -12,6 +12,7 @@
     "start:all": "concurrently \"pnpm start:client\" \"pnpm start:extension\""
   },
   "dependencies": {
+    "floating-vue": "^5.2.2",
     "radix-vue": "^1.8.2",
     "remixicon": "^4.2.0"
   },
