@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* .v-popper__arrow-container .v-popper__arrow-outer {
+  visibility: hidden;
+}
+.v-popper__arrow-container .v-popper__arrow-inner {
+  visibility: hidden;
+} */
+
+.v-popper--theme-dropdown .v-popper__arrow-inner,
+.v-popper--theme-dropdown .v-popper__arrow-outer{
+  visibility: hidden!important;
+}
+.v-popper--theme-dropdown .v-popper__inner{
+  @apply !border !rounded-md !text-slate-700;
+}
+.v-popper--some-open--dropdown .mask-dis{
+  display: block;
+}

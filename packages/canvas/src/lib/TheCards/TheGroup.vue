@@ -14,15 +14,36 @@
       <span>
         <input v-model="label" type="text" class="bg-transparent" @mousemove.prevent>
       </span>
-      <button class="size-5 hover:bg-green-500 rounded-sm flex justify-center items-center text-xl">
-        <i class="i-ri-more-line" />
-      </button>
+      <Dropdown
+        :distance="6"
+      >
+        <button class="size-6 hover:bg-black/20 rounded flex justify-center items-center text-xl">
+          <i class="i-ri-more-line" />
+        </button>
+        <template #popper>
+          <div class="p-1 space-y-1">
+            <TheMenuItem icon="i-ri-edit-line">
+              Rename
+            </TheMenuItem>
+            <TheMenuColorsItem />
+            <TheMenuItem icon="i-ri-file-copy-line" hotkey="Cmd+C">
+              Copy
+            </TheMenuItem>
+            <TheMenuItem icon="i-ri-delete-bin-7-line" hotkey="Del">
+              Delete
+            </TheMenuItem>
+          </div>
+        </template>
+      </Dropdown>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { Dropdown } from 'floating-vue'
+import TheMenuItem from '../TheMenuItem.vue'
+import TheMenuColorsItem from '../TheMenuColorsItem.vue'
 
 const props = defineProps({
   data: {

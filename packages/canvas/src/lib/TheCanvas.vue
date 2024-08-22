@@ -6,7 +6,7 @@
     @mousedown="clickContainer"
   >
     <div
-      class="fixed origin-top-left left-0 top-0"
+      class="wangwenbo fixed origin-top-left left-0 top-0"
       :style="{
         transform: `translate(${x}px, ${y}px) scale(${scale})`,
       }"
@@ -59,6 +59,7 @@
       <rect width="100%" height="100%" fill="url(#grid-dot-pattern)" />
     </svg>
   </div>
+  <div class="mask-dis fixed inset-0 hidden" @wheel.stop.prevent />
 </template>
 
 <script setup>
@@ -69,6 +70,8 @@ import ToolBar from './TheCanvasToolbar.vue'
 import TheCardContainer from './TheCardContainer.vue'
 import TheGroup from './TheCards/TheGroup.vue'
 import TheWriter from './TheCards/TheWriter.vue'
+
+import 'floating-vue/dist/style.css'
 
 const props = defineProps({
   pattern: {
