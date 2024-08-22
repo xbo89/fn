@@ -9,8 +9,9 @@
   >
     <slot
       :pointer-down="dragStart"
-      cursor-style="cursor-grab active:cursor-grabbing select-none"
       :mousenter="isMouseenter"
+      :scale="scale"
+      cursor-style="cursor-grab active:cursor-grabbing select-none"
     />
     <template v-if="selected">
       <!-- 各个边的 resize handle -->
@@ -84,7 +85,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import { useResize } from './useCardContainer'
 
 const props = defineProps({
@@ -105,6 +106,10 @@ const props = defineProps({
         h: 280,
       }
     },
+  },
+  cardIndex: {
+    type: Number,
+    default: 0,
   },
   limitMin: {
     type: Object,
@@ -151,6 +156,7 @@ const emits = defineEmits([
   'resize',
   'resizeEnd',
 ])
+const { scale } = inject('canvasbase')
 const {
   containerRef,
   style,

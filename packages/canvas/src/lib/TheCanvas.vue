@@ -12,22 +12,29 @@
       }"
     >
       <template v-for="(node, index) in nodeData" :key="node.id">
-        <TheCardOfWriter
-          v-if="node.type === 'card'"
-          :data="node"
-          :data-node-index="index"
-          @on-update="updateNodePositionData"
-          @on-move-end="cardMoveEnd"
-          @on-resize-end="updateNodeSizeData"
-        />
-        <TheCardOfGroup
-          v-if="node.type === 'group'"
-          :data="node"
-          :data-node-index="index"
-          @on-update="updateNodePositionData"
-          @on-move-end="cardMoveEnd"
-          @on-resize-end="updateNodeSizeData"
-        />
+        <TheCardContainer
+          :pos="node.position"
+          :size="node.size"
+          :card-index="index"
+          @move="({ position, delta }) => updateNodePositionData({ id: node.id, position, delta })"
+          @move-end="cardMoveEnd"
+          @resize-end="({ size }) => updateNodeSizeData({ id: node.id, size })"
+        >
+          <template #default="{ pointerDown, cursorStyle }">
+            <TheGroup
+              v-if="node.type === 'group'"
+              :data="node"
+              :scale="scale"
+              :cursor-style="cursorStyle" @drag-handle-event="pointerDown"
+            />
+            <TheWriter
+              v-if="node.type === 'card'"
+              :data="node"
+              :scale="scale"
+              :cursor-style="cursorStyle" @drag-handle-event="pointerDown"
+            />
+          </template>
+        </TheCardContainer>
       </template>
       <div
         v-show="selectHelper.display"
@@ -55,12 +62,13 @@
 </template>
 
 <script setup>
-import { provide, ref, watch } from 'vue'
+import { provide, reactive, ref, watch } from 'vue'
 import { useCanvas } from './useCanvas'
 import { useCanvasData } from './useCanvasData'
 import ToolBar from './TheCanvasToolbar.vue'
-import TheCardOfWriter from './TheCardTypeofWriter.vue'
-import TheCardOfGroup from './TheCardTypeofGroup.vue'
+import TheCardContainer from './TheCardContainer.vue'
+import TheGroup from './TheCards/TheGroup.vue'
+import TheWriter from './TheCards/TheWriter.vue'
 
 const props = defineProps({
   pattern: {
@@ -92,6 +100,12 @@ const { scale, cursor, x, y, selectHelper, containerRef, zoomControl } = useCanv
 const { updateNodePositionData, updateNodeSizeData, updateClear } = useCanvasData(nodeData)
 
 const nodeId = ref(-1)
+const canvasbase = reactive({
+  scale,
+  x,
+  y,
+})
+provide('canvasbase', canvasbase) // 用这个
 provide('selectedNodeId', nodeId)
 provide('canvasBaseInfo', {
   scale,
