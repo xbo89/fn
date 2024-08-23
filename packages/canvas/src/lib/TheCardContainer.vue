@@ -8,6 +8,7 @@
     <slot
       :pointer-down="dragStart"
       :scale="scale"
+      :is-select="isSelect"
       cursor-style="cursor-grab active:cursor-grabbing select-none"
     />
     <template v-if="isSelect">

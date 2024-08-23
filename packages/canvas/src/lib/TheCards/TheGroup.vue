@@ -12,9 +12,21 @@
       @pointerdown.stop="(event) => { !isEdit && handleDrag(event) }"
       @mousedown.stop="handleSelect"
     >
-      <span>
-        <input v-model="label" type="text" class="bg-transparent  outline-none" :class="[isEdit ? 'cursor-text hover:bg-white/60' : 'cursor-pointer hover:bg-black/10']" @click="handleEdit" @blur="handleCancelEdit" @keypress.esc="handleCancelEdit">
-      </span>
+      <i class="i-ri-layout-top-2-line text-xl text-gray-600" />
+      <div
+        class="w-full relative"
+        @dblclick.stop="handleEdit"
+      >
+        <input
+          v-model="label"
+          type="text"
+          class="bg-transparent absolute inset-x-0 outline-none z-10 rounded p-0.5"
+          :class="[selected && isEdit ? 'bg-white/60' : 'pointer-events-none']"
+          @keydown.esc="handleCancelEdit"
+          @blur="handleCancelEdit"
+        >
+        <span :class="[isEdit ? 'opacity-0' : 'opacity-100']" class="pointer-events-none p-0.5 block">{{ label }}</span>
+      </div>
       <Dropdown
         :distance="6"
       >
@@ -75,6 +87,10 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
+  selected: {
+    type: Boolean,
+    default: false,
+  },
   cursorStyle: {
     type: String,
     default: 'cursor-grab active:cursor-grabbing select-none',
@@ -88,10 +104,13 @@ function handleDrag(event) {
 function handleSelect() {
   emits('handleSelect')
 }
-function handleEdit() {
+function handleEdit(event) {
   isEdit.value = true
+  event.target.children[0].focus()
+  event.target.children[0].select()
 }
-function handleCancelEdit() {
+function handleCancelEdit(event) {
+  event.target.blur()
   isEdit.value = false
 }
 const label = ref(props.data.title)

@@ -4,7 +4,6 @@
     class="w-full h-full touch-none overflow-hidden absolute bg-slate-100"
     :class="[cursor]"
     @mousedown="clickContainer"
-    @contextmenu.s.stop="handleContextMenu"
   >
     <div
       class="wangwenbo fixed origin-top-left left-0 top-0"
@@ -21,11 +20,12 @@
           @move-end="cardMoveEnd"
           @resize-end="({ size }) => updateNodeSizeData({ id: node.id, size })"
         >
-          <template #default="{ pointerDown, cursorStyle }">
+          <template #default="{ pointerDown, cursorStyle, isSelect }">
             <TheGroup
               v-if="node.type === 'group'"
               :data="node"
               :scale="scale"
+              :selected="isSelect"
               :cursor-style="cursorStyle"
               @handle-drag="pointerDown"
               @handle-select="canvasbase.selected[0] = index"
@@ -34,6 +34,7 @@
               v-if="node.type === 'card'"
               :data="node"
               :scale="scale"
+              :selected="isSelect"
               :cursor-style="cursorStyle"
               @handle-drag="pointerDown"
               @handle-select="canvasbase.selected[0] = index"
@@ -66,7 +67,6 @@
   </div>
   <Dropdown
     :shown="contextMenu"
-    :delay="1000"
   >
     <div class="w-0" :style="{ transform: `translate(${contextMenuPosition.x}px,${contextMenuPosition.y}px)` }" />
     <template #popper>
@@ -158,17 +158,18 @@ provide('cardDraging', {
   deltaY: ref(0),
 })
 const contextMenuPosition = reactive({ x: 0, y: 0 })
+// 禁止浏览器鼠标右键菜单
+document.body.addEventListener('contextmenu', (event) => {
+  event.preventDefault()
+  event.stopPropagation()
+  handleContextMenu(event)
+})
 function handleContextMenu(event) {
-  console.log(event)
   contextMenuPosition.x = event.clientX
   contextMenuPosition.y = event.clientY
   contextMenu.value = true
 }
-document.addEventListener('contextmenu', (event) => {
-  console.log('aa')
-  // event.stopPropagation()
-  event.preventDefault()
-})
+
 watch(selectHelper, (v) => {
   if (v.w !== 0 || v.h !== 0) {
     canvasbase.selected = []
