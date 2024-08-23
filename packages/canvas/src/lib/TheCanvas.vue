@@ -26,13 +26,16 @@
               v-if="node.type === 'group'"
               :data="node"
               :scale="scale"
-              :cursor-style="cursorStyle" @drag-handle-event="pointerDown"
+              :cursor-style="cursorStyle"
+              @drag-handle-event="pointerDown"
             />
             <TheWriter
               v-if="node.type === 'card'"
               :data="node"
               :scale="scale"
-              :cursor-style="cursorStyle" @drag-handle-event="pointerDown"
+              :cursor-style="cursorStyle"
+              @handle-drag="pointerDown"
+              @handle-select="canvasbase.selected[0] = index"
             />
           </template>
         </TheCardContainer>

@@ -2,13 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .v-popper__arrow-container .v-popper__arrow-outer {
-  visibility: hidden;
-}
-.v-popper__arrow-container .v-popper__arrow-inner {
-  visibility: hidden;
-} */
-
 .v-popper--theme-dropdown .v-popper__arrow-inner,
 .v-popper--theme-dropdown .v-popper__arrow-outer{
   visibility: hidden!important;
@@ -18,4 +11,14 @@
 }
 .v-popper--some-open--dropdown .mask-dis{
   display: block;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.35s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
