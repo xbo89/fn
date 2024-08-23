@@ -4,6 +4,7 @@
     class="w-full h-full touch-none overflow-hidden absolute bg-slate-100"
     :class="[cursor]"
     @mousedown="clickContainer"
+    @contextmenu.s.stop="handleContextMenu"
   >
     <div
       class="wangwenbo fixed origin-top-left left-0 top-0"
@@ -59,18 +60,46 @@
       <rect width="100%" height="100%" fill="url(#grid-dot-pattern)" />
     </svg>
   </div>
+  <Dropdown
+    :shown="contextMenu"
+    :delay="1000"
+  >
+    <div class="w-0" :style="{ transform: `translate(${contextMenuPosition.x}px,${contextMenuPosition.y}px)` }" />
+    <template #popper>
+      <div class="p-1 space-y-0.5">
+        <TheMenuItem icon="i-ri-fullscreen-line">
+          Default size
+        </TheMenuItem>
+        <TheMenuItem icon="i-ri-contract-up-down-line">
+          Fold
+        </TheMenuItem>
+        <TheMenuItem icon="i-ri-expand-height-line">
+          Fit to content
+        </TheMenuItem>
+        <TheMenuColorsItem />
+        <TheMenuItem icon="i-ri-file-copy-line" hotkey="Cmd+C">
+          Copy
+        </TheMenuItem>
+        <TheMenuItem icon="i-ri-delete-bin-7-line" hotkey="Del">
+          Delete
+        </TheMenuItem>
+      </div>
+    </template>
+  </Dropdown>
   <div class="mask-dis fixed inset-0 hidden" @wheel.stop.prevent />
 </template>
 
 <script setup>
 import { provide, reactive, ref, watch } from 'vue'
+import { Dropdown, Tooltip } from 'floating-vue'
 import { useCanvas } from './useCanvas'
 import { useCanvasData } from './useCanvasData'
 import ToolBar from './TheCanvasToolbar.vue'
 import TheCardContainer from './TheCardContainer.vue'
 import TheGroup from './TheCards/TheGroup.vue'
 import TheWriter from './TheCards/TheWriter.vue'
-
+import TheMenuItem from './TheMenuItem.vue'
+import TheMenuColorsItem from './TheMenuColorsItem.vue'
 import 'floating-vue/dist/style.css'
 
 const props = defineProps({
@@ -96,6 +125,7 @@ const props = defineProps({
     },
   },
 })
+
 const nodeData = defineModel('nodes', { required: true })
 // const edgesData = defineModel('edges', { required: true })
 
@@ -103,6 +133,7 @@ const { scale, cursor, x, y, selectHelper, containerRef, zoomControl } = useCanv
 const { updateNodePositionData, updateNodeSizeData, updateClear } = useCanvasData(nodeData)
 
 const nodeId = ref(-1)
+const contextMenu = ref(false)
 // const selectedNodeIndices = ref([])
 const canvasbase = reactive({
   scale,
@@ -122,7 +153,18 @@ provide('cardDraging', {
   deltaX: ref(0),
   deltaY: ref(0),
 })
-
+const contextMenuPosition = reactive({ x: 0, y: 0 })
+function handleContextMenu(event) {
+  console.log(event)
+  contextMenuPosition.x = event.clientX
+  contextMenuPosition.y = event.clientY
+  contextMenu.value = true
+}
+document.addEventListener('contextmenu', (event) => {
+  console.log('aa')
+  // event.stopPropagation()
+  event.preventDefault()
+})
 watch(selectHelper, (v) => {
   if (v.w !== 0 || v.h !== 0) {
     canvasbase.selected = []
@@ -161,6 +203,7 @@ function clickContainer() {
   // 清空选择
   nodeId.value = -1
   canvasbase.selected = []
+  contextMenu.value = false
 }
 function cardMoveEnd() {
   updateClear()
