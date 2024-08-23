@@ -27,7 +27,8 @@
               :data="node"
               :scale="scale"
               :cursor-style="cursorStyle"
-              @drag-handle-event="pointerDown"
+              @handle-drag="pointerDown"
+              @handle-select="canvasbase.selected[0] = index"
             />
             <TheWriter
               v-if="node.type === 'card'"

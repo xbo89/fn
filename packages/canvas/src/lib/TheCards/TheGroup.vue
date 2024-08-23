@@ -9,10 +9,11 @@
         top: `calc(-36px / ${scale} )`,
         height: `${28}px`,
       }"
-      @pointerdown="dragHandleEvent"
+      @pointerdown.stop="(event) => { !isEdit && handleDrag(event) }"
+      @mousedown.stop="handleSelect"
     >
       <span>
-        <input v-model="label" type="text" class="bg-transparent" @mousemove.prevent>
+        <input v-model="label" type="text" class="bg-transparent  outline-none" :class="[isEdit ? 'cursor-text hover:bg-white/60' : 'cursor-pointer hover:bg-black/10']" @click="handleEdit" @blur="handleCancelEdit" @keypress.esc="handleCancelEdit">
       </span>
       <Dropdown
         :distance="6"
@@ -79,9 +80,19 @@ const props = defineProps({
     default: 'cursor-grab active:cursor-grabbing select-none',
   },
 })
-const emits = defineEmits(['dragHandleEvent'])
-function dragHandleEvent(event) {
-  emits('dragHandleEvent', event)
+const emits = defineEmits(['handleDrag', 'handleSelect'])
+const isEdit = ref(false)
+function handleDrag(event) {
+  emits('handleDrag', event)
+}
+function handleSelect() {
+  emits('handleSelect')
+}
+function handleEdit() {
+  isEdit.value = true
+}
+function handleCancelEdit() {
+  isEdit.value = false
 }
 const label = ref(props.data.title)
 </script>
