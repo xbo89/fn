@@ -3,7 +3,7 @@
     ref="containerRef"
     class="w-full h-full touch-none overflow-hidden absolute bg-slate-100"
     :class="[cursor]"
-    @mousedown="clickContainer"
+    @contextmenu.stop.prevent="handleContextMenu"
   >
     <div
       class="wangwenbo fixed origin-top-left left-0 top-0"
@@ -13,12 +13,27 @@
     >
       <template v-for="(node, index) in nodeData" :key="node.id">
         <TheCardContainer
-          :pos="node.position"
+          :position="node.position"
           :size="node.size"
+          :scale="scale"
           :card-index="index"
-          @move="({ position, delta }) => updateNodePositionData({ id: node.id, position, delta })"
-          @move-end="cardMoveEnd"
-          @resize-end="({ size }) => updateNodeSizeData({ id: node.id, size })"
+          @handle-move="({
+            position,
+            delta,
+          }) => updateNodePositionData({
+            id: node.id,
+            position,
+            delta,
+          })"
+          @handle-move-end="updateClear"
+          @handle-resize-end="({
+            size,
+            position,
+          }) => updateNodeSizeData({
+            id: node.id,
+            size,
+            position,
+          })"
         >
           <template #default="{ pointerDown, cursorStyle, isSelect }">
             <TheGroup
@@ -28,7 +43,7 @@
               :selected="isSelect"
               :cursor-style="cursorStyle"
               @handle-drag="pointerDown"
-              @handle-select="canvasbase.selected[0] = index"
+              @handle-select="selectedNodeByIndex[0] = index"
             />
             <TheWriter
               v-if="node.type === 'card'"
@@ -37,88 +52,79 @@
               :selected="isSelect"
               :cursor-style="cursorStyle"
               @handle-drag="pointerDown"
-              @handle-select="canvasbase.selected[0] = index"
+              @handle-select="selectedNodeByIndex[0] = index"
             />
           </template>
         </TheCardContainer>
       </template>
       <div
-        v-show="selectHelper.display"
+        v-show="selection.display"
         :style="{
-          width: `${selectHelper.w}px`,
-          height: `${selectHelper.h}px`,
-          transform: `translate(${selectHelper.x}px,${selectHelper.y}px)`,
+          width: `${selection.w}px`,
+          height: `${selection.h}px`,
+          transform: `translate(${selection.x}px,${selection.y}px)`,
         }"
-        class="border border-blue-400 bg-blue-800/10 absolute pointer-events-none rounded-sm origin-top-left z-50"
+        class="border border-blue-600 bg-blue-600/10 fixed left-0 top-0 pointer-events-none rounded-sm origin-top-left z-50"
       />
     </div>
-    <ToolBar
+    <TheCanvasToolbar
       class="z-10"
       :scale="scale"
-      @on-zoom-in="zoomControl(true)"
-      @on-zoom-out="zoomControl(false)"
+      @on-zoom-in="zoomIn"
+      @on-zoom-out="zoomOut"
     />
-    <svg v-if="pattern" width="100%" height="100%">
-      <pattern id="grid-dot-pattern" :width="patternStyle.gap * scale" :height="patternStyle.gap * scale" patternUnits="userSpaceOnUse" :patternTransform="`translate(${x},${y})`">
-        <circle :cx="patternStyle.size * scale" :cy="patternStyle.size * scale" :r="patternStyle.size * scale" :fill="patternStyle.color" :fill-opacity="patternStyle.opacity" />
+    <svg v-if="backgroundStyle.enable" width="100%" height="100%">
+      <pattern id="grid-dot-pattern" :width="backgroundStyle.gap * scale" :height="backgroundStyle.gap * scale" patternUnits="userSpaceOnUse" :patternTransform="`translate(${x},${y})`">
+        <circle :cx="backgroundStyle.size * scale" :cy="backgroundStyle.size * scale" :r="backgroundStyle.size * scale" :fill="backgroundStyle.color" :fill-opacity="backgroundStyle.opacity" />
       </pattern>
       <rect width="100%" height="100%" fill="url(#grid-dot-pattern)" />
     </svg>
   </div>
-  <Dropdown
-    :shown="contextMenu"
+  <div
+    v-if="showContextMenu"
+    class="fixed inset-0"
+    @wheel.stop.prevent
+    @mousedown.stop.prevent
+  />
+  <div
+    v-if="showContextMenu"
+    class="absolute left-0 top-0 bg-white border border-gray-200 rounded-lg p-1 shadow-2xl "
+    :style="{
+      transform: `translate(${contextMenuPosition.x}px,${contextMenuPosition.y}px)`,
+    }"
   >
-    <div class="w-0" :style="{ transform: `translate(${contextMenuPosition.x}px,${contextMenuPosition.y}px)` }" />
-    <template #popper>
-      <div class="p-1 space-y-0.5">
-        <TheMenuItem icon="i-ri-fullscreen-line">
-          Default size
-        </TheMenuItem>
-        <TheMenuItem icon="i-ri-contract-up-down-line">
-          Fold
-        </TheMenuItem>
-        <TheMenuItem icon="i-ri-expand-height-line">
-          Fit to content
-        </TheMenuItem>
-        <TheMenuColorsItem />
-        <TheMenuItem icon="i-ri-file-copy-line" hotkey="Cmd+C">
-          Copy
-        </TheMenuItem>
-        <TheMenuItem icon="i-ri-delete-bin-7-line" hotkey="Del">
-          Delete
-        </TheMenuItem>
-      </div>
-    </template>
-  </Dropdown>
-  <div class="mask-dis fixed inset-0 hidden" @wheel.stop.prevent />
+    <TheMenuItem icon="i-ri-file-paper-line" hotkey="Ctrl+N">
+      Card
+    </TheMenuItem>
+    <TheMenuItem icon="i-ri-layout-top-2-line" hotkey="Ctrl+G">
+      Section
+    </TheMenuItem>
+  </div>
 </template>
 
 <script setup>
-import { provide, reactive, ref, watch } from 'vue'
-import { Dropdown, Tooltip } from 'floating-vue'
-import { useCanvas } from './useCanvas'
-import { useCanvasData } from './useCanvasData'
-import ToolBar from './TheCanvasToolbar.vue'
+import { provide } from 'vue'
+import { useCanvas } from './useHooks/useCanvas'
+import { useCanvasSelection, useNodeSelection } from './useHooks/useCanvasSelection'
+import { useCanvasContextMenu } from './useHooks/useCanvasContextMenu'
+import { useCanvasData } from './useHooks/useCanvasData'
+import TheCanvasToolbar from './TheCanvasToolbar.vue'
 import TheCardContainer from './TheCardContainer.vue'
 import TheGroup from './TheCards/TheGroup.vue'
 import TheWriter from './TheCards/TheWriter.vue'
 import TheMenuItem from './TheMenuItem.vue'
-import TheMenuColorsItem from './TheMenuColorsItem.vue'
-import 'floating-vue/dist/style.css'
+// import TheMenuColorsItem from './TheMenuColorsItem.vue'
 
-const props = defineProps({
-  pattern: {
-    type: Boolean,
-    default: true,
-  },
-  patternStyle: {
+defineProps({
+  backgroundStyle: {
     type: Object,
     default: () => {
       return {
-        gap: 36,
-        color: '#060709',
+        enable: true,
+        gap: 24,
+        color: '#64748b',
         opacity: 0.2,
-        size: 1.2,
+        size: 1,
         scale: {
           default: 1,
           max: 2,
@@ -129,91 +135,23 @@ const props = defineProps({
     },
   },
 })
-
 const nodeData = defineModel('nodes', { required: true })
-// const edgesData = defineModel('edges', { required: true })
-
-const { scale, cursor, x, y, selectHelper, containerRef, zoomControl } = useCanvas(props)
 const { updateNodePositionData, updateNodeSizeData, updateClear } = useCanvasData(nodeData)
-
-const nodeId = ref(-1)
-const contextMenu = ref(false)
-// const selectedNodeIndices = ref([])
-const canvasbase = reactive({
+const { containerRef, x, y, scale, cursor, zoomIn, zoomOut } = useCanvas()
+const { selection } = useCanvasSelection({
+  target: containerRef,
+  position: { x, y },
   scale,
+})
+const { selectedNodeByIndex } = useNodeSelection({
+  nodes: nodeData,
+  container: containerRef,
+})
+const { showContextMenu, contextMenuPosition, handleContextMenu } = useCanvasContextMenu()
+provide('canvasbase', {
   x,
   y,
-  selected: [],
-})
-provide('canvasbase', canvasbase) // 用这个
-provide('selectedNodeId', nodeId)
-provide('canvasBaseInfo', {
   scale,
-  x,
-  y,
+  selected: selectedNodeByIndex,
 })
-provide('cardDraging', {
-  isDragging: ref(false),
-  deltaX: ref(0),
-  deltaY: ref(0),
-})
-const contextMenuPosition = reactive({ x: 0, y: 0 })
-// 禁止浏览器鼠标右键菜单
-document.body.addEventListener('contextmenu', (event) => {
-  event.preventDefault()
-  event.stopPropagation()
-  handleContextMenu(event)
-})
-function handleContextMenu(event) {
-  contextMenuPosition.x = event.clientX
-  contextMenuPosition.y = event.clientY
-  contextMenu.value = true
-}
-
-watch(selectHelper, (v) => {
-  if (v.w !== 0 || v.h !== 0) {
-    canvasbase.selected = []
-    nodeData.value.forEach((node, index) => {
-      const nodeBox = {
-        position: node.position,
-        size: node.size,
-      }
-      if (node.type === 'card' && isIntersecting(selectHelper, nodeBox)) {
-        canvasbase.selected.push(index)
-      }
-
-      if (node.type === 'group' && isCompletelyInside(nodeBox, selectHelper)) {
-        canvasbase.selected.push(index)
-      }
-    })
-  }
-})
-function isIntersecting(box1, box2) {
-  return !(
-    box1.x + box1.w < box2.position.x // box1 is to the left of box2
-    || box1.x > box2.position.x + box2.size.w // box1 is to the right of box2
-    || box1.y + box1.h < box2.position.y // box1 is above box2
-    || box1.y > box2.position.y + box2.size.h // box1 is below box2
-  )
-}
-function isCompletelyInside(innerBox, outerBox) {
-  return (
-    innerBox.position.x >= outerBox.x
-    && innerBox.position.x + innerBox.size.w <= outerBox.x + outerBox.w
-    && innerBox.position.y >= outerBox.y
-    && innerBox.position.y + innerBox.size.h <= outerBox.y + outerBox.h
-  )
-}
-function clickContainer() {
-  // 清空选择
-  nodeId.value = -1
-  canvasbase.selected = []
-  contextMenu.value = false
-}
-function cardMoveEnd() {
-  updateClear()
-}
 </script>
-
-<style>
-</style>

@@ -20,10 +20,11 @@ export function useCanvasData(nodeData) {
       }
     }
   }
-  function updateNodeSizeData({ id, size }) {
+  function updateNodeSizeData({ id, size, position }) {
     const node = nodeData.value.find(i => i.id === id)
     node.size.w = size.width
     node.size.h = size.height
+    updateNodePositionData({ id, position, delta: { x: 0, y: 0 } })
   }
   function updateClear() {
     cachePosition.value = []

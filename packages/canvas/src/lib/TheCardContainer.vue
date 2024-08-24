@@ -7,7 +7,7 @@
   >
     <slot
       :pointer-down="dragStart"
-      :scale="scale"
+      :canvas-scale="scale"
       :is-select="isSelect"
       cursor-style="cursor-grab active:cursor-grabbing select-none"
     />
@@ -91,11 +91,11 @@
 </template>
 
 <script setup>
-import { inject, ref } from 'vue'
-import { useResize } from './useCardContainer'
+import { computed, inject } from 'vue'
+import { useResize } from './useHooks/useCardContainer'
 
 const props = defineProps({
-  pos: {
+  position: {
     type: Object,
     default: () => {
       return {
@@ -112,6 +112,10 @@ const props = defineProps({
         h: 280,
       }
     },
+  },
+  scale: {
+    type: Number,
+    default: 1,
   },
   cardIndex: {
     type: Number,
@@ -150,19 +154,21 @@ const props = defineProps({
   },
 })
 const emits = defineEmits([
-  'change',
-  'moveStart',
-  'move',
-  'moveEnd',
-  'resizeStart',
-  'resize',
-  'resizeEnd',
+  'handle-change',
+  'handle-move-start',
+  'handle-move',
+  'handle-move-end',
+  'handle-resize-start',
+  'handle-resize',
+  'handle-resize-end',
 ])
-const { scale } = inject('canvasbase')
+const canvasbase = inject('canvasbase')
+const isSelect = computed(() => {
+  return canvasbase.selected.value.includes(props.cardIndex)
+})
 const {
   containerRef,
   style,
-  isSelect,
   dragStart,
   resizeStart,
 } = useResize(props, emits)

@@ -1,16 +1,13 @@
-import { computed, inject, reactive, ref, toRef, watchEffect } from 'vue'
+import { computed, reactive, ref, watchEffect } from 'vue'
 
 export function useResize(props, emits) {
   const containerRef = ref(null)
-  const position = reactive({ x: props.pos.x, y: props.pos.y })
+  const position = reactive({ x: props.position.x, y: props.position.y })
   const size = reactive({ width: props.size.w, height: props.size.h })
   const start = reactive({ x: 0, y: 0 })
   const isDragging = ref(false)
   const isResizing = ref(false)
   const dragDirection = ref('')
-  const canvasbase = inject('canvasbase')
-  const scale = toRef(canvasbase, 'scale')
-  const selected = toRef(canvasbase, 'selected')
 
   const style = computed(() => {
     return {
@@ -25,26 +22,24 @@ export function useResize(props, emits) {
       maxHeight: `${props.limitMax.maxH}px`,
     }
   })
-  const isSelect = computed(() => {
-    return selected.value.includes(props.cardIndex)
-  })
+
   watchEffect(() => {
-    position.x = props.pos.x
-    position.y = props.pos.y
+    position.x = props.position.x
+    position.y = props.position.y
     size.width = props.size.w
     size.height = props.size.h
   })
   let mouseDownPoint = { x: 0, y: 0 }
   function dragStart(event) {
-    // event.preventDefault()
+    event.stopPropagation()
     isDragging.value = true
-    start.x = (event.clientX - position.x * scale.value)
-    start.y = (event.clientY - position.y * scale.value)
+    start.x = (event.clientX - position.x * props.scale)
+    start.y = (event.clientY - position.y * props.scale)
     mouseDownPoint = {
       x: event.clientX,
       y: event.clientY,
     }
-    emits('moveStart', { start, isDragging })
+    emits('handle-move-start', { start, isDragging })
     document.onpointermove = function (event) {
       onPointerMove(event)
     }
@@ -63,7 +58,7 @@ export function useResize(props, emits) {
     omx = event.clientX
     omy = event.clientY
 
-    emits('resizeStart', { isResizing })
+    emits('handle-resize-start')
     document.onpointermove = function (event) {
       onPointerMove(event)
     }
@@ -72,8 +67,8 @@ export function useResize(props, emits) {
     }
   }
   function onPointerMove(event) {
-    isDragging.value && containerMove(event, scale)
-    isResizing.value && containerResize(event, scale)
+    isDragging.value && containerMove(event, props.scale)
+    isResizing.value && containerResize(event, props.scale)
   }
 
   function onPointerUp() {
@@ -81,19 +76,19 @@ export function useResize(props, emits) {
     document.onpointerup = null
     isDragging.value = false
     isResizing.value = false
-    emits('moveEnd')
-    emits('resizeEnd', { size })
+    emits('handle-move-end')
+    emits('handle-resize-end', { size, position })
   }
 
   function containerMove(event, canvaScale) {
-    position.x = (event.clientX - start.x) / canvaScale.value
-    position.y = (event.clientY - start.y) / canvaScale.value
-    emits('move', {
+    position.x = (event.clientX - start.x) / canvaScale
+    position.y = (event.clientY - start.y) / canvaScale
+    emits('handle-move', {
       position,
       isDragging,
       delta: {
-        x: (event.clientX - mouseDownPoint.x) / canvaScale.value,
-        y: (event.clientY - mouseDownPoint.y) / canvaScale.value,
+        x: (event.clientX - mouseDownPoint.x) / canvaScale,
+        y: (event.clientY - mouseDownPoint.y) / canvaScale,
       },
     })
   }
@@ -102,53 +97,52 @@ export function useResize(props, emits) {
     let deltaXLeft, deltaYTop, deltaXBottomLeft, deltaXTopLeft, deltaYTopLeft, deltaYTopRight
     switch (dragDirection.value) {
       case 'right':
-        size.width = (event.clientX - left) / canvaScale.value
+        size.width = (event.clientX - left) / canvaScale
         break
       case 'bottom':
-        size.height = (event.clientY - top) / canvaScale.value
+        size.height = (event.clientY - top) / canvaScale
         break
       case 'left':
-        deltaXLeft = (event.clientX - omx) / canvaScale.value
+        deltaXLeft = (event.clientX - omx) / canvaScale
         size.width = (ow - deltaXLeft)
         position.x = ox + deltaXLeft
         break
       case 'top':
-        deltaYTop = (event.clientY - omy) / canvaScale.value
+        deltaYTop = (event.clientY - omy) / canvaScale
         size.height = (oh - deltaYTop)
         position.y = oy + deltaYTop
         break
       case 'bottom-right':
-        size.width = (event.pageX - left) / canvaScale.value
-        size.height = (event.pageY - top) / canvaScale.value
+        size.width = (event.pageX - left) / canvaScale
+        size.height = (event.pageY - top) / canvaScale
         break
       case 'bottom-left':
-        deltaXBottomLeft = (event.clientX - omx) / canvaScale.value
+        deltaXBottomLeft = (event.clientX - omx) / canvaScale
         size.width = (ow - deltaXBottomLeft)
         position.x = ox + deltaXBottomLeft
-        size.height = (event.clientY - top) / canvaScale.value
+        size.height = (event.clientY - top) / canvaScale
         break
       case 'top-left':
-        deltaXTopLeft = (event.clientX - omx) / canvaScale.value
-        deltaYTopLeft = (event.clientY - omy) / canvaScale.value
+        deltaXTopLeft = (event.clientX - omx) / canvaScale
+        deltaYTopLeft = (event.clientY - omy) / canvaScale
         size.width = (ow - deltaXTopLeft)
         position.x = ox + deltaXTopLeft
         size.height = (oh - deltaYTopLeft)
         position.y = oy + deltaYTopLeft
         break
       case 'top-right':
-        deltaYTopRight = (event.clientY - omy) / canvaScale.value
-        size.width = (event.clientX - left) / canvaScale.value
+        deltaYTopRight = (event.clientY - omy) / canvaScale
+        size.width = (event.clientX - left) / canvaScale
         size.height = (oh - deltaYTopRight)
         position.y = oy + deltaYTopRight
         break
     }
-    emits('resize', { size, isResizing })
+    emits('handle-resize', { size, isResizing })
   }
 
   return {
     containerRef,
     style,
-    isSelect,
     dragStart,
     resizeStart,
   }

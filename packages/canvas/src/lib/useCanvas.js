@@ -1,5 +1,5 @@
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
-import { EASING, animate } from './useAnimation'
+import { EASING, animate } from './useHooks/useAnimation'
 
 export function useCanvas(props) {
   const x = ref(0)
