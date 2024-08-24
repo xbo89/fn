@@ -21,7 +21,11 @@ export const useCanvasStore = defineStore('canvas', {
       },
     },
   }),
-
+  getters: {
+    selectState: (state) => {
+      return index => state.selectedNodes.includes(index)
+    },
+  },
   actions: {
     handleNodeSelect(index) {
       this.selectedNodes = []

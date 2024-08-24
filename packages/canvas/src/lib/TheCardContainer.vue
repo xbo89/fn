@@ -2,15 +2,15 @@
   <div
     ref="containerRef"
     class="absolute box-border"
-    :class="[isSelect ? 'outline outline-2 outline-blue-600' : '']"
+    :class="[selectState(cardIndex) ? 'outline outline-2 outline-blue-600' : '']"
     :style="style"
   >
     <slot
       :pointer-down="dragStart"
-      :is-select="isSelect"
+      :is-select="selectState(cardIndex)"
       cursor-style="cursor-grab active:cursor-grabbing select-none"
     />
-    <template v-if="isSelect">
+    <template v-if="selectState(cardIndex)">
       <!-- 各个边的 resize handle -->
       <div
         class="resize-handle-border absolute top !w-full left-1/2 transform -translate-x-1/2 cursor-ns-resize"
@@ -90,7 +90,6 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useResize } from './useHooks/useCardContainer'
 import { useCanvasStore } from '@/useStore/useCanvasStore.js'
@@ -160,11 +159,8 @@ const emits = defineEmits([
   'handle-resize-end',
 ])
 const store = useCanvasStore()
-const { selectedNodes } = storeToRefs(store)
+const { selectState } = storeToRefs(store)
 
-const isSelect = computed(() => {
-  return selectedNodes.value.includes(props.cardIndex)
-})
 const {
   containerRef,
   style,
