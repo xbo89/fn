@@ -80,40 +80,23 @@
       <rect width="100%" height="100%" fill="url(#grid-dot-pattern)" />
     </svg>
   </div>
-  <div
-    v-if="showContextMenu"
-    class="fixed inset-0"
-    @wheel.stop.prevent
-    @mousedown.stop.prevent
-  />
-  <div
-    v-if="showContextMenu"
-    class="absolute left-0 top-0 bg-white border border-gray-200 rounded-lg p-1 shadow-2xl "
-    :style="{
-      transform: `translate(${contextMenuPosition.x}px,${contextMenuPosition.y}px)`,
-    }"
-  >
+  <TheContextMenu v-model="showContextMenu" :position="contextMenuPosition">
     <TheMenuItem icon="i-ri-file-paper-line" hotkey="Ctrl+N">
       Card
     </TheMenuItem>
     <TheMenuItem icon="i-ri-layout-top-2-line" hotkey="Ctrl+G">
       Section
     </TheMenuItem>
-  </div>
+  </TheContextMenu>
 </template>
 
 <script setup>
 import { provide } from 'vue'
 import { useCanvas } from './useHooks/useCanvas'
 import { useCanvasSelection, useNodeSelection } from './useHooks/useCanvasSelection'
-import { useCanvasContextMenu } from './useHooks/useCanvasContextMenu'
+import { useCanvasContextMenu } from './useHooks/useContextMenu'
 import { useCanvasData } from './useHooks/useCanvasData'
 import TheCanvasToolbar from './TheCanvasToolbar.vue'
-import TheCardContainer from './TheCardContainer.vue'
-import TheGroup from './TheCards/TheGroup.vue'
-import TheWriter from './TheCards/TheWriter.vue'
-import TheMenuItem from './TheMenuItem.vue'
-// import TheMenuColorsItem from './TheMenuColorsItem.vue'
 
 defineProps({
   backgroundStyle: {

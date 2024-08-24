@@ -1,5 +1,8 @@
 <template>
-  <div class="border border-teal-600 bg-teal-700/30 h-full relative rounded-md">
+  <div
+    class="border border-teal-600 bg-teal-700/30 h-full relative rounded-md"
+    @contextmenu.stop.prevent="handleContextMenu"
+  >
     <div
       class="bg-teal-700/30 border border-teal-600 rounded py-1 pl-2 pr-1 font-bold flex items-center text-sm space-x-2 absolute -top-2 origin-top-left"
       :class="[cursorStyle]"
@@ -27,36 +30,42 @@
         >
         <span :class="[isEdit ? 'opacity-0' : 'opacity-100']" class="pointer-events-none p-0.5 block">{{ label }}</span>
       </div>
-      <Dropdown
-        :distance="6"
-      >
-        <button class="size-6 hover:bg-black/20 rounded flex justify-center items-center text-xl">
-          <i class="i-ri-more-line" />
-        </button>
-        <template #popper>
-          <div class="p-1 space-y-1">
-            <TheMenuItem icon="i-ri-edit-line">
-              Rename
-            </TheMenuItem>
-            <TheMenuColorsItem />
-            <TheMenuItem icon="i-ri-file-copy-line" hotkey="Cmd+C">
-              Copy
-            </TheMenuItem>
-            <TheMenuItem icon="i-ri-delete-bin-7-line" hotkey="Del">
-              Delete
-            </TheMenuItem>
-          </div>
-        </template>
-      </Dropdown>
+      <TheContextMenu v-model="showContextMenu" :position="contextMenuPosition">
+        <TheContextMenu v-model="showContextMenu" :position="contextMenuPosition">
+          <TheMenuItem icon="i-ri-file-paper-line" hotkey="Ctrl+N">
+            Card
+          </TheMenuItem>
+          <TheMenuItem icon="i-ri-layout-top-2-line" hotkey="Ctrl+G">
+            Section
+          </TheMenuItem>
+          <TheMenuDivide />
+          <TheMenuColorsItem />
+          <TheMenuDivide />
+          <TheMenuItem icon="i-ri-fullscreen-line">
+            Default size
+          </TheMenuItem>
+          <TheMenuItem icon="i-ri-contract-up-down-line">
+            Fold
+          </TheMenuItem>
+          <TheMenuItem icon="i-ri-expand-height-line">
+            Fit to content
+          </TheMenuItem>
+          <TheMenuDivide />
+          <TheMenuItem icon="i-ri-file-copy-line" hotkey="Cmd+C">
+            Copy
+          </TheMenuItem>
+          <TheMenuItem icon="i-ri-delete-bin-7-line" hotkey="Del">
+            Delete
+          </TheMenuItem>
+        </TheContextMenu>
+      </thecontextmenu>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { Dropdown } from 'floating-vue'
-import TheMenuItem from '../TheMenuItem.vue'
-import TheMenuColorsItem from '../TheMenuColorsItem.vue'
+import { useCanvasContextMenu } from '../useHooks/useContextMenu'
 
 const props = defineProps({
   data: {
@@ -96,7 +105,11 @@ const props = defineProps({
     default: 'cursor-grab active:cursor-grabbing select-none',
   },
 })
+
 const emits = defineEmits(['handleDrag', 'handleSelect'])
+
+const { showContextMenu, contextMenuPosition, handleContextMenu } = useCanvasContextMenu()
+
 const isEdit = ref(false)
 function handleDrag(event) {
   emits('handleDrag', event)

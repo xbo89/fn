@@ -5,6 +5,7 @@
     @mousedown.stop="handleSelect"
     @mouseenter.stop="handleMouseEnter"
     @mouseleave.stop="handleMouseLeave"
+    @contextmenu.stop.prevent="handleContextMenu"
   >
     <Transition name="fade">
       <div
@@ -13,48 +14,17 @@
         class="writer-toolbar p-1 flex space-x-1 justify-between absolute top-1 inset-x-1 rounded-md bg-gray-100 hover:bg-gray-200 transition-colors"
       >
         <div class="right-slot">
-          <Tooltip>
-            <button class="size-6 hover:bg-gray-300 rounded-md flex justify-center items-center text-xl">
-              <i class="i-ri-arrow-down-s-line" />
-            </button>
-            <template #popper>
-              Toggle card
-            </template>
-          </Tooltip>
+          <button class="size-6 hover:bg-gray-300 rounded-md flex justify-center items-center text-xl">
+            <i class="i-ri-arrow-down-s-line" />
+          </button>
         </div>
         <div class="right-slot flex space-x-1 justify-between">
           <button class="size-6 hover:bg-gray-300 rounded-md flex justify-center items-center text-xl">
             <i class="i-ri-information-line" />
           </button>
-
-          <Dropdown
-            :distance="6"
-            boundary="body"
-          >
-            <button class="size-6 hover:bg-gray-300 rounded flex justify-center items-center text-xl">
-              <i class="i-ri-more-line" />
-            </button>
-            <template #popper>
-              <div class="p-1 space-y-0.5">
-                <TheMenuItem icon="i-ri-fullscreen-line">
-                  Default size
-                </TheMenuItem>
-                <TheMenuItem icon="i-ri-contract-up-down-line">
-                  Fold
-                </TheMenuItem>
-                <TheMenuItem icon="i-ri-expand-height-line">
-                  Fit to content
-                </TheMenuItem>
-                <TheMenuColorsItem />
-                <TheMenuItem icon="i-ri-file-copy-line" hotkey="Cmd+C">
-                  Copy
-                </TheMenuItem>
-                <TheMenuItem icon="i-ri-delete-bin-7-line" hotkey="Del">
-                  Delete
-                </TheMenuItem>
-              </div>
-            </template>
-          </Dropdown>
+          <button class="size-6 hover:bg-gray-300 rounded flex justify-center items-center text-xl">
+            <i class="i-ri-more-line" />
+          </button>
         </div>
       </div>
     </Transition>
@@ -62,17 +32,35 @@
       <!-- <Writer /> -->
     </div>
   </div>
+  <TheContextMenu v-model="showContextMenu" :position="contextMenuPosition">
+    <TheMenuItem icon="i-ri-fullscreen-line">
+      Default size
+    </TheMenuItem>
+    <TheMenuItem icon="i-ri-contract-up-down-line">
+      Fold
+    </TheMenuItem>
+    <TheMenuItem icon="i-ri-expand-height-line">
+      Fit to content
+    </TheMenuItem>
+    <TheMenuDivide />
+    <TheMenuColorsItem />
+    <TheMenuDivide />
+    <TheMenuItem icon="i-ri-file-copy-line" hotkey="Cmd+C">
+      Copy
+    </TheMenuItem>
+    <TheMenuItem icon="i-ri-delete-bin-7-line" hotkey="Del">
+      Delete
+    </TheMenuItem>
+  </TheContextMenu>
 </template>
 
 <script setup>
-import { Writer } from '@floatnote/writer'
+// import { Writer } from '@floatnote/writer'
 import '@floatnote/writer/dist/style.css'
 import 'simplebar'
 import 'simplebar/dist/simplebar.css'
-import { Dropdown, Tooltip } from 'floating-vue'
 import { ref } from 'vue'
-import TheMenuItem from '../TheMenuItem.vue'
-import TheMenuColorsItem from '../TheMenuColorsItem.vue'
+import { useCanvasContextMenu } from '../useHooks/useContextMenu'
 
 defineProps({
   data: {
@@ -109,6 +97,7 @@ defineProps({
   },
 })
 const emits = defineEmits(['handleDrag', 'handleSelect'])
+const { showContextMenu, contextMenuPosition, handleContextMenu } = useCanvasContextMenu()
 const showToolBar = ref(false)
 let timer = null
 function handleDrag(event) {

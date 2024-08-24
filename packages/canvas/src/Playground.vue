@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-import FCanvas from './lib/TheCanvas.vue'
 
 const nodes = ref([
 
@@ -66,7 +65,7 @@ const edges = ref([])
 </script>
 
 <template>
-  <FCanvas
+  <TheCanvas
     v-model:nodes="nodes"
     v-model:edges="edges"
   />
