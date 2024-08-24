@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-between px-2 py-1 hover:bg-gray-200 rounded-md w-52 text-base cursor-pointer">
-    <div class="flex items-center space-x-2">
+    <div class="flex items-center space-x-2 text-gray-600">
       <i class="text-gray-500" :class="[icon]" />
       <span class="title "><slot /></span>
     </div>

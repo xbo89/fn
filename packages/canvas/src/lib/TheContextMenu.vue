@@ -9,7 +9,7 @@
     />
     <div
       v-if="show"
-      class="absolute left-0 top-0 bg-white border border-gray-200 rounded-lg p-1 shadow-2xl space-y-0.5 "
+      class="absolute left-0 top-0 bg-white border border-gray-200 rounded-lg p-1 drop-shadow-[0_26px_35px_rgba(0,0,0,0.1)] space-y-0.5 "
       :style="{
         transform: `translate(${position.x}px,${position.y}px)`,
       }"
