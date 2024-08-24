@@ -1,11 +1,12 @@
 import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useEventListener } from './useEventListener'
+import { useCanvasStore } from '@/useStore/useCanvasStore.js'
 
 const scale = ref(1)
 const wheelX = ref(0)
 const wheelY = ref(0)
 export function useWheelMove({
-  position,
   target,
   callback,
   config = {
@@ -15,6 +16,9 @@ export function useWheelMove({
     },
   },
 }) {
+  const store = useCanvasStore()
+  const { canvasBase } = storeToRefs(store)
+
   const containerRect = ref(null)
   useEventListener(target, 'wheel', mousewheel, { passive: false })
   onMounted(() => {
@@ -45,8 +49,8 @@ export function useWheelMove({
      */
     const offsetX = event.clientX - left
     const offsetY = event.clientY - top
-    const relativeX = (offsetX - position.x.value) / scale.value
-    const relativeY = (offsetY - position.y.value) / scale.value
+    const relativeX = (offsetX - canvasBase.value.x) / scale.value
+    const relativeY = (offsetY - canvasBase.value.y) / scale.value
     // 缩放逻辑
     const dy = -deltaY || wheelDeltaY
     if (dy > 0 && scale.value < config.scale.max) {

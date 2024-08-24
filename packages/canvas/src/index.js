@@ -6,6 +6,7 @@ import TheMenuColorsItem from './lib/TheMenuColorsItem.vue'
 import TheCardContainer from './lib/TheCardContainer.vue'
 import TheGroup from './lib/TheCards/TheGroup.vue'
 import TheWriter from './lib/TheCards/TheWriter.vue'
+import TheCanvasSelectionArea from './lib/TheCanvasSelectionArea.vue'
 import TheMenuDivide from './lib/TheMenuDivide.vue'
 
 export default {
@@ -18,6 +19,7 @@ export default {
     app.component('TheGroup', TheGroup)
     app.component('TheWriter', TheWriter)
     app.component('TheMenuDivide', TheMenuDivide)
+    app.component('TheCanvasSelectionArea', TheCanvasSelectionArea)
     app.use(createPinia())
   },
 }

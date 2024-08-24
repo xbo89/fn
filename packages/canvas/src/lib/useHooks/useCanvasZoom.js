@@ -1,9 +1,13 @@
 import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { EASING, animate } from './useAnimation'
 
 import { useEventListener } from './useEventListener'
+import { useCanvasStore } from '@/useStore/useCanvasStore.js'
 
-export function useCanvasZoom({ target, position, scale, config = { max: 2, min: 0.1, step: 0.1 } }) {
+export function useCanvasZoom({ target, config = { max: 2, min: 0.1, step: 0.1 } }) {
+  const store = useCanvasStore()
+  const { canvasBase } = storeToRefs(store)
   const containerRect = ref(null)
 
   onMounted(() => {
@@ -24,22 +28,22 @@ export function useCanvasZoom({ target, position, scale, config = { max: 2, min:
           break
         case '0':
           event.preventDefault()
-          scale.value = 1
+          canvasBase.value.scale = 1
           break
       }
     }
   })
   function zoomControl(isZoomIn) {
-    const old = scale.value
+    const old = canvasBase.value.scale
     const { left, top } = containerRect.value
     const offsetX = target.value.offsetWidth / 2 - left
     const offsetY = target.value.offsetHeight / 2 - top
-    const relativeX = (offsetX - position.x.value) / scale.value
-    const relativeY = (offsetY - position.y.value) / scale.value
+    const relativeX = (offsetX - canvasBase.value.x) / canvasBase.value.scale
+    const relativeY = (offsetY - canvasBase.value.y) / canvasBase.value.scale
 
     const targetScale = isZoomIn
-      ? Math.min(scale.value + config.step, config.max)
-      : Math.max(scale.value - config.step, config.min)
+      ? Math.min(canvasBase.value.scale + config.step, config.max)
+      : Math.max(canvasBase.value.scale - config.step, config.min)
 
     animate({
       startValue: old,
@@ -47,12 +51,12 @@ export function useCanvasZoom({ target, position, scale, config = { max: 2, min:
       duration: 300,
       easingFunction: EASING.easeOutQuint,
       onUpdate: (value) => {
-        scale.value = value
-        const newRelativeX = relativeX * scale.value
-        const newRelativeY = relativeY * scale.value
+        canvasBase.value.scale = value
+        const newRelativeX = relativeX * canvasBase.value.scale
+        const newRelativeY = relativeY * canvasBase.value.scale
 
-        position.x.value = offsetX - newRelativeX
-        position.y.value = offsetY - newRelativeY
+        canvasBase.value.x = offsetX - newRelativeX
+        canvasBase.value.y = offsetY - newRelativeY
       },
     })
   }

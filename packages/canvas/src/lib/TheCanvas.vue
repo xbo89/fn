@@ -8,14 +8,13 @@
     <div
       class="wangwenbo fixed origin-top-left left-0 top-0"
       :style="{
-        transform: `translate(${x}px, ${y}px) scale(${scale})`,
+        transform: `translate(${canvasBase.x}px, ${canvasBase.y}px) scale(${canvasBase.scale})`,
       }"
     >
       <template v-for="(node, index) in nodeData" :key="node.id">
         <TheCardContainer
           :position="node.position"
           :size="node.size"
-          :scale="scale"
           :card-index="index"
           @handle-move="({
             position,
@@ -39,43 +38,33 @@
             <TheGroup
               v-if="node.type === 'group'"
               :data="node"
-              :scale="scale"
+              :scale="canvasBase.scale"
               :selected="isSelect"
               :cursor-style="cursorStyle"
               @handle-drag="pointerDown"
-              @handle-select="selectedNodeByIndex[0] = index"
+              @handle-select="handleNodeSelect(index)"
             />
             <TheWriter
               v-if="node.type === 'card'"
               :data="node"
-              :scale="scale"
-              :selected="isSelect"
+              :scale="canvasBase.scale"
               :cursor-style="cursorStyle"
               @handle-drag="pointerDown"
-              @handle-select="selectedNodeByIndex[0] = index"
+              @handle-select="handleNodeSelect(index)"
             />
           </template>
         </TheCardContainer>
       </template>
-      <div
-        v-show="selection.display"
-        :style="{
-          width: `${selection.w}px`,
-          height: `${selection.h}px`,
-          transform: `translate(${selection.x}px,${selection.y}px)`,
-        }"
-        class="border border-blue-600 bg-blue-600/10 fixed left-0 top-0 pointer-events-none rounded-sm origin-top-left z-50"
-      />
+      <TheCanvasSelectionArea />
     </div>
     <TheCanvasToolbar
       class="z-10"
-      :scale="scale"
       @on-zoom-in="zoomIn"
       @on-zoom-out="zoomOut"
     />
     <svg v-if="backgroundStyle.enable" width="100%" height="100%">
-      <pattern id="grid-dot-pattern" :width="backgroundStyle.gap * scale" :height="backgroundStyle.gap * scale" patternUnits="userSpaceOnUse" :patternTransform="`translate(${x},${y})`">
-        <circle :cx="backgroundStyle.size * scale" :cy="backgroundStyle.size * scale" :r="backgroundStyle.size * scale" :fill="backgroundStyle.color" :fill-opacity="backgroundStyle.opacity" />
+      <pattern id="grid-dot-pattern" :width="backgroundStyle.gap * canvasBase.scale" :height="backgroundStyle.gap * canvasBase.scale" patternUnits="userSpaceOnUse" :patternTransform="`translate(${canvasBase.x},${canvasBase.y})`">
+        <circle :cx="backgroundStyle.size * canvasBase.scale" :cy="backgroundStyle.size * canvasBase.scale" :r="backgroundStyle.size * canvasBase.scale" :fill="backgroundStyle.color" :fill-opacity="backgroundStyle.opacity" />
       </pattern>
       <rect width="100%" height="100%" fill="url(#grid-dot-pattern)" />
     </svg>
@@ -91,12 +80,13 @@
 </template>
 
 <script setup>
-import { provide } from 'vue'
-import { useCanvas } from './useHooks/useCanvas'
-import { useCanvasSelection, useNodeSelection } from './useHooks/useCanvasSelection'
-import { useCanvasContextMenu } from './useHooks/useContextMenu'
-import { useCanvasData } from './useHooks/useCanvasData'
+import { storeToRefs } from 'pinia'
 import TheCanvasToolbar from './TheCanvasToolbar.vue'
+import { useCanvas } from '@/useHooks/useCanvas'
+import { useNodeSelection, useSelectionArea } from '@/useHooks/useCanvasSelection'
+import { useCanvasContextMenu } from '@/useHooks/useContextMenu'
+import { useCanvasData } from '@/useHooks/useCanvasData'
+import { useCanvasStore } from '@/useStore/useCanvasStore.js'
 
 defineProps({
   backgroundStyle: {
@@ -118,23 +108,21 @@ defineProps({
     },
   },
 })
-const nodeData = defineModel('nodes', { required: true })
-const { updateNodePositionData, updateNodeSizeData, updateClear } = useCanvasData(nodeData)
-const { containerRef, x, y, scale, cursor, zoomIn, zoomOut } = useCanvas()
-const { selection } = useCanvasSelection({
+const nodeData = defineModel({ required: true })
+
+const store = useCanvasStore()
+const { nodes, canvasBase } = storeToRefs(store)
+const { handleNodeSelect } = store
+nodes.value = nodeData
+
+const { updateNodePositionData, updateNodeSizeData, updateClear } = useCanvasData(nodes)
+const { containerRef, cursor, zoomIn, zoomOut } = useCanvas()
+useSelectionArea({
   target: containerRef,
-  position: { x, y },
-  scale,
 })
-const { selectedNodeByIndex } = useNodeSelection({
-  nodes: nodeData,
-  container: containerRef,
+useNodeSelection({
+  nodes,
+  target: containerRef,
 })
 const { showContextMenu, contextMenuPosition, handleContextMenu } = useCanvasContextMenu()
-provide('canvasbase', {
-  x,
-  y,
-  scale,
-  selected: selectedNodeByIndex,
-})
 </script>

@@ -3,7 +3,7 @@
     <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl" @click="zoomIn">
       <i class="i-ri-add-line" />
     </button>
-    <span class="text-sm w-10 text-center pointer-events-none">{{ parseInt(scale * 100) }}%</span>
+    <span class="text-sm w-10 text-center pointer-events-none">{{ parseInt(canvasBase.scale * 100) }}%</span>
     <button class="size-8 hover:bg-gray-200 rounded-md flex justify-center items-center text-xl" @click="zoomOut">
       <i class="i-ri-subtract-line" />
     </button>
@@ -11,13 +11,12 @@
 </template>
 
 <script setup>
-defineProps({
-  scale: {
-    type: Number,
-    default: 1,
-  },
-})
+import { storeToRefs } from 'pinia'
+import { useCanvasStore } from '@/useStore/useCanvasStore.js'
+
 const emits = defineEmits(['onZoomIn', 'onZoomOut'])
+const store = useCanvasStore()
+const { canvasBase } = storeToRefs(store)
 function zoomIn() {
   emits('onZoomIn')
 }

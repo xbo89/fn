@@ -1,6 +1,10 @@
 import { computed, reactive, ref, watchEffect } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useCanvasStore } from '@/useStore/useCanvasStore.js'
 
 export function useResize(props, emits) {
+  const store = useCanvasStore()
+  const { canvasBase } = storeToRefs(store)
   const containerRef = ref(null)
   const position = reactive({ x: props.position.x, y: props.position.y })
   const size = reactive({ width: props.size.w, height: props.size.h })
@@ -33,8 +37,8 @@ export function useResize(props, emits) {
   function dragStart(event) {
     event.stopPropagation()
     isDragging.value = true
-    start.x = (event.clientX - position.x * props.scale)
-    start.y = (event.clientY - position.y * props.scale)
+    start.x = (event.clientX - position.x * canvasBase.value.scale)
+    start.y = (event.clientY - position.y * canvasBase.value.scale)
     mouseDownPoint = {
       x: event.clientX,
       y: event.clientY,
@@ -67,8 +71,8 @@ export function useResize(props, emits) {
     }
   }
   function onPointerMove(event) {
-    isDragging.value && containerMove(event, props.scale)
-    isResizing.value && containerResize(event, props.scale)
+    isDragging.value && containerMove(event, canvasBase.value.scale)
+    isResizing.value && containerResize(event, canvasBase.value.scale)
   }
 
   function onPointerUp() {

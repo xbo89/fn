@@ -7,7 +7,6 @@
   >
     <slot
       :pointer-down="dragStart"
-      :canvas-scale="scale"
       :is-select="isSelect"
       cursor-style="cursor-grab active:cursor-grabbing select-none"
     />
@@ -91,8 +90,10 @@
 </template>
 
 <script setup>
-import { computed, inject } from 'vue'
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useResize } from './useHooks/useCardContainer'
+import { useCanvasStore } from '@/useStore/useCanvasStore.js'
 
 const props = defineProps({
   position: {
@@ -112,10 +113,6 @@ const props = defineProps({
         h: 280,
       }
     },
-  },
-  scale: {
-    type: Number,
-    default: 1,
   },
   cardIndex: {
     type: Number,
@@ -162,9 +159,11 @@ const emits = defineEmits([
   'handle-resize',
   'handle-resize-end',
 ])
-const canvasbase = inject('canvasbase')
+const store = useCanvasStore()
+const { selectedNodes } = storeToRefs(store)
+
 const isSelect = computed(() => {
-  return canvasbase.selected.value.includes(props.cardIndex)
+  return selectedNodes.value.includes(props.cardIndex)
 })
 const {
   containerRef,

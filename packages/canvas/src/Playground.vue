@@ -61,13 +61,11 @@ const nodes = ref([
     zinde: 1,
   },
 ])
-const edges = ref([])
 </script>
 
 <template>
   <TheCanvas
-    v-model:nodes="nodes"
-    v-model:edges="edges"
+    v-model="nodes"
   />
 </template>
 
