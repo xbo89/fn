@@ -53,7 +53,7 @@ export const useCanvasStore = defineStore('canvas', {
         id: nanoid(),
         pid,
         type,
-        title: '',
+        title: type === 'group' ? `Untitled Section` : 'A Card',
         position: {
           x: (clientPos.x - this.canvasBase.x) / this.canvasBase.scale,
           y: (clientPos.y - this.canvasBase.y) / this.canvasBase.scale,
