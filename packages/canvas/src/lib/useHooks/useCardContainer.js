@@ -106,32 +106,36 @@ export function useResize(props, emits) {
     _mousePos.x = (event.clientX - canvasBase.value.x) / canvasBase.value.scale
     _mousePos.y = (event.clientY - canvasBase.value.y) / canvasBase.value.scale
     // 查询nodes中type为group的类型的node
-    const groupNodes = nodes.value.filter(node => node.type === 'group')
-    console.log('groupNodes', groupNodes)
-    groupNodes.forEach((node, idx) => {
-      if (_mousePos.x >= node.position.x && _mousePos.x <= node.position.x + node.size.w && _mousePos.y >= node.position.y && _mousePos.y <= node.position.y + node.size.h) {
-        isInGroup.value = true
-        _InGroupNodeIndex.value = idx
-      }
-      else {
-        isInGroup.value = false
-      }
-    })
-    // nodes.value.forEach((node, idx) => {
-    //   if (node.type === 'group') {
-    //     if (_mousePos.x >= node.position.x && _mousePos.x <= node.position.x + node.size.w && _mousePos.y >= node.position.y && _mousePos.y <= node.position.y + node.size.h) {
-    //       isInGroup.value = true
-    //       _InGroupNodeIndex.value = idx
-    //     }
-    //     else {
-    //       handleNodeInsetGroup(idx, false)
-    //       isInGroup.value = false
-    //     }
+    // const groupNodes = nodes.value.filter(node => node.type === 'group')
+    // console.log('groupNodes', groupNodes)
+    // groupNodes.forEach((node, idx) => {
+    //   if (_mousePos.x >= node.position.x && _mousePos.x <= node.position.x + node.size.w && _mousePos.y >= node.position.y && _mousePos.y <= node.position.y + node.size.h) {
+    //     isInGroup.value = true
+    //     _InGroupNodeIndex.value = idx
+    //   }
+    //   else {
+    //     isInGroup.value = false
     //   }
     // })
+    nodes.value.forEach((node, idx) => {
+      // console.log(idx)
+      if (node.type === 'group') {
+        // console.log(idx)
+        if (_mousePos.x >= node.position.x && _mousePos.x <= node.position.x + node.size.w && _mousePos.y >= node.position.y && _mousePos.y <= node.position.y + node.size.h) {
+          isInGroup.value = true
+          _InGroupNodeIndex.value = idx
+          console.log(node.id)
+        }
+        else {
+          // handleNodeInsetGroup(idx, false)
+          isInGroup.value = false
+        }
+      }
+    })
   }
   watch(isInGroup, (newVal) => {
     if (newVal) {
+      console.log(_InGroupNodeIndex.value)
       handleNodeInsetGroup(_InGroupNodeIndex.value, true)
     }
     else {
