@@ -42,10 +42,7 @@
           <TheMenuColorsItem />
           <TheMenuDivide />
           <TheMenuItem icon="i-ri-fullscreen-line">
-            Default size
-          </TheMenuItem>
-          <TheMenuItem icon="i-ri-contract-up-down-line">
-            Fold
+            Rename
           </TheMenuItem>
           <TheMenuItem icon="i-ri-expand-height-line">
             Fit to content

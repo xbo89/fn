@@ -33,14 +33,26 @@
       </div>
     </Transition>
     <div class="absolute px-4 top-10 bottom-0 inset-x-0 " data-simplebar style="position: absolute;">
-      <!-- <Writer /> -->
+      <Writer />
     </div>
   </div>
   <TheContextMenu v-model="showContextMenu" :position="contextMenuPosition">
-    <TheMenuItem icon="i-ri-fullscreen-line">
+    <TheMenuItem
+      icon="i-ri-fullscreen-line"
+      @click="() => {
+        updateNode(data.id, { size: { w: 380, h: 180 } });
+        showContextMenu = false
+      }"
+    >
       Default size
     </TheMenuItem>
-    <TheMenuItem icon="i-ri-contract-up-down-line">
+    <TheMenuItem
+      icon="i-ri-contract-up-down-line"
+      @click="() => {
+        updateNode(data.id, { fold: !data.fold });
+        showContextMenu = false
+      }"
+    >
       Fold
     </TheMenuItem>
     <TheMenuItem icon="i-ri-expand-height-line">
@@ -59,7 +71,7 @@
 </template>
 
 <script setup>
-// import { Writer } from '@floatnote/writer'
+import { Writer } from '@floatnote/writer'
 import '@floatnote/writer/dist/style.css'
 import 'simplebar'
 import 'simplebar/dist/simplebar.css'

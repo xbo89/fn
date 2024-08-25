@@ -2,9 +2,9 @@
   <div class="flex items-center space-x-2 px-2 py-2 rounded w-52">
     <template v-for="(color, index) in colors" :key="color.name">
       <div
-        class="size-6 rounded bg-gray-300 cursor-pointer"
+        class="size-6 rounded bg-gray-300 cursor-pointer hover:outline hover:outline-2 hover:outline-offset-1 hover:outline-gray-300"
         :class="index === colorIndex
-          ? 'outline outline-2 outline-offset-1 outline-blue-600'
+          ? 'outline outline-2 outline-offset-1 !outline-blue-600'
           : ''"
         :style="{
           border: `1px solid ${color.border}`,

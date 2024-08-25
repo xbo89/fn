@@ -87,6 +87,7 @@ import { useNodeSelection, useSelectionArea } from '@/useHooks/useCanvasSelectio
 import { useCanvasContextMenu } from '@/useHooks/useContextMenu'
 import { useCanvasData } from '@/useHooks/useCanvasData'
 import { useCanvasStore } from '@/useStore/useCanvasStore.js'
+import { useKeypress } from '@/useHooks/useKeypress'
 
 defineProps({
   backgroundStyle: {
@@ -124,6 +125,7 @@ useNodeSelection({
   nodes,
   target: containerRef,
 })
+useKeypress()
 const { showContextMenu, contextMenuPosition, handleContextMenu } = useCanvasContextMenu()
 function handleAddNewNode(type, clientPos) {
   addNode({ type, clientPos })
