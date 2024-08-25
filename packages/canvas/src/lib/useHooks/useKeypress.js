@@ -1,12 +1,17 @@
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useKeyboardStore } from '../useStore/useKeyboardStore'
 import { useEventListener } from './useEventListener'
 
 export function useKeypress() {
-  const SPACE_KEY = ref(false)
-  const META_KEY = ref(false)
-  const EQUAL_KEY = ref(false)
-  const MINUS_KEY = ref(false)
-  const ZERO_KEY = ref(false)
+  const KeyboardStore = useKeyboardStore()
+  const { SPACE_KEY, META_KEY, EQUAL_KEY, MINUS_KEY, ZERO_KEY } = storeToRefs(KeyboardStore)
+
+  // const SPACE_KEY = ref(false)
+  // const META_KEY = ref(false)
+  // const EQUAL_KEY = ref(false)
+  // const MINUS_KEY = ref(false)
+  // const ZERO_KEY = ref(false)
   useEventListener(window, 'keydown', (event) => {
     // event.preventDefault()
     switch (event.key) {
@@ -47,11 +52,11 @@ export function useKeypress() {
         break
     }
   })
-  return {
-    SPACE_KEY,
-    META_KEY,
-    EQUAL_KEY,
-    MINUS_KEY,
-    ZERO_KEY,
-  }
+  // return {
+  //   SPACE_KEY,
+  //   META_KEY,
+  //   EQUAL_KEY,
+  //   MINUS_KEY,
+  //   ZERO_KEY,
+  // }
 }

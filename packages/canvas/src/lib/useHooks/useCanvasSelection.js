@@ -1,18 +1,19 @@
 import { onMounted, reactive, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEventListener } from './useEventListener'
-import { useKeypress } from './useKeypress'
 
 import { useCanvasStore } from '@/useStore/useCanvasStore.js'
+import { useKeyboardStore } from '@/useStore/useKeyboardStore'
 
 export function useSelectionArea({ target }) {
   const store = useCanvasStore()
+  const KeyboardStore = useKeyboardStore()
   const { selectionArea, canvasBase } = storeToRefs(store)
   const mousePosition = reactive({ x: 0, y: 0 })
   const edgeThreshold = 20
   const step = 6
 
-  const { SPACE_KEY } = useKeypress()
+  const { SPACE_KEY } = storeToRefs(KeyboardStore)
   const containerRect = ref(null)
   onMounted(() => {
     containerRect.value = target.value.getBoundingClientRect()
@@ -104,7 +105,8 @@ export function useSelectionArea({ target }) {
 }
 
 export function useNodeSelection({ target, nodes }) {
-  const { SPACE_KEY } = useKeypress()
+  const KeyboardStore = useKeyboardStore()
+  const { SPACE_KEY } = storeToRefs(KeyboardStore)
   const store = useCanvasStore()
   const { selectedNodes, selectionArea } = storeToRefs(store)
   useEventListener(target, 'mousedown', () => {

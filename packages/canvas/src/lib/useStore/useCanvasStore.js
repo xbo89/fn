@@ -23,11 +23,11 @@ export const useCanvasStore = defineStore('canvas', {
     },
     colors: [
       { name: 'white', background: '#fff', border: '#ccc' },
-      { name: 'red', background: '#fecdd3', border: '#e11d48' },
-      { name: 'orange', background: '#fed7aa', border: '#ea580c' },
-      { name: 'green', background: '#a7f3d0', border: '#059669' },
-      { name: 'blue', background: '#bfdbfe', border: '#2563eb' },
-      { name: 'purple', background: '#ddd6fe', border: '#7c3aed' },
+      { name: 'red', background: '#FEEBE7', border: '#FFCDC2' },
+      { name: 'orange', background: '#FFEFD6', border: '#FFD19A' },
+      { name: 'green', background: '#E6F6EB', border: '#C4E8D1' },
+      { name: 'blue', background: '#EDF2FE', border: '#D2DEFF' },
+      { name: 'purple', background: '#F4F0FE', border: '#E1D9FF' },
     ],
   }),
   getters: {
@@ -51,7 +51,7 @@ export const useCanvasStore = defineStore('canvas', {
           y: (clientPos.y - this.canvasBase.y) / this.canvasBase.scale,
         },
         size: { w: 380, h: 180 },
-        color: this.colors[0],
+        color: 0,
         fold: false,
         zinde: 1,
       })

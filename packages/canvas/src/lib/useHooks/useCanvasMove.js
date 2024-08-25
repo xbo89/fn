@@ -1,11 +1,13 @@
 // 鼠标+空格位移
 
 import { computed, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useKeyboardStore } from '../useStore/useKeyboardStore'
 import { useEventListener } from './useEventListener'
-import { useKeypress } from './useKeypress'
 
 export function useDownMove({ target, callback }) {
-  const { SPACE_KEY } = useKeypress()
+  const KeyboardStore = useKeyboardStore()
+  const { SPACE_KEY } = storeToRefs(KeyboardStore)
   const mouseLeftDownState = ref(false)
 
   const deltaX = ref(0)
