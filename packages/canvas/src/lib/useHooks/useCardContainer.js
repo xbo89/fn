@@ -1,10 +1,11 @@
-import { computed, reactive, ref, watchEffect } from 'vue'
+import { computed, reactive, ref, watch, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCanvasStore } from '@/useStore/useCanvasStore.js'
 
 export function useResize(props, emits) {
   const store = useCanvasStore()
-  const { canvasBase } = storeToRefs(store)
+  const { canvasBase, nodes } = storeToRefs(store)
+  const { handleNodeInsetGroup } = store
   const containerRef = ref(null)
   const position = reactive({ x: props.position.x, y: props.position.y })
   const size = reactive({ width: props.size.w, height: props.size.h })
@@ -33,6 +34,7 @@ export function useResize(props, emits) {
     size.width = props.size.w
     size.height = props.size.h
   })
+
   let mouseDownPoint = { x: 0, y: 0 }
   function dragStart(event) {
     event.stopPropagation()
@@ -83,7 +85,12 @@ export function useResize(props, emits) {
     emits('handle-move-end')
     emits('handle-resize-end', { size, position })
   }
-
+  const _mousePos = reactive({
+    x: 0,
+    y: 0,
+  })
+  const isInGroup = ref(false)
+  const _InGroupNodeIndex = ref(-1)
   function containerMove(event, canvaScale) {
     position.x = (event.clientX - start.x) / canvaScale
     position.y = (event.clientY - start.y) / canvaScale
@@ -95,7 +102,42 @@ export function useResize(props, emits) {
         y: (event.clientY - mouseDownPoint.y) / canvaScale,
       },
     })
+    // 判断position.y和position.x是否在nodes的某个对象所表示的node区域内部, 排除当前点击拖拽的这个node
+    _mousePos.x = (event.clientX - canvasBase.value.x) / canvasBase.value.scale
+    _mousePos.y = (event.clientY - canvasBase.value.y) / canvasBase.value.scale
+    // 查询nodes中type为group的类型的node
+    const groupNodes = nodes.value.filter(node => node.type === 'group')
+    console.log('groupNodes', groupNodes)
+    groupNodes.forEach((node, idx) => {
+      if (_mousePos.x >= node.position.x && _mousePos.x <= node.position.x + node.size.w && _mousePos.y >= node.position.y && _mousePos.y <= node.position.y + node.size.h) {
+        isInGroup.value = true
+        _InGroupNodeIndex.value = idx
+      }
+      else {
+        isInGroup.value = false
+      }
+    })
+    // nodes.value.forEach((node, idx) => {
+    //   if (node.type === 'group') {
+    //     if (_mousePos.x >= node.position.x && _mousePos.x <= node.position.x + node.size.w && _mousePos.y >= node.position.y && _mousePos.y <= node.position.y + node.size.h) {
+    //       isInGroup.value = true
+    //       _InGroupNodeIndex.value = idx
+    //     }
+    //     else {
+    //       handleNodeInsetGroup(idx, false)
+    //       isInGroup.value = false
+    //     }
+    //   }
+    // })
   }
+  watch(isInGroup, (newVal) => {
+    if (newVal) {
+      handleNodeInsetGroup(_InGroupNodeIndex.value, true)
+    }
+    else {
+      handleNodeInsetGroup(_InGroupNodeIndex.value, false)
+    }
+  })
   function containerResize(event, canvaScale) {
     const { left, top } = containerRef.value.getBoundingClientRect()
     let deltaXLeft, deltaYTop, deltaXBottomLeft, deltaXTopLeft, deltaYTopLeft, deltaYTopRight

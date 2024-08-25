@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card-content h-full relative border bg-white rounded-lg transition-colors"
+    class="card-content h-full relative border bg-white rounded-lg transition-colors select-none"
     :style="{
       background: colors[data.color].background,
       borderColor: colors[data.color].border,

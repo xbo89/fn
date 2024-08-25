@@ -48,6 +48,15 @@ export const useCanvasStore = defineStore('canvas', {
         this.selectedNodes.push(index)
       }
     },
+    handleNodeInsetGroup(index, isInset) {
+      if (isInset) {
+        this.selectedNodes.push(index)
+      }
+      else {
+        // 删除selectedNodes中index的元素,是删除数组中等于index的那个值
+        this.selectedNodes = this.selectedNodes.filter(item => item !== index)
+      }
+    },
     addNode({ type, clientPos, pid = 0 }) {
       this.nodes.push({
         id: nanoid(),
