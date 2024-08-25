@@ -70,10 +70,10 @@
     </svg>
   </div>
   <TheContextMenu v-model="showContextMenu" :position="contextMenuPosition">
-    <TheMenuItem icon="i-ri-file-paper-line" hotkey="Ctrl+N">
+    <TheMenuItem icon="i-ri-file-paper-line" hotkey="Ctrl+N" @click="handleAddNewNode('card', contextMenuPosition)">
       Card
     </TheMenuItem>
-    <TheMenuItem icon="i-ri-layout-top-2-line" hotkey="Ctrl+G">
+    <TheMenuItem icon="i-ri-layout-top-2-line" hotkey="Ctrl+G" @click="handleAddNewNode('group', contextMenuPosition)">
       Section
     </TheMenuItem>
   </TheContextMenu>
@@ -112,7 +112,7 @@ const nodeData = defineModel({ required: true })
 
 const store = useCanvasStore()
 const { nodes, canvasBase } = storeToRefs(store)
-const { handleNodeSelect } = store
+const { handleNodeSelect, addNode } = store
 nodes.value = nodeData
 
 const { updateNodePositionData, updateNodeSizeData, updateClear } = useCanvasData(nodes)
@@ -125,4 +125,8 @@ useNodeSelection({
   target: containerRef,
 })
 const { showContextMenu, contextMenuPosition, handleContextMenu } = useCanvasContextMenu()
+function handleAddNewNode(type, clientPos) {
+  addNode({ type, clientPos })
+  showContextMenu.value = false
+}
 </script>

@@ -17,6 +17,7 @@
     "easing-utils": "^1.0.0",
     "hotkeys-js": "^3.13.7",
     "interactjs": "^1.10.27",
+    "nanoid": "^5.0.7",
     "pinia": "^2.2.2",
     "resize-observer-polyfill": "^1.5.1",
     "simplebar": "^6.2.7",

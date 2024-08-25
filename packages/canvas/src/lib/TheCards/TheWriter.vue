@@ -1,6 +1,10 @@
 <template>
   <div
-    class="card-content h-full relative border bg-white rounded-lg"
+    class="card-content h-full relative border bg-white rounded-lg transition-colors"
+    :style="{
+      background: colors[data.color].background,
+      borderColor: colors[data.color].border,
+    }"
     @pointerdown.stop="handleDrag"
     @mousedown.stop="handleSelect"
     @mouseenter.stop="handleMouseEnter"
@@ -11,7 +15,7 @@
       <div
         v-if="showToolBar"
         :class="[cursorStyle]"
-        class="writer-toolbar p-1 flex space-x-1 justify-between absolute top-1 inset-x-1 rounded-md bg-gray-100 hover:bg-gray-200 transition-colors"
+        class="writer-toolbar p-1 flex space-x-1 justify-between absolute top-1 inset-x-1 rounded-md bg-black/5 hover:bg-black/10 transition-colors"
       >
         <div class="right-slot">
           <button class="size-6 hover:bg-gray-300 rounded-md flex justify-center items-center text-xl">
@@ -43,12 +47,12 @@
       Fit to content
     </TheMenuItem>
     <TheMenuDivide />
-    <TheMenuColorsItem />
+    <TheMenuColorsItem :color-index="data.color" @handle-color="handleColor" />
     <TheMenuDivide />
     <TheMenuItem icon="i-ri-file-copy-line" hotkey="Cmd+C">
       Copy
     </TheMenuItem>
-    <TheMenuItem icon="i-ri-delete-bin-7-line" hotkey="Del">
+    <TheMenuItem icon="i-ri-delete-bin-7-line" hotkey="Del" @click="removeNode(data.id)">
       Delete
     </TheMenuItem>
   </TheContextMenu>
@@ -60,9 +64,11 @@ import '@floatnote/writer/dist/style.css'
 import 'simplebar'
 import 'simplebar/dist/simplebar.css'
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useCanvasContextMenu } from '../useHooks/useContextMenu'
+import { useCanvasStore } from '../useStore/useCanvasStore'
 
-defineProps({
+const props = defineProps({
   data: {
     type: Object,
     default: () => {
@@ -79,10 +85,7 @@ defineProps({
           w: 600,
           h: 400,
         },
-        color: {
-          border: 1,
-          background: 2,
-        },
+        color: 0,
         fold: false,
       }
     },
@@ -98,6 +101,10 @@ defineProps({
 })
 const emits = defineEmits(['handleDrag', 'handleSelect'])
 const { showContextMenu, contextMenuPosition, handleContextMenu } = useCanvasContextMenu()
+const store = useCanvasStore()
+const { colors } = storeToRefs(store)
+const { removeNode, updateNode } = store
+
 const showToolBar = ref(false)
 let timer = null
 function handleDrag(event) {
@@ -116,5 +123,8 @@ function handleMouseLeave() {
   timer = setTimeout(() => {
     showToolBar.value = false
   }, 300)
+}
+function handleColor(index) {
+  updateNode(props.data.id, { color: index })
 }
 </script>
