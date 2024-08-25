@@ -1,5 +1,6 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import { nanoid } from 'nanoid'
+import { useKeyboardStore } from '@/useStore/useKeyboardStore'
 
 export const useCanvasStore = defineStore('canvas', {
   state: () => ({
@@ -37,8 +38,15 @@ export const useCanvasStore = defineStore('canvas', {
   },
   actions: {
     handleNodeSelect(index) {
-      this.selectedNodes = []
-      this.selectedNodes.push(index)
+      const KeyboardStore = useKeyboardStore()
+      const { SHIFT_KEY } = storeToRefs(KeyboardStore)
+      if (SHIFT_KEY.value) {
+        this.selectedNodes.push(index)
+      }
+      else {
+        this.selectedNodes = []
+        this.selectedNodes.push(index)
+      }
     },
     addNode({ type, clientPos, pid = 0 }) {
       this.nodes.push({

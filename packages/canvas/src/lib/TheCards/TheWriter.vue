@@ -5,8 +5,8 @@
       background: colors[data.color].background,
       borderColor: colors[data.color].border,
     }"
-    @pointerdown.stop="handleDrag"
-    @mousedown.stop="handleSelect"
+    @pointerdown="handleDrag"
+    @mousedown="handleSelect"
     @mouseenter.stop="handleMouseEnter"
     @mouseleave.stop="handleMouseLeave"
     @contextmenu.stop.prevent="handleContextMenu"
@@ -78,7 +78,8 @@ import 'simplebar/dist/simplebar.css'
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCanvasContextMenu } from '../useHooks/useContextMenu'
-import { useCanvasStore } from '../useStore/useCanvasStore'
+import { useCanvasStore } from '@/useStore/useCanvasStore'
+import { useKeyboardStore } from '@/useStore/useKeyboardStore'
 
 const props = defineProps({
   data: {
@@ -114,17 +115,27 @@ const props = defineProps({
 const emits = defineEmits(['handleDrag', 'handleSelect'])
 const { showContextMenu, contextMenuPosition, handleContextMenu } = useCanvasContextMenu()
 const store = useCanvasStore()
+const KeyboardStore = useKeyboardStore()
+const { SPACE_KEY } = storeToRefs(KeyboardStore)
 const { colors } = storeToRefs(store)
 const { removeNode, updateNode } = store
 
 const showToolBar = ref(false)
-let timer = null
+
 function handleDrag(event) {
-  emits('handleDrag', event)
+  if (!SPACE_KEY.value) {
+    event.stopPropagation()
+    emits('handleDrag', event)
+  }
 }
-function handleSelect() {
-  emits('handleSelect')
+function handleSelect(event) {
+  if (!SPACE_KEY.value) {
+    event.stopPropagation()
+    emits('handleSelect')
+  }
 }
+
+let timer = null
 function handleMouseEnter() {
   clearTimeout(timer)
   timer = setTimeout(() => {
