@@ -2,15 +2,15 @@
   <div
     ref="containerRef"
     class="absolute box-border"
-    :class="[selectState(cardIndex) ? 'outline outline-2 outline-blue-600' : '']"
+    :class="[selectState(id) ? 'outline outline-2 outline-blue-600' : '']"
     :style="style"
   >
     <slot
       :pointer-down="dragStart"
-      :is-select="selectState(cardIndex)"
+      :is-select="selectState(id)"
       cursor-style="cursor-grab active:cursor-grabbing select-none"
     />
-    <template v-if="selectState(cardIndex)">
+    <template v-if="selectState(id)">
       <!-- 各个边的 resize handle -->
       <div
         class="resize-handle-border absolute top !w-full left-1/2 transform -translate-x-1/2 cursor-ns-resize"
@@ -113,9 +113,9 @@ const props = defineProps({
       }
     },
   },
-  cardIndex: {
-    type: Number,
-    default: -1,
+  id: {
+    type: String,
+    default: '',
   },
   limitMin: {
     type: Object,

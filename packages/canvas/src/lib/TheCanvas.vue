@@ -13,9 +13,9 @@
     >
       <template v-for="(node, index) in nodeData" :key="node.id">
         <TheCardContainer
+          :id="node.id"
           :position="node.position"
           :size="node.size"
-          :card-index="index"
           @handle-move="({
             position,
             delta,
@@ -42,7 +42,7 @@
               :selected="isSelect"
               :cursor-style="cursorStyle"
               @handle-drag="pointerDown"
-              @handle-select="handleNodeSelect(index)"
+              @handle-select="handleNodeSelect(node.id)"
             />
             <TheWriter
               v-if="node.type === 'card'"
@@ -50,7 +50,7 @@
               :scale="canvasBase.scale"
               :cursor-style="cursorStyle"
               @handle-drag="pointerDown"
-              @handle-select="handleNodeSelect(index)"
+              @handle-select="handleNodeSelect(node.id)"
             />
           </template>
         </TheCardContainer>

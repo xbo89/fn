@@ -4,7 +4,7 @@ import { ref } from 'vue'
 const nodes = ref([
 
   {
-    id: 'b7gO3uPc',
+    id: '"xSuNEXR2jRu2R1jpL8i3E"',
     pid: 0,
     type: 'group',
     title: 'Card Group For Green Test',
@@ -15,7 +15,7 @@ const nodes = ref([
     zinde: 1,
   },
   {
-    id: '9wL2xqXH',
+    id: '2_DMJFQnDqr9noHR4L39j',
     pid: 0,
     type: 'card',
     title: '',
@@ -27,8 +27,8 @@ const nodes = ref([
   },
 
   {
-    id: 'X3v9pFq7dghgf',
-    pid: 'b7gO3uPc',
+    id: '9aoBX6V6acjMJpW2-usWQ',
+    pid: '"xSuNEXR2jRu2R1jpL8i3E"',
     type: 'card',
     title: '',
     position: { x: 514.5126363710378, y: 1057.8557079081634 },
@@ -38,8 +38,8 @@ const nodes = ref([
     zinde: 1,
   },
   {
-    id: 'X3v9pFq7hfgh',
-    pid: 'b7gO3uPc',
+    id: '6JUgRrP6HKNpTh2tDTOnt',
+    pid: '"xSuNEXR2jRu2R1jpL8i3E"',
     type: 'card',
     title: '',
     position: { x: 517.7319240528658, y: 471.8555739117456 },

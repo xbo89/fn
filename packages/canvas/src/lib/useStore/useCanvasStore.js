@@ -33,28 +33,31 @@ export const useCanvasStore = defineStore('canvas', {
   }),
   getters: {
     selectState: (state) => {
-      return index => state.selectedNodes.includes(index)
+      return id => state.selectedNodes.includes(id)
+    },
+    groupLayer: (state) => {
+      return state.nodes.filter(node => node.type === 'group')
     },
   },
   actions: {
-    handleNodeSelect(index) {
+    handleNodeSelect(id) {
       const KeyboardStore = useKeyboardStore()
       const { SHIFT_KEY } = storeToRefs(KeyboardStore)
       if (SHIFT_KEY.value) {
-        this.selectedNodes.push(index)
+        this.selectedNodes.push(id)
       }
       else {
         this.selectedNodes = []
-        this.selectedNodes.push(index)
+        this.selectedNodes.push(id)
       }
     },
-    handleNodeInsetGroup(index, isInset) {
+    handleNodeInsetGroup(cid, isInset) {
       if (isInset) {
-        this.selectedNodes.push(index)
+        this.selectedNodes.push(cid)
       }
       else {
-        // 删除selectedNodes中index的元素,是删除数组中等于index的那个值
-        this.selectedNodes = this.selectedNodes.filter(item => item !== index)
+        // 删除selectedNodes中id不为cid的那个元素
+        this.selectedNodes = this.selectedNodes.filter(item => item !== cid)
       }
     },
     addNode({ type, clientPos, pid = 0 }) {

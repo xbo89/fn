@@ -118,17 +118,17 @@ export function useNodeSelection({ target, nodes }) {
   watch(selectionArea, (newVal) => {
     if (newVal.size.w !== 0 || newVal.size.h !== 0) {
       selectedNodes.value = []
-      nodes.value.forEach((node, index) => {
+      nodes.value.forEach((node) => {
         const nodeItemArea = {
           position: node.position,
           size: node.size,
         }
         if (node.type === 'card' && useIntersecting(selectionArea.value, nodeItemArea)) {
-          selectedNodes.value.push(index)
+          selectedNodes.value.push(node.id)
         }
 
         if (node.type === 'group' && useCompletelyInside(nodeItemArea, selectionArea.value)) {
-          selectedNodes.value.push(index)
+          selectedNodes.value.push(node.id)
         }
       })
     }
