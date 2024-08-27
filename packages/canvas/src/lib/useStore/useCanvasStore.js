@@ -60,6 +60,8 @@ export const useCanvasStore = defineStore('canvas', {
         this.selectedNodes = this.selectedNodes.filter(item => item !== cid)
       }
     },
+
+    // 👇 节点操作
     addNode({ type, clientPos, pid = 0 }) {
       this.nodes.push({
         id: nanoid(),
