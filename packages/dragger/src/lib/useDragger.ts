@@ -19,6 +19,7 @@ export function useDragger(options: Options): void {
   options.target.addEventListener('mousedown', (event) => {
     event.stopPropagation()
     const rect = options.target.getBoundingClientRect()
+    console.log(event.clientX,event.pageX,event.layerX,event.offsetX,event.target.offsetLeft)
     startDrag = { x: event.clientX - rect.left, y: event.clientY - rect.top }
     currentPosition = { x: rect.left, y: rect.top }
     currentSize = { width: rect.width, height: rect.height }
