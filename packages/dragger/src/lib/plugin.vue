@@ -45,7 +45,6 @@
         left: `-${config.handleSize / 2 + 2}px`,
         background: `${debugMode && '#0d622d5f'}`,
       }"
-      @pointerdown.stop.prevent="resizeStart($event, 'top-left')"
     />
     <div
       class="resize-handle-corner size-4 absolute top-right cursor-nesw-resize"

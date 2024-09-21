@@ -6,15 +6,17 @@ interface Options {
   onMove: (event: MouseEvent, delta: { x: number, y: number }) => void
   onMoveEnd: (event: MouseEvent) => void
 }
-
+let ox: number, oy: number, ow: number, oh: number, omx: number, omy: number
 export function useDragger(options: Options): void {
   if (!options.enable) return
   let startDrag = { x: 0, y: 0 }
   let currentPosition = { x: 0, y: 0 }
   let currentSize = { width: 300, height: 300 }
 
-  const handleBorders = options.target.querySelectorAll('.resize-handle-border')
-  const handleCorners = options.target.querySelectorAll('.resize-handle-corner')
+  
+
+  const handleBorders: HTMLElement[] = Array.from(options.target.querySelectorAll('.resize-handle-border'))
+  const handleCorners: HTMLElement[] = Array.from(options.target.querySelectorAll('.resize-handle-corner'))
 
   options.target.addEventListener('mousedown', (event) => {
     event.stopPropagation()
@@ -22,6 +24,14 @@ export function useDragger(options: Options): void {
     startDrag = { x: event.clientX - rect.left, y: event.clientY - rect.top }
     currentPosition = { x: rect.left, y: rect.top }
     currentSize = { width: rect.width, height: rect.height }
+
+    ox = startDrag.x
+    oy = startDrag.y
+    ow = currentSize.width
+    oh = currentSize.height
+    omx = event.clientX
+    omy = event.clientY
+
     options.onMoveStart(event, currentPosition)
 
     function onMouseMove(event: MouseEvent) {
@@ -40,10 +50,21 @@ export function useDragger(options: Options): void {
     document.addEventListener('mousemove', onMouseMove)
     document.addEventListener('mouseup', onMouseUp)
   })
+  let deltaXLeft, deltaYTop, deltaXBottomLeft, deltaXTopLeft, deltaYTopLeft, deltaYTopRight
   for (let border = 0; border < handleBorders.length; border++) {
-    handleBorders[border].addEventListener('mousedown', (event) => {
+    handleBorders[border].addEventListener('mousedown', (event: MouseEvent) => {
       event.stopPropagation()
       event.preventDefault()
+      switch (border) {
+        case 0:
+          deltaXTopLeft = (event.clientX - omx) / options.scale
+        deltaYTopLeft = (event.clientY - omy) / options.scale
+        currentSize.width = (ow - deltaXTopLeft)
+        currentPosition.x = ox + deltaXTopLeft
+        currentSize.height = (oh - deltaYTopLeft)
+        currentPosition.y = oy + deltaYTopLeft
+          break
+      }
       console.log('pointerdown', event)
     })
   }
